@@ -108,12 +108,18 @@ function handleTagClick(tag: string, event: MouseEvent) {
   box-shadow: var(--hub-card-shadow);
   transition: transform var(--hub-transition), border-color var(--hub-transition), box-shadow var(--hub-transition);
   position: relative;
+  cursor: pointer;
 }
 
 .resource-card:hover {
   transform: translateY(-2px);
   border-color: var(--vp-c-border-hover);
   box-shadow: var(--hub-card-shadow-hover);
+}
+
+.resource-card:focus-within {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 1px var(--vp-c-brand-1);
 }
 
 .card-header {
@@ -131,7 +137,10 @@ function handleTagClick(tag: string, event: MouseEvent) {
   flex-wrap: wrap;
 }
 
+/* Category Badge with Elevated z-index */
 .category-badge {
+  position: relative;
+  z-index: 2;
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--vp-c-text-2);
@@ -156,8 +165,10 @@ function handleTagClick(tag: string, event: MouseEvent) {
   text-transform: lowercase;
 }
 
-/* 44x44px Accessible Hit Target for External Link */
+/* External Link with Elevated z-index & Accessible 44x44px Hit Target */
 .external-btn {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -198,9 +209,22 @@ function handleTagClick(tag: string, event: MouseEvent) {
   margin-bottom: 1.15rem;
 }
 
+/* Stretched Link Pattern on Title Anchor */
 .title-link {
   text-decoration: none;
   align-self: flex-start;
+}
+
+.title-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: var(--hub-card-radius, 10px);
+}
+
+.title-link:focus-visible {
+  outline: none;
 }
 
 .resource-title {
@@ -213,6 +237,7 @@ function handleTagClick(tag: string, event: MouseEvent) {
   transition: color var(--hub-transition);
 }
 
+.resource-card:hover .resource-title,
 .title-link:hover .resource-title {
   color: var(--vp-c-brand-1);
 }
@@ -246,8 +271,10 @@ function handleTagClick(tag: string, event: MouseEvent) {
   overflow: hidden;
 }
 
-/* Interactive Tag Link */
+/* Tag Pill with Elevated z-index */
 .tag-pill {
+  position: relative;
+  z-index: 2;
   font-size: 0.7rem;
   font-family: var(--vp-font-family-mono);
   color: var(--vp-c-text-3);
