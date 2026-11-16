@@ -15,15 +15,17 @@ dateAdded: "2026-10-25"
 
 # The Modern JavaScript Tutorial (javascript.info)
 
-## Overview
+## Why Use It
 
-The Modern JavaScript Tutorial (javascript.info) is a tool that provides a comprehensive, open-source guide covering javascript from core language basics to advanced browser apis
+Surface-level tutorials often leave developers confused when encountering subtle JavaScript edge cases involving prototype chains, closures, the event loop, and DOM reflow cycles. The Modern JavaScript Tutorial (javascript.info) is an authoritative, deeply technical reference manual that explores modern ECMAScript from first principles to browser internals. It combines meticulous theoretical breakdowns with practical browser engine mechanics and runnable in-context code challenges.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern learning workflows
-- Streamlining developer tooling and productivity
+- Exhaustive three-part curriculum: Core JavaScript language mechanics, DOM/Browser interfaces, and advanced topics (WebSockets, IndexedDB, Web Components)
+- Rigorous deep dives into lexical environments, execution contexts, prototypical inheritance, garbage collection, and microtask queues
+- Clean, modern syntax emphasizing modern ES6+ standards while explaining historical browser quirks and polyfills
+- Interactive code tasks with hidden hints and runnable browser solution tests for self-assessment
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-178 (User item #180).
+The premier textbook and reference manual for frontend developers, Node.js engineers, and TypeScript programmers striving for deep language mastery.

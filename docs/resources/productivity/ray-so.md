@@ -14,15 +14,17 @@ featured: true
 
 # Ray.so
 
-## Overview
+## Why Use It
 
-Ray.so is a tool that provides raycast's free online tool for turning code snippets into clean, customizable syntax-highlighted images for sharing
+Sharing raw code screenshots on social media, documentation sites, and presentation slides often results in blurry text, distracting editor chrome, and poor visual contrast. Ray.so (developed by the Raycast team) is a free, browser-based utility that generates beautiful, high-contrast, syntax-highlighted code snippet images. It packages code into clean macOS-style window frames with customizable padding, gradient backgrounds, and language themes.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern productivity workflows
-- Streamlining developer tooling and productivity
+- Instant syntax highlighting supporting dozens of programming languages with clean, modern themes
+- Real-time visual controls for padding, drop shadows, background gradients, and window title bar styling
+- High-resolution SVG and PNG export presets optimized for Twitter/X cards, blog headers, and conference presentations
+- Dedicated copy-to-clipboard functionality allowing instant pasting of rendered graphics into chats and docs
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-214 (User item #216).
+An essential visual utility for developer advocates, technical writers, and software engineers sharing code snippets across documentation and social channels.

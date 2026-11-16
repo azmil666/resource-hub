@@ -13,15 +13,17 @@ dateAdded: "2026-10-29"
 
 # Refactoring UI
 
-## Overview
+## Why Use It
 
-Refactoring UI is a tool that provides an automated design audit skill that scores your ui and provides actionable fixes for visual hierarchy, spacing, and depth
+Software developers frequently build functional web applications that look amateurish because traditional design advice focuses on artistic theory rather than tactical engineering rules. Refactoring UI is a celebrated design handbook that translates visual design into practical, repeatable rules for developers. It deconstructs color choices, typography scales, whitespace balancing, and depth into systematic implementation guidelines.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern miscellaneous workflows
-- Streamlining developer tooling and productivity
+- Pragmatic design heuristics: designing without color first, establishing strict spacing scales, and using borders instead of shadows
+- Systematic typography rules: choosing font pairings, setting fluid type scales, and avoiding low-contrast body text
+- Real-world before-and-after UI refactoring case studies illustrating practical transformations of common web views
+- Companion design assets including curated color palettes, icon guidelines, and component spacing cheatsheets
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-065 (User item #67).
+Essential reading for full-stack developers, frontend engineers, and solo founders building clean, professional interfaces with Tailwind CSS and modern web frameworks.

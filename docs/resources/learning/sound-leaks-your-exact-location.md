@@ -17,16 +17,17 @@ dateAdded: "2026-10-24"
 
 # Sound Leaks Your Exact Location
 
-## Overview
+## Why Use It
 
-A deep-dive security research explainer showing how ambient audio signatures, power hum, and acoustic reflections can be analyzed to determine geographical location.
+Software applications often treat ambient microphone audio and physical acoustic noise as harmless background data without realizing it can expose sensitive environmental context. This cybersecurity research explainer analyzes physical acoustic side-channel attacks, demonstrating how electrical hum (Electric Network Frequency, or ENF) and ambient acoustic signatures can pinpoint an operator's exact physical location and timestamp. It illustrates how physical hardware phenomena bypass application-level privacy sandboxes.
 
-## Useful for
+## Key Capabilities
 
-- Learning about acoustic side-channel attacks and threat vectors
-- Understanding ambient frequency analysis and geolocation tracking
-- Evaluating device microphone privacy and physical OPSEC
+- Technical breakdown of Electric Network Frequency (ENF) analysis extracting micro-fluctuations in AC power grids
+- Exploration of acoustic side-channel reconnaissance techniques using spectrogram audio analysis
+- Demonstration of time-location triangulation using audio recordings against geographical power grid logs
+- Countermeasure strategies for hardware audio sandboxing, high-pass filtering, and ambient noise neutralization
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-011.
+Essential watching for security researchers, privacy engineers, and hardware security analysts building threat models for mobile, IoT, and edge devices.

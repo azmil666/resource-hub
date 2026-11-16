@@ -15,16 +15,17 @@ featured: true
 
 # Cal.com
 
-## Overview
+## Why Use It
 
-Cal.com is an open-source scheduling tool and Calendly alternative that integrates with Google Calendar, Outlook, Zoom, and Stripe with full white-label support.
+Commercial scheduling tools (like Calendly) offer rigid UI customization, lack white-label embedding, and restrict direct database integration. Cal.com is an open-source, enterprise-grade scheduling infrastructure platform built with Next.js and TypeScript, offering complete white-label customization and API-first scheduling controls. It allows developers to embed appointment booking workflows directly into their applications with full calendar synchronization.
 
-## Useful for
+## Key Capabilities
 
-- Booking meetings without third-party scheduling fees
-- Embedding scheduling widgets directly into web apps
-- Building custom booking workflows with webhooks and APIs
+- Comprehensive scheduling engine supporting round-robin routing, collective bookings, paid appointments, and team availability
+- Multi-calendar synchronization with Google Calendar, Microsoft Outlook, Apple iCloud, and CalDAV
+- Embeddable React component (@calcom/embed-react) with customizable themes, fonts, and dark mode support
+- Full REST API and webhook architecture allowing programmatic booking management and database syncing
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-045.
+The industry-standard scheduling infrastructure for Next.js, React, and Node.js platforms, telehealth apps, and SaaS customer portals.

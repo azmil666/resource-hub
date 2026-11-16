@@ -14,15 +14,17 @@ dateAdded: "2026-10-24"
 
 # System Design Primer
 
-## Overview
+## Why Use It
 
-System Design Primer is a github repository that provides donne martin's massive open-source github guide for learning how to design large-scale distributed systems and ace system design interviews
+Designing distributed systems that scale to millions of concurrent users requires balancing trade-offs between consistency, availability, latency, and throughput that traditional software development courses overlook. The System Design Primer (by Donne Martin) is the canonical open-source distributed systems engineering guide on GitHub, providing comprehensive architectural blueprints, design patterns, and case studies. It demystifies enterprise architecture through concrete math-backed calculations and visual flowcharts.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern learning workflows
-- Streamlining developer tooling and productivity
+- Comprehensive coverage of distributed systems fundamentals: DNS, CDNs, Load Balancers, API Gateways, Caching, and Asynchronous queues
+- In-depth database scaling patterns: RDBMS vs. NoSQL, Sharding, Federation, Master-Slave replication, and the CAP theorem
+- Step-by-step interview solution walkthroughs for large-scale architectures: Twitter/X timeline, Pastebin, web crawlers, and minting systems
+- Practical back-of-the-envelope estimation guides for calculating memory, bandwidth, and storage capacity constraints
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-205 (User item #207).
+The definitive study guide and architectural blueprint for senior backend developers, systems architects, and software engineers designing scalable distributed infrastructure.

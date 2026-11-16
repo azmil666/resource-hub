@@ -13,15 +13,17 @@ dateAdded: "2026-11-05"
 
 # Resume Worded
 
-## Overview
+## Why Use It
 
-Resume Worded is a website that provides an ai-powered career platform that scores resumes and linkedin profiles with instant, actionable feedback for tech roles
+Software engineers and technical job seekers frequently get rejected by Automated Applicant Tracking Systems (ATS) due to passive phrasing, missing technical keywords, and poor bullet structure. Resume Worded is an AI-powered resume and LinkedIn optimization platform designed by executive recruiters to score technical resumes against real-world hiring criteria. It analyzes resumes line by line, providing concrete recommendations to quantify impact and improve ATS parse rates.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern productivity workflows
-- Streamlining developer tooling and productivity
+- Algorithmic resume scoring evaluating bullet point impact, action verbs, repetition, and ATS compatibility
+- Targeted feedback modules highlighting missing technical skills, metrics quantification, and brevity issues
+- Dedicated LinkedIn profile review analyzing headline effectiveness, summary clarity, and recruiter search visibility
+- Real-world sample bullet points and resume templates calibrated for software engineering and product roles
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-213 (User item #215).
+Essential career preparation platform for software engineers, product managers, and technical applicants optimizing job applications for tech companies.

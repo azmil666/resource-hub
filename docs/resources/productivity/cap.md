@@ -15,16 +15,17 @@ dateAdded: "2026-10-30"
 
 # Cap
 
-## Overview
+## Why Use It
 
-Cap is an open-source, privacy-focused screen recording application that captures webcam, audio, and screens with instant shareable links.
+Proprietary screen recording tools (like Loom) impose aggressive video duration limits on free tiers and store internal engineering recordings on external third-party cloud servers. Cap is an open-source, lightweight screen recorder and video sharing application that delivers instant, high-resolution desktop recordings with shareable links and customizable recording frames. It offers developers and engineering teams an open, private alternative for recording technical demos and bug reproductions.
 
-## Useful for
+## Key Capabilities
 
-- Recording bug reports, engineering demos, and PR walkthroughs
-- Sharing fast asynchronous video updates with teams
-- Self-hosting shareable screen recordings with custom domains
+- High-resolution screen, window, and webcam recording with hardware acceleration and zero duration limits
+- Automated instant cloud upload generating shareable links with customizable playback domains
+- Studio customization options: adjustable camera bubbles, background padding, shadows, and canvas presets
+- Open-source, transparent architecture allowing self-hosting of recording assets and backend storage
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-047.
+Indispensable tool for remote engineering teams, open-source maintainers, and developer advocates recording bug reports, PR walkthroughs, and technical demos.

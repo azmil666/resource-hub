@@ -14,15 +14,17 @@ dateAdded: "2026-11-03"
 
 # Node-RED
 
-## Overview
+## Why Use It
 
-Node-RED is a tool that provides a flow-based, low-code visual programming tool for wiring together hardware devices, apis, and online services
+Integrating IoT hardware sensors, industrial protocols (MQTT, Modbus), and cloud APIs often involves writing brittle glue code across disparate runtimes. Node-RED is an open-source, visual flow-based programming environment developed originally by IBM, built on Node.js to wire together hardware devices, APIs, and online services. It provides a browser-based flow editor that allows developers to connect visual nodes into complex, event-driven pipelines in minutes.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern productivity workflows
-- Streamlining developer tooling and productivity
+- Browser-based drag-and-drop flow editor for connecting hardware inputs, protocol handlers, and cloud services
+- Native support for IoT and industrial communication standards: MQTT, WebSockets, TCP/UDP, Serial, and HTTP
+- Rich ecosystem of over 4,000 community-contributed nodes in the Node-RED library covering specialized hardware and APIs
+- Lightweight Node.js event-driven runtime ideal for running on edge hardware like Raspberry Pi and industrial gateways
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-116 (User item #118).
+The de facto standard visual orchestration platform for IoT engineers, home automation enthusiasts, and industrial automation developers.

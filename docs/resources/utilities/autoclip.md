@@ -16,16 +16,17 @@ dateAdded: "2026-11-07"
 
 # AutoClip
 
-## Overview
+## Why Use It
 
-AutoClip is an automated video clipping utility that processes long-form YouTube videos and streams to detect, crop, and export highlights.
+Manually reviewing multi-hour YouTube streams, gaming sessions, or technical webinars to extract exciting highlights is a tedious, labor-intensive editing bottleneck. AutoClip is an open-source video processing utility that automatically detects high-energy moments, laughter, and chat spikes in recorded video streams to generate short highlight clips. It automates video segmentation, clipping, and vertical reframing using local audio and visual analysis.
 
-## Useful for
+## Key Capabilities
 
-- Extracting highlights and key moments from long-form YouTube streams
-- Automating video clipping pipelines for content creators
-- Repurposing video archives into short-form clips
+- Automated highlight detection analyzing audio volume spikes, laughter recognition, and stream activity
+- Direct integration with YouTube stream downloading and local video processing via FFmpeg
+- Automatic vertical cropping (9:16) for direct repurposing into TikTok, YouTube Shorts, and Instagram Reels
+- Fully open-source and local execution, eliminating recurring cloud API transcription and rendering fees
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-001.
+Ideal for video editors, content creators, and developer advocates programmatically extracting highlights from stream archives and technical presentations.

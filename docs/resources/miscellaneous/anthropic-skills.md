@@ -15,15 +15,17 @@ dateAdded: "2026-10-27"
 
 # Anthropic Skills
 
-## Overview
+## Why Use It
 
-Anthropic Skills is a github repository that provides anthropic's official public repository of built-in agent skills alongside templates for writing your own custom skills
+Equipping Claude with domain-specific tool-calling abilities, deterministic file operations, and external API connectors requires standardized capability schemas and structured prompts. Anthropic Skills is Anthropic's official public GitHub repository cataloging built-in agent skills alongside reference templates for authoring custom capabilities. It provides developers with the canonical specification for packaging agent skills compatible with Anthropic's Claude Desktop, Claude Code, and custom agent harnesses.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern miscellaneous workflows
-- Streamlining developer tooling and productivity
+- Canonical agent skill schemas defining tool interfaces, parameter validation, and system instructions for Claude
+- Ready-to-import built-in skills covering filesystem manipulation, document processing, and code analysis
+- Developer templates and scaffolding for authoring, testing, and distributing bespoke agent skills
+- Architectural compatibility with Anthropic's Model Context Protocol (MCP) and custom tool-use runtimes
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-073 (User item #75).
+The official standard for developers, tooling engineers, and AI architects building custom skill extensions for Claude Code and Claude Desktop.

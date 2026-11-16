@@ -14,15 +14,17 @@ dateAdded: "2026-10-26"
 
 # Virgilio
 
-## Overview
+## Why Use It
 
-Virgilio is a github repository that provides an open-source, community-driven github repository offering structured learning paths and mentorship resources for aspiring data scientists
+Transitioning into data science and machine learning without a formal university degree often results in fragmented self-study and gaps in mathematical rigor. Virgilio is an open-source, community-driven learning path that serves as a guided roadmap through the entire data science and AI discipline. It organizes mathematical fundamentals, machine learning algorithms, and deep learning architectures into progressive, thematic learning chapters.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern learning workflows
-- Streamlining developer tooling and productivity
+- Thematic learning roadmaps covering Mathematics, Classical Machine Learning, Deep Learning, NLP, and Computer Vision
+- Curated collection of open-access textbooks, university video lectures, and hands-on coding repositories
+- Practical advice on setting up Python scientific environments, Jupyter notebooks, and Kaggle workflow setups
+- Community-governed open-source repository with active contributions and structured mentorship guidelines
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-197 (User item #199).
+A valuable self-study roadmap for self-taught programmers, computer science students, and career switchers entering data science and machine learning.
