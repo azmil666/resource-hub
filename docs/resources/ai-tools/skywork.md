@@ -14,15 +14,17 @@ dateAdded: "2026-08-25"
 
 # Skywork
 
-## Overview
+## Why Use It
 
-Skywork is a tool that provides an ai workspace and deep-research agent platform for generating documents, slides, spreadsheets, podcasts, and web apps
+Conducting rigorous technical research requires cross-referencing dozens of online resources, validating citations, and synthesizing findings across disparate file formats. Skywork functions as an autonomous deep-research agent platform that combs the web, synthesizes findings, and outputs structured deliverables such as research documents, slide decks, spreadsheets, and web applications. It automates information gathering and synthesis for complex analytical tasks.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Autonomous multi-step deep research agent with automated web search, cross-referencing, and source citation
+- Multi-artifact output generation producing formatted documents, presentations, data spreadsheets, and audio podcasts
+- Interactive collaborative workspace for refining research outputs, editing charts, and organizing findings
+- High-context analysis models capable of processing large documents and tabular data sets
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-230 (User item #232).
+Ideal for technical analysts, product managers, and research teams looking to automate comprehensive market analysis, literature reviews, and executive reporting.

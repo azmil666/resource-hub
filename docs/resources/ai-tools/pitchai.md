@@ -13,15 +13,17 @@ dateAdded: "2026-08-23"
 
 # PitchAI
 
-## Overview
+## Why Use It
 
-PitchAI is a tool that provides an ai presentation and pitch deck tool that generates slides and provides automated feedback for founders
+Founders frequently struggle to distill technical architectures and complex business models into compelling, visually balanced pitch decks. PitchAI combines generative content creation with an automated review engine that evaluates investor presentations for narrative flow, clarity, and structural completeness. It helps founders draft investor-ready decks rapidly while offering actionable critique to eliminate weak messaging.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Generative slide deck builder translating brief text descriptions into structured multi-slide presentations
+- AI pitch analyzer evaluating narrative structure, market framing, and team slide effectiveness
+- Clean typographic presets and layout hierarchies designed specifically for investor evaluations
+- Export capabilities supporting standard presentation formats for collaborative editing and offline pitching
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-098 (User item #100).
+Ideal for early-stage startup founders, technical creators, and accelerators crafting seed and Series A fundraising decks.

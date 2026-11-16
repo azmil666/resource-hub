@@ -14,15 +14,17 @@ dateAdded: "2026-08-14"
 
 # Illustroke
 
-## Overview
+## Why Use It
 
-Illustroke is a tool that provides a generative ai design tool that creates customizable, scalable svg vector illustrations directly from text prompts
+Raster image generators output pixel-based assets (PNG/JPEG) that cannot be scaled cleanly, lack semantic vector paths, and bloat frontend bundle sizes. Illustroke uses generative models specifically trained on vector semantics to generate scalable, clean SVG illustrations directly from text prompts. It allows developers and designers to produce lightweight, infinite-resolution vector graphics ready for immediate web and mobile integration.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Generative SVG creation outputting cleanly grouped, editable vector paths and nodes
+- Multiple distinct visual styles including flat design, isometric, outline, and minimal corporate art
+- Direct SVG code export with lightweight markup optimized for direct DOM embedding
+- Resolution-independent assets that eliminate asset pixelation on high-DPI screens
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-158 (User item #160).
+Pairs with frontend UI frameworks (React, Vue, Svelte) and static site generators needing lightweight, custom hero illustrations and iconography without graphic design overhead.

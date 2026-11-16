@@ -14,15 +14,17 @@ dateAdded: "2026-08-18"
 
 # Magnetic UI (Libraries.dev)
 
-## Overview
+## Why Use It
 
-Magnetic UI (Libraries.dev) is a library that provides a react ui library and shader effect by libraries.dev for creating responsive magnetic cursor attractions and tactile micro-interactions
+Static button hovers and rigid cursor states often make web applications feel flat and disconnected from user input. Magnetic UI by Libraries.dev provides lightweight React components and shader effects that mathematically pull interactive elements toward the user's cursor with smooth spring physics. It injects tactile, playful polish into navigational elements and call-to-action buttons with minimal performance overhead.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Spring-physics cursor attraction algorithms that pull target elements toward pointer coordinates
+- Hardware-accelerated CSS and WebGL shader effects maintaining 60+ FPS during pointer tracking
+- Configurable magnetic strength, trigger radius, damping coefficients, and boundary constraints
+- Drop-in React wrapper components compatible with any standard HTML button, anchor, or custom component
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-083 (User item #85).
+Fits into React, Next.js, and Tailwind CSS frontend architectures for marketing landing pages, interactive portfolios, and high-craft design systems.

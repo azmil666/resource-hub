@@ -16,16 +16,17 @@ dateAdded: "2026-08-23"
 
 # Rederive
 
-## Overview
+## Why Use It
 
-Rederive is an agent skill for Claude Code that teaches developers how complex systems work by walking them through the problem space and re-deriving decisions step by step.
+Reading through massive, mature repositories rarely explains why particular architectural trade-offs, state machines, or caching layers were implemented the way they are. Rederive is an interactive Claude Code skill that guides engineers through an unfamiliar codebase by posing the core problems first and challenging the developer to re-derive the design step by step. It transforms passive code reading into active, first-principles architectural comprehension.
 
-## Useful for
+## Key Capabilities
 
-- Deep onboarding into large or unfamiliar open-source codebases
-- Understanding architectural trade-offs behind library designs
-- Interactive Socratic engineering code review
+- Socratic guided exploration that isolates key subsystem abstractions and challenges engineers to deduce their design
+- Automated repository indexing that maps architectural inflection points and complex trade-off decisions
+- Interactive terminal Q&A sessions integrated directly into the Claude Code command-line workflow
+- Accelerated engineering onboarding that builds deep mental models of unfamiliar software systems
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-016.
+A valuable skill for senior engineers, tech leads, and open-source contributors using Claude Code CLI to navigate unfamiliar or legacy architectures.
