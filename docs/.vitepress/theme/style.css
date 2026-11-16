@@ -253,6 +253,31 @@ p, li {
   box-shadow: 0 0 0 1px rgba(7, 255, 225, 0.3) !important;
 }
 
+/* Force inner search input to be borderless and transparent so only .search-bar highlights */
+.VPLocalSearchBox input,
+.VPLocalSearchBox .search-input,
+.VPLocalSearchBox input:focus,
+.VPLocalSearchBox .search-input:focus,
+.VPLocalSearchBox input:focus-visible,
+.VPLocalSearchBox .search-input:focus-visible,
+.DocSearch-Input,
+.DocSearch-Input:focus,
+.DocSearch-Input:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.VPLocalSearchBox .search-actions button,
+.VPLocalSearchBox .search-actions button:focus,
+.VPLocalSearchBox .search-actions button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 .VPLocalSearchBox .search-input {
   font-family: var(--vp-font-family-base) !important;
   font-size: 0.95rem !important;
