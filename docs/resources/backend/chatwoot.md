@@ -14,16 +14,17 @@ dateAdded: "2026-09-02"
 
 # Chatwoot
 
-## Overview
+## Why Use It
 
-Chatwoot connects customer conversations across website live chat, email, WhatsApp, Twitter, and Facebook into a unified open-source team inbox.
+Commercial live-chat and omnichannel support platforms (like Intercom or Zendesk) are expensive, store sensitive customer communications on third-party servers, and restrict custom data pipelines. Chatwoot is an open-source, self-hostable customer communication platform that consolidates live chat, email, WhatsApp, and social messaging into a unified inbox. It gives engineering teams full control over user data, conversation histories, and backend webhooks.
 
-## Useful for
+## Key Capabilities
 
-- Embedding real-time customer support chat on websites
-- Unifying support queries across email and social channels in one dashboard
-- Self-hosting secure customer communication infrastructure
+- Omnichannel inbox aggregating website live chat, email, SMS, WhatsApp, and Twitter/X DMs
+- Fully self-hostable architecture built on Ruby on Rails, PostgreSQL, Redis, and Vue.js
+- Rich REST API and webhook infrastructure for bidirectional CRM syncing and automated bot dispatching
+- Embeddable, lightweight client-side live chat widget customizable to any brand styling
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-046.
+Pairs with Ruby on Rails, Node.js, and Docker environments for SaaS companies and open-source projects requiring privacy-compliant, self-hosted customer support.

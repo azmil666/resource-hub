@@ -14,15 +14,17 @@ featured: true
 
 # Mobbin
 
-## Overview
+## Why Use It
 
-Mobbin is a library that provides the largest real-world ui/ux design reference library featuring over 600,000 shipped mobile and web app screens, user flows, and components
+Designing complex mobile and web user flows (like biometric authentication, multi-step onboarding, and subscription paywalls) is inefficient when designing in a vacuum without analyzing battle-tested patterns. Mobbin is the world's most extensive design reference library, cataloging over 600,000 fully searchable screenshots and complete screen-by-screen user flows from top shipped iOS, Android, and web applications. It allows developers and product teams to deconstruct exact interaction patterns from market leaders.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern inspiration workflows
-- Streamlining developer tooling and productivity
+- 600,000+ high-resolution screenshots capturing complete user journeys (sign-up, checkout, settings, empty states)
+- Granular search filters indexing apps by platform, UI patterns, component types, visual styles, and business verticals
+- Frame-by-frame user flow breakdowns tracing edge cases, validation alerts, and step-by-step state changes
+- Figma integration allowing direct copy-paste of high-resolution screen elements into design workspaces
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-136 (User item #138).
+The industry-standard reference tool for product designers, mobile developers (Swift, Kotlin, Flutter), and full-stack engineers structuring UX workflows.

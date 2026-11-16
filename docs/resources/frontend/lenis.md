@@ -16,16 +16,17 @@ dateAdded: "2026-09-26"
 
 # Lenis
 
-## Overview
+## Why Use It
 
-Lenis is a modern smooth-scroll library developed by Darkroom Engineering that synchronizes native scrolling with WebGL, GSAP, and CSS animations.
+Native browser smooth-scrolling implementations are erratic across operating systems, frequently causing stutter, scroll hijacking bugs, and synchronization lag with WebGL or GSAP animations. Lenis is a lightweight, non-hijacking smooth scroll library that normalizes scroll velocity and synchronizes the browser's native scroll thread with requestAnimationFrame loops. It enables award-winning inertial scrolling and parallax effects without breaking accessibility or native keyboard navigation.
 
-## Useful for
+## Key Capabilities
 
-- Implementing silky, responsive smooth scroll on high-end websites
-- Synchronizing parallax, pinned sections, and WebGL camera transforms with scroll
-- Ensuring smooth scroll works reliably across touch, trackpad, and mouse wheels
+- Non-intrusive smooth scrolling maintaining native browser accessibility, touch gestures, and keyboard navigation
+- Perfect frame synchronization with WebGL canvases, Three.js scenes, and GSAP ScrollTrigger timelines
+- Tiny bundle footprint (< 3KB gzipped) with zero external runtime dependencies
+- Comprehensive control API supporting virtual scroll offsets, programmatic easing curves, and orientation toggles
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-048.
+The industry-standard smooth scrolling runtime for high-craft marketing websites and WebGL experiences built with Next.js, Nuxt, GSAP, and Three.js.

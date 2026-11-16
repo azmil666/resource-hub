@@ -16,15 +16,17 @@ dateAdded: "2026-09-29"
 
 # Planes UI
 
-## Overview
+## Why Use It
 
-Planes UI is a library that provides a library of 170+ animated react and next.js components built with motion, tailwind css, and shadcn/ui for modern and ai-driven interfaces
+Modern AI applications and SaaS products demand fluid, futuristic interfaces with subtle glow shaders, dynamic particle meshes, and generative loading indicators. Planes UI is an extensive component registry featuring over 170 animated React and Next.js components built with Motion, Tailwind CSS, and shadcn/ui. It provides developers with ready-to-use visual components specifically designed for AI agents, prompt inputs, and futuristic dashboard interfaces.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- 170+ animated, accessible React components optimized for Next.js App Router and React Server Components
+- Specialized component patterns for AI products: streaming text responses, reasoning disclosure cards, and prompt bars
+- Drop-in compatibility with shadcn/ui architectures allowing full local source code ownership
+- Physics-based spring animations and performant CSS shader backgrounds powered by Motion
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-081 (User item #83).
+Tailored for full-stack developers and design engineers building AI interfaces, SaaS dashboards, and modern landing pages with Next.js and Tailwind CSS.

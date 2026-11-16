@@ -14,15 +14,17 @@ dateAdded: "2026-09-01"
 
 # BaseHub
 
-## Overview
+## Why Use It
 
-BaseHub is a library that provides a fast, collaborative, ai-native headless cms featuring git-like content branching and a real-time graphql/typescript sdk
+Traditional headless CMS platforms require complex schema definitions, lack type safety at the query layer, and offer clumsy editorial experiences for content teams. BaseHub is an AI-native headless CMS that delivers an intuitive document-based editor for non-technical writers while automatically generating a fully type-safe TypeScript SDK and instant GraphQL API for developers. It bridges marketing content authoring with developer ergonomics via automated schema synchronization.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Automated TypeScript SDK generation (basehub) delivering end-to-end type safety and autocomplete for all content queries
+- Instant GraphQL API endpoint with sub-second global edge caching and CDN distribution
+- AI-assisted editorial workspace offering real-time multi-user collaboration and contextual text generation
+- Native image optimization, asset management, and rich text blocks with custom component embeddings
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-239 (User item #241).
+Optimized for Next.js (App Router), React, and Remix applications deployed on Vercel or Cloudflare, eliminating CMS runtime query type errors.

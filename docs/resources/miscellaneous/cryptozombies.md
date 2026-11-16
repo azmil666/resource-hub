@@ -13,15 +13,17 @@ dateAdded: "2026-10-28"
 
 # CryptoZombies
 
-## Overview
+## Why Use It
 
-CryptoZombies is a website that provides a free, gamified interactive code school that teaches you how to build smart contracts and games in solidity
+Learning Solidity and smart contract engineering can be intimidating due to obscure blockchain state models, strict gas optimization constraints, and high vulnerability risks. CryptoZombies is a celebrated, gamified interactive coding school that teaches developers how to build decentralized applications (dApps) on Ethereum by building a zombie battle game. It breaks down complex Web3 concepts into bite-sized, browser-based coding challenges.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern miscellaneous workflows
-- Streamlining developer tooling and productivity
+- Interactive in-browser Solidity compiler and validation harness providing instant feedback on contract code
+- Comprehensive smart contract curriculum: state variables, mappings, structs, events, inheritance, and payable functions
+- Practical lessons on ERC-721 non-fungible token (NFT) standards and cryptographic ownership verification
+- Frontend Web3 integration modules teaching how to connect browser clients to deployed smart contracts via Web3.js
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-184 (User item #186).
+The canonical interactive onboarding course for web developers, JavaScript engineers, and software architects transitioning into Ethereum and Solidity development.

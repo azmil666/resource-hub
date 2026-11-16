@@ -15,15 +15,17 @@ dateAdded: "2026-09-14"
 
 # Iconbuddy
 
-## Overview
+## Why Use It
 
-Iconbuddy is a website that provides a massive icon search engine aggregating over 200,000 open-source svg icons across 70+ popular collections for instant customization and download
+Hunting across dozens of disparate icon repositories (Lucide, Radix, Heroicons, FontAwesome) to find matching symbols wastes developer time and creates asset fragmentation. Iconbuddy aggregates over 200,000 open-source vector icons across 70+ popular icon packs into a single, high-performance search engine. It features in-browser customization tools allowing developers to modify stroke width, colors, and dimensions before exporting clean SVG, JSX, or Vue components.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Unified search indexing 200,000+ open-source SVG icons across 70+ top industry icon collections
+- In-browser visual editor for tweaking stroke thickness, fill colors, canvas paddings, and corner rounding
+- Multi-format copy-paste options including raw SVG markup, React JSX, Vue template code, and data URI strings
+- Advanced search filters sorting by icon pack, license type, style (outline, solid, duotone), and grid size
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-153 (User item #155).
+A universal icon discovery and formatting workbench for full-stack developers, UI engineers, and designers across all web frameworks.

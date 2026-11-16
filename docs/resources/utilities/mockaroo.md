@@ -15,15 +15,17 @@ dateAdded: "2026-11-09"
 
 # Mockaroo
 
-## Overview
+## Why Use It
 
-Mockaroo is a website that provides a web-based realistic test data generator that lets you download up to 1,000 rows of custom mock data in csv, json, sql, and excel formats
+Benchmarking database query execution plans and stress-testing ETL pipelines requires realistic relational datasets with foreign keys and custom distribution curves. Mockaroo is a powerful web-based test data generator that allows developers to define custom schemas with over 150 data types, formulas, and relational dependencies. It generates up to 1,000 rows of production-grade mock data for free in SQL insert statements, CSV, JSON, or Excel formats.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern utilities workflows
-- Streamlining developer tooling and productivity
+- 150+ realistic data generators covering healthcare, finance, commerce, technical identifiers, and geolocations
+- Formula engine using Ruby-like syntax to calculate conditional values and inter-field dependencies
+- Multi-table relational generation supporting foreign key mappings between parent and child datasets
+- Multi-format data export: SQL INSERT/UPDATE scripts, JSON, CSV, TSV, XML, and Excel spreadsheets
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-104 (User item #106).
+Essential utility for database administrators, backend architects, and data engineers seeding PostgreSQL, MySQL, SQLite, and MongoDB databases for load testing.

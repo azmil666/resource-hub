@@ -13,15 +13,17 @@ dateAdded: "2026-09-04"
 
 # Kestra
 
-## Overview
+## Why Use It
 
-Kestra is a website that provides an open-source, event-driven orchestration and scheduling platform for managing complex data and infrastructure workflows as code
+Orchestrating complex data pipelines and multi-step background microservices often leads to fragmented cron jobs, brittle custom glue scripts, and heavyweight orchestrators with high operational overhead. Kestra is an open-source, language-agnostic orchestration platform that executes data pipelines, infrastructure tasks, and scheduled workflows defined declaratively in YAML. It combines event-driven triggers, real-time visual execution graphs, and built-in secret management into an enterprise-ready runtime.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Declarative YAML workflow definitions supporting code tasks in Python, Node.js, Shell, Docker, and SQL
+- Event-driven architecture with native triggers for webhooks, message queues (Kafka, RabbitMQ), and schedule crons
+- Embedded web UI providing real-time DAG visualizations, log streaming, and metric telemetry
+- Rich plugin ecosystem connecting cloud providers (AWS, GCP, Azure), modern data warehouses, and notification systems
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-118 (User item #120).
+Excels in data engineering, backend microservices, and DevOps automation workflows alongside Docker, Kubernetes, Snowflake, and Postgres.

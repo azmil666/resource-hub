@@ -14,16 +14,17 @@ dateAdded: "2026-08-30"
 
 # Wayin AI
 
-## Overview
+## Why Use It
 
-Wayin AI is an automated video clipping application that analyzes speeches, podcasts, and interviews to generate reframed vertical shorts with auto-subtitles.
+Manual video editing workflows struggle to keep pace with modern short-form distribution demands, requiring editors to spend hours finding hooks and transcribing speech. Wayin AI analyzes raw video files using multimodal speech and visual understanding models, automatically extracting high-engagement segments and generating vertical video clips. It coordinates speaker tracking, auto-captions, and pacing optimization into a single automated pipeline.
 
-## Useful for
+## Key Capabilities
 
-- Repurposing webinars, podcasts, and long YouTube videos into short clips
-- Auto-generating animated subtitles and vertical formatting
-- Social media content scheduling and clipping workflows
+- Automated hook and highlight detection scoring video segments based on viewer retention heuristics
+- Smart multi-speaker reframing keeping active speakers centered in vertical 9:16 frames
+- Dynamic animated captions with multi-language subtitle translation and customizable styling
+- Cloud-based timeline editor for quick trimming, b-roll insertion, and brand overlay management
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-004.
+Well suited for content marketing teams, conference organizers, and developer relations engineers publishing technical clips across YouTube Shorts, Instagram Reels, and TikTok.

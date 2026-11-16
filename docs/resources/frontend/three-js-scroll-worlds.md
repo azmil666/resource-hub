@@ -15,15 +15,17 @@ dateAdded: "2026-10-04"
 
 # Three.js Scroll Worlds
 
-## Overview
+## Why Use It
 
-Three.js Scroll Worlds is a website that provides a 3d web development skill for linking camera movements and webgl scenes directly to native page scroll
+Binding Three.js 3D camera trajectories and object transformations to page scroll typically leads to jittery interpolations, mobile scroll locking, and desynchronized rendering. Three.js Scroll Worlds is a specialized code repository and architectural blueprint that teaches developers how to link 3D WebGL camera paths directly to native window scroll events. It demonstrates how to build cinematic, narrative-driven 3D scroll experiences with smooth math-driven camera splines.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Production-ready architectural pattern for mapping 1D scroll progress to multi-dimensional 3D camera paths
+- Smooth spline camera trajectories using Catmull-Rom splines for cinematic scene navigation
+- Performant integration with native browser scroll and smooth-scrolling engines (Lenis, Locomotive)
+- Modular Three.js scene architecture separating asset loading, lighting passes, and scroll-event listeners
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-063 (User item #64).
+Essential reference for creative technologists and frontend developers building narrative 3D storytelling sites with Three.js, GSAP, and Vite.

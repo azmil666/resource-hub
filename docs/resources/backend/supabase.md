@@ -16,15 +16,17 @@ featured: true
 
 # Supabase
 
-## Overview
+## Why Use It
 
-Supabase is a website that provides an open-source firebase alternative providing a hosted postgres database, authentication, instant apis, edge functions, and storage
+Building cloud backends with proprietary BaaS platforms often creates painful vendor lock-in, inflexible non-relational data schemas, and complex export limitations. Supabase provides an open-source, enterprise-grade backend suite built on dedicated PostgreSQL databases, giving developers full SQL control alongside hosted authentication, real-time subscriptions, storage, and auto-generated REST/GraphQL APIs. It couples the rapid prototyping speed of Firebase with the architectural power, extensibility, and portability of native Postgres.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Full dedicated PostgreSQL instance with direct connection strings, pgvector extension support, and granular Row Level Security (RLS)
+- Auto-generated RESTful (PostgREST) and GraphQL APIs reflecting database schemas and permissions instantly
+- Integrated Auth engine supporting email/password, magic links, social OAuth providers, and phone OTP
+- Real-time database change streams via WebSockets and globally distributed Deno-based Edge Functions
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-102 (User item #104).
+The premier backend-as-a-service for Next.js, React, SvelteKit, Flutter, and React Native developers needing production-ready Postgres infrastructure with minimal devops overhead.

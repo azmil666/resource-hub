@@ -16,16 +16,17 @@ dateAdded: "2026-09-29"
 
 # PlayCanvas
 
-## Overview
+## Why Use It
 
-PlayCanvas is a cloud-hosted 3D development platform featuring a collaborative visual editor, lightweight WebGL/WebGPU engine, and real-time multi-user editing.
+Developing rich, interactive 3D browser games and simulations usually involves managing complex desktop engine builds and sluggish web exports. PlayCanvas is a cloud-hosted, collaborative 3D game engine and developer platform that executes directly in the browser via high-performance WebGL and WebGPU pipelines. It combines a real-time collaborative scene editor with an ultra-lightweight JavaScript/TypeScript engine designed for instant web delivery.
 
-## Useful for
+## Key Capabilities
 
-- Collaborative browser-based 3D game development
-- Creating interactive 3D product configurators and digital showrooms
-- Building lightweight, mobile-optimized WebGL interactive experiences
+- Cloud-based real-time collaborative visual editor enabling simultaneous multi-user scene composition and asset management
+- High-performance, lightweight rendering engine (< 200KB gzipped core) supporting WebGL 2.0 and WebGPU
+- Integrated Ammo.js / PhysX 3D physics, particle systems, dynamic lighting, and spatial audio
+- Native mobile optimization achieving consistent 60 FPS performance across iOS and Android mobile browsers
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-020.
+The premier 3D platform for browser game developers, interactive advertising agencies, architectural visualizations, and metaverse experiences in JavaScript and TypeScript.

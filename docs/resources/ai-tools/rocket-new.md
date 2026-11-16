@@ -13,15 +13,17 @@ dateAdded: "2026-08-24"
 
 # Rocket.new
 
-## Overview
+## Why Use It
 
-Rocket.new is a tool that provides an ai-powered full-stack app builder that turns text descriptions and figma designs into production-ready web and mobile apps
+Bridging the gap between Figma design systems and production full-stack code typically requires manual slicing, CSS tuning, and repetitive API scaffolding. Rocket.new leverages generative AI models to convert natural language specifications and Figma designs directly into production-grade web and mobile applications. It generates clean, modular code architectures complete with database models, authentication, and state management.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Direct Figma-to-code compilation preserving layout constraints, typography, and responsive component structures
+- Full-stack code generation supporting web (React, Next.js) and cross-platform mobile (Flutter, React Native)
+- Automated backend scaffolding including PostgreSQL schemas, REST/GraphQL endpoints, and authentication flows
+- Exportable, clean source code with zero proprietary lock-in or runtime dependencies
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-222 (User item #224).
+Great for product teams, startup engineers, and design agencies looking to compress design-to-production cycles in React and Flutter stacks.

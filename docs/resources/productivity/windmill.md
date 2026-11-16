@@ -14,15 +14,17 @@ dateAdded: "2026-11-06"
 
 # Windmill
 
-## Overview
+## Why Use It
 
-Windmill is a tool that provides an open-source developer platform and workflow engine for turning scripts into internal tools, apis, and scheduled automations
+Building internal developer tools, admin dashboards, and background workflow engines typically requires cobbling together heavy frontend frameworks, cron schedulers, and authorization microservices. Windmill is a high-performance, open-source developer platform that converts raw scripts written in TypeScript, Python, Go, Bash, or SQL into auto-generated internal UIs, webhooks, and distributed background workflows. Built with a Rust core, it executes jobs with sub-millisecond overhead.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern productivity workflows
-- Streamlining developer tooling and productivity
+- Multi-language script execution: turn TypeScript, Python, Go, SQL, and Bash scripts into auto-generated web forms and endpoints
+- Ultra-fast workflow execution engine powered by a high-throughput, low-latency Rust backend core
+- Drag-and-drop internal UI builder connecting custom scripts to interactive tables, charts, and buttons
+- Enterprise-grade orchestration: distributed workers, automated retries, secret management, and fine-grained RBAC
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-115 (User item #117).
+The preferred open-source internal tool and workflow platform for DevOps engineers, backend developers, and platform teams replacing Retool, Temporal, and custom admin portals.

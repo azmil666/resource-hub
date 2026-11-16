@@ -15,15 +15,17 @@ dateAdded: "2026-08-13"
 
 # GitHub Copilot
 
-## Overview
+## Why Use It
 
-GitHub Copilot is a github repository that provides github's ai pair programmer and coding agent offering inline autocomplete, chat, and autonomous pull-request generation in ides
+Developers spend considerable time writing boilerplate, looking up unfamiliar API signatures, and manually drafting regression tests across different repositories. GitHub Copilot integrates directly into editor runtimes to provide real-time ghost-text completions, contextual semantic chat, and multi-file code editing based on local workspace context. Powered by OpenAI models and GitHub's specialized code index, it speeds up everyday implementation loops without leaving the editor.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Low-latency inline code completion predicting whole lines and complex multi-line functions from local context
+- IDE-integrated chat agent supporting workspace indexing, active file references, and debugging assistance
+- CLI integration via Copilot in the CLI for shell command explanation and generation
+- Autonomous agents capable of drafting pull request summaries, reviewing code diffs, and scaffolding tests
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-231 (User item #233).
+Essential for developers working in VS Code, Visual Studio, JetBrains IDEs, or Neovim across any programming language and framework.

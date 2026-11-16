@@ -14,15 +14,17 @@ dateAdded: "2026-08-18"
 
 # Lovable
 
-## Overview
+## Why Use It
 
-Lovable is a website that provides a full-stack ai software engineer platform that generates, edits, and deploys complete react and supabase web apps via chat
+Traditional low-code builders lock developers into proprietary runtime environments, making customization and code export difficult. Lovable functions as an autonomous full-stack AI engineer that writes real, clean React and TypeScript code directly connected to a Supabase backend and a GitHub repository. It allows developers to prompt complete features into existence, inspect the underlying code, and maintain full version control over the codebase.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Natural-language full-stack app scaffolding generating clean React, Vite, and Tailwind CSS code
+- Out-of-the-box Supabase integration for authentication, PostgreSQL storage, and row-level security
+- Bi-directional GitHub integration synchronizing every AI prompt and human edit directly to a git repository
+- Visual canvas and live preview environment allowing instant component-level prompt iteration
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-223 (User item #225).
+Pairs with modern web development stacks (React, TypeScript, Tailwind CSS, Supabase) for fast prototyping, MVP development, and internal tool creation.

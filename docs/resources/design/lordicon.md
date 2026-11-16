@@ -16,15 +16,17 @@ dateAdded: "2026-09-16"
 
 # Lordicon
 
-## Overview
+## Why Use It
 
-Lordicon is a library that provides a vast library of over 49,000 customizable animated icons available in lottie, json, gif, and svg formats for web and mobile apps
+Static icons often fail to deliver engaging feedback during user interactions like completing checkouts, toggling states, or submitting forms. Lordicon provides a production-ready library of over 8,900 animated vector icons powered by Lottie and JSON, delivering smooth 60 FPS vector micro-interactions. It features built-in interaction triggers (hover, click, loop, morph) that can be wired up declaratively with minimal JavaScript.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- 8,900+ animated vector icons covering business, interface, multimedia, and celebratory themes
+- Powered by Lottie JSON, ensuring lightweight vector animations that scale infinitely without pixelation
+- Declarative interaction triggers: play on hover, click, viewport entry, or state morphing via Web Component (`<lord-icon>`)
+- In-browser customization of stroke widths, animation timing, and multi-color palettes prior to export
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-155 (User item #157).
+Great for modern frontend stacks (React, Vue, Next.js, Svelte) and native mobile apps (iOS/Android) using the lottie-web or lottie-react runtimes.

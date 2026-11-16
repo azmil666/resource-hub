@@ -16,15 +16,17 @@ dateAdded: "2026-09-03"
 
 # JSON Server
 
-## Overview
+## Why Use It
 
-JSON Server is a github repository that provides a zero-coding node.js tool that spins up a full fake rest api from a single json file in under 30 seconds
+Frontend developers often stall during initial application prototyping when backend APIs are still under development or unstable. JSON Server creates a fully functional, zero-configuration mock REST API server from a single local JSON file in seconds. It allows frontend engineers to test CRUD operations, pagination, filtering, and relationships without waiting for backend implementation.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Instant RESTful CRUD endpoint generation (GET, POST, PUT, PATCH, DELETE) mapped to JSON keys
+- Built-in support for query parameters: filtering, sorting, pagination, full-text search, and slicing
+- Custom route mapping and middleware injection via simple Express-compatible functions
+- Persistence to disk on write operations, simulating realistic stateful backend behavior
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-108 (User item #110).
+Indispensable tool for React, Vue, Angular, and mobile app developers prototyping UI flows, conducting user tests, and writing component mock tests.

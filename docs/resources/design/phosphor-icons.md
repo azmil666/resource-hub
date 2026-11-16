@@ -14,15 +14,17 @@ dateAdded: "2026-09-18"
 
 # Phosphor Icons
 
-## Overview
+## Why Use It
 
-Phosphor Icons is a library that provides curated developer resource for icon library.
+Design systems often struggle to maintain visual weight harmony when icon line widths do not scale alongside typographic font weights (Thin, Regular, Bold). Phosphor Icons solves this with a family of over 1,200 icons crafted across 6 distinct visual weights (Thin, Light, Regular, Bold, Fill, and Duotone) on a consistent 256px virtual canvas. It enables developers to pair icon weights directly with CSS font-weight variables for flawless interface balance.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- 6 cohesive weights per icon: Thin, Light, Regular, Bold, Fill, and Duotone
+- Over 1,200 icons covering general UI, navigation, media, communication, and technical development
+- Official framework packages for React (@phosphor-icons/react), Vue, Svelte, Flutter, and Elm
+- Web font and SVG sprite distributions with built-in context providers for global weight and color inheritance
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-053 (User item #51).
+The industry-standard icon system for React, Next.js, Vue, and Tailwind CSS design systems requiring rigorous typographic weight matching.

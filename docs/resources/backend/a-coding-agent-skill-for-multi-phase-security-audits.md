@@ -15,15 +15,17 @@ dateAdded: "2026-08-31"
 
 # A coding-agent skill for multi-phase security audits
 
-## Overview
+## Why Use It
 
-A coding-agent skill for multi-phase security audits is a github repository that provides curated developer resource for a coding-agent skill for multi-phase security audits.
+Ad-hoc code reviews frequently overlook subtle vulnerability patterns, insecure dependency configurations, and improper credential handling across large codebases. This Claude Code skill provides a systematic, multi-phase security auditing harness that guides coding agents through reconnaissance, static code analysis, dependency tree auditing, and vulnerability reporting. It converts loose LLM security queries into an exhaustive, repeatable security verification pipeline.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Multi-phase audit methodology covering reconnaissance, static vulnerability scanning, dependency evaluation, and remediation planning
+- Targeted detection routines for OWASP Top 10 vulnerabilities, hardcoded secrets, and insecure API endpoints
+- Automated generation of structured security audit reports with severity ratings (CVSS) and actionable diff patches
+- Direct execution via Claude Code CLI, allowing immediate interactive remediation and testing
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-076 (User item #78).
+Pairs with Claude Code in CI/CD pipelines and pre-release security reviews across modern web applications, microservices, and smart contract repositories.

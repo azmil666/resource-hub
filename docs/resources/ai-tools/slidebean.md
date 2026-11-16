@@ -13,15 +13,17 @@ dateAdded: "2026-08-25"
 
 # Slidebean
 
-## Overview
+## Why Use It
 
-Slidebean is a tool that provides an ai-powered pitch deck builder and financial modeling platform tailored for startups and founders
+Designing presentation slides manually often leads to misaligned elements, broken typographic hierarchy, and tedious reformatting whenever content changes. Slidebean solves this by separating content input from visual rendering, using AI layout algorithms to organize slide elements into balanced, professional designs automatically. It also provides integrated financial modeling tools that link startup metrics directly to investor presentation slides.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Automated content-first slide design engine that arranges text, metrics, and images into clean visual layouts
+- Integrated startup financial modeling templates connected to live deck presentations
+- Investor pitch deck templates reverse-engineered from successful venture capital funding rounds
+- Real-time deck analytics tracking viewer engagement, slide completion rates, and investor drop-off
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-097 (User item #99).
+Tailored for venture-backed founders and startup executives building fundraising decks and financial forecasts.

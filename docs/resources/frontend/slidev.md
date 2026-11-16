@@ -14,15 +14,17 @@ dateAdded: "2026-10-03"
 
 # Slidev
 
-## Overview
+## Why Use It
 
-Slidev is a library that provides a web-based presentation maker and slide deck framework designed specifically for developers using markdown and vue
+Authoring developer presentations in standard slide software is frustrating when displaying live code, interactive UI components, and mathematical formulas. Slidev is a developer-first presentation framework that turns a single Markdown file into interactive, responsive HTML slides powered by Vite and Vue 3. It allows developers to embed real, interactive Vue components, executable code snippets, and custom UnoCSS/Tailwind styles directly inside slide decks.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Markdown-based slide authoring with frontmatter slide separators and deep UnoCSS/Tailwind CSS integration
+- Interactive Vue 3 component embedding allowing live, runnable widgets and stateful demos directly inside slides
+- Built-in syntax highlighting (Shiki) with line focusing, Monaco editor integration, and live terminal recording
+- Comprehensive presenter mode with dual-screen view, speaker notes, live drawing annotations, and PDF/PNG export
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-093 (User item #95).
+The ultimate slide tool for frontend developers, developer advocates, and tech conference speakers working with Vue, Vite, and Markdown.

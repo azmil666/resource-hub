@@ -13,15 +13,17 @@ dateAdded: "2026-11-14"
 
 # ZoomEye
 
-## Overview
+## Why Use It
 
-ZoomEye is a website that provides a cyberspace search engine for discovering and mapping internet-connected devices, open ports, and web services globally
+Security researchers and network administrators need to identify internet-facing infrastructure vulnerabilities, exposed services, and unpatched firmware versions across global IP spaces. ZoomEye is a cyberspace search engine that continuously scans and indexes global internet-connected devices, open ports, and running service banners. It functions as an intelligence platform for mapping attack surfaces and researching global vulnerability distributions.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern utilities workflows
-- Streamlining developer tooling and productivity
+- Global cyberspace scanning engine indexing millions of active IP addresses, open ports, and protocol service banners
+- Granular search query syntax filtering by component, operating system, service banner, country, and vulnerability identifier
+- Comprehensive device fingerprinting identifying IoT hardware, industrial control systems (ICS), web servers, and databases
+- Powerful REST API for programmatically integrating threat reconnaissance data into automated security monitoring pipelines
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-207 (User item #209).
+Essential search platform for penetration testers, security analysts, and DevSecOps teams assessing perimeter exposure and conducting external vulnerability reconnaissance.

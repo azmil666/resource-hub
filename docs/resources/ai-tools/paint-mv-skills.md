@@ -17,16 +17,17 @@ dateAdded: "2026-08-22"
 
 # Paint MV Skills
 
-## Overview
+## Why Use It
 
-Paint MV Skills is an agent skill that guides coding agents in rendering artistic, painterly, and illustrative motion videos with textured visual aesthetics.
+Programmatic video creation tools often lean heavily into sterile corporate layouts or generic 3D effects that lack distinctive artistic character. Paint MV Skills is a specialized skill for Claude Code that directs coding agents in generating stylized, painterly music videos and animated explainers. It guides the agent through structured prompt crafting, SVG canvas styling, and Remotion/Canvas video code composition to produce hand-painted aesthetics.
 
-## Useful for
+## Key Capabilities
 
-- Directing artistic, hand-painted aesthetic video sequences
-- Authoring creative visual treatments for generative video pipelines
-- Applying illustrative textures and custom rendering styles
+- Structured prompt playbooks instructing Claude Code to generate artistic, painterly motion graphics
+- Seamless integration with Remotion and Canvas API rendering engines for programmatic frame generation
+- Curated aesthetic palettes, brush-stroke shaders, and textured SVG filter primitives
+- Automated scene composition and audio-sync workflows for music videos and technical narratives
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-030.
+Pairs with Claude Code CLI and Remotion (React-based video framework) for creative developers and digital artists automating stylized motion graphics.

@@ -15,15 +15,17 @@ featured: true
 
 # DevDocs
 
-## Overview
+## Why Use It
 
-DevDocs is a website that provides a fast, free, offline-capable api documentation browser that combines over 100 developer reference docs into a single searchable web interface
+Switching across dozens of divergent, ad-heavy documentation websites to look up API methods and standard library references slows down engineering flow. DevDocs aggregates over 100 popular API documentation sets (MDN, Python, React, Go, Docker, Rust, PostgreSQL) into a unified, lightning-fast web application with instant keyboard navigation. It caches documentation locally via service workers, providing full offline documentation access without internet dependency.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern utilities workflows
-- Streamlining developer tooling and productivity
+- Unified keyboard-driven search indexing 100+ official API documentations in a single, consistent UI
+- Full offline functionality powered by IndexedDB and service workers with customizable documentation pack downloads
+- Zero-lag fuzzy search filtering across classes, functions, and properties instantly as you type
+- Clean, distraction-free reading mode with dark theme support and standardized typography hierarchies
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-164 (User item #166).
+Indispensable desktop documentation reader for full-stack developers, mobile engineers, and systems programmers coding offline or in low-connectivity environments.

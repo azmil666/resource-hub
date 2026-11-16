@@ -13,15 +13,17 @@ dateAdded: "2026-11-04"
 
 # Replit
 
-## Overview
+## Why Use It
 
-Replit is a tool that provides a cloud-based collaborative ide and deployment platform for writing, running, and hosting code directly in the browser
+Configuring local development environments with language runtimes, package managers, and port forwarding presents high friction for rapid prototyping, collaborative pair programming, and coding education. Replit is a cloud-based collaborative IDE and application hosting platform that runs dozens of programming languages natively inside containerized cloud instances. It provides instant, zero-setup developer environments with multiplayer code editing, integrated AI assistance (Replit Agent), and one-click cloud deployments.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern productivity workflows
-- Streamlining developer tooling and productivity
+- Zero-setup in-browser development environment supporting 50+ languages (Python, Node.js, Rust, Go, C++)
+- Real-time multiplayer collaboration allowing multiple developers to edit, run, and debug code simultaneously
+- Autonomous AI assistant (Replit Agent) capable of scaffolding full-stack applications from text prompts
+- Built-in hosting and deployments with custom domains, automatic SSL certificates, and serverless compute scaling
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-212 (User item #214).
+The go-to cloud development sandbox for rapid prototyping, hackathons, classroom education, and full-stack web deployments.

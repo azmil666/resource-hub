@@ -15,15 +15,17 @@ dateAdded: "2026-08-12"
 
 # Frontend Slides
 
-## Overview
+## Why Use It
 
-Frontend Slides is a github repository that provides a claude code skill for generating animated, interactive html presentations that can be exported directly to powerpoint (.pptx)
+Traditional presentation software isolates slide decks from developer toolchains, preventing programmatic generation and interactive web-based previews. Frontend Slides provides a Claude Code skill that translates structured content into responsive, animated HTML/CSS slides and compiles them into standard PowerPoint (.pptx) decks. It bridges developer-centric authoring with executive-ready presentation exports.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Interactive HTML slide generation utilizing modern web typography, flexbox layouts, and CSS keyframe animations
+- Direct headless compilation and export pipeline from DOM trees to native .pptx slides
+- Agentic workflow integration allowing natural-language slide generation and revision through Claude Code
+- Modular theme templates supporting code syntax highlighting, callout blocks, and data cards
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-064 (User item #66).
+Integrates into Claude Code CLI workflows for engineering leads, developer advocates, and technical founders generating conference slides, sprint demos, and investor decks.

@@ -13,15 +13,17 @@ dateAdded: "2026-10-02"
 
 # Shader Dev
 
-## Overview
+## Why Use It
 
-Shader Dev is a website that provides a graphics programming skill covering 36 glsl techniques ranging from signed distance fields (sdfs) to fluid simulations
+Implementing performant GLSL fragment and vertex shaders in modern web applications requires specialized knowledge of GPU pipelines, coordinate normalization, and framebuffers. Shader Dev curates a collection of production-ready WebGL shader effects and visual canvas components designed for seamless drop-in integration on the web. It allows creative engineers to add organic liquid distortions, noise fields, and chromatic aberrations without authoring low-level shader math from scratch.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Curated collection of modular GLSL fragment and vertex shaders optimized for WebGL and Three.js
+- Aesthetic effects library including chromatic aberration, dynamic noise fields, ripple distortions, and CRT scanlines
+- Interactive browser preview allowing real-time parameter tuning of speed, frequency, scale, and color uniforms
+- Clean JavaScript/TypeScript integration wrappers compatible with Three.js, React Three Fiber, and vanilla WebGL
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-062 (User item #63).
+Pairs with Three.js, React Three Fiber (R3F), Vite, and Next.js for high-impact creative landing pages and interactive WebGL experiences.

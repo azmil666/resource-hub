@@ -13,15 +13,17 @@ dateAdded: "2026-10-08"
 
 # grep.app
 
-## Overview
+## Why Use It
 
-grep.app is a website that provides a lightning-fast code search engine for searching across more than half a million public github repositories in milliseconds
+Standard GitHub code search is notoriously slow, frequently fails on exact punctuation or regex patterns, and struggles to surface canonical real-world library usage examples. grep.app is an ultra-fast code search engine that indexes over 500,000 public GitHub repositories, executing regex and exact-string searches in milliseconds. It provides developers with instant, real-world examples of how specific APIs, undocumented parameters, and configuration files are implemented in production.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern github workflows
-- Streamlining developer tooling and productivity
+- Sub-second search across half a million top public repositories powered by custom memory-mapped index engines
+- Full regular expression (regex) search support alongside case-sensitive and whole-word matching
+- Filtering by programming language, repository, and file path to isolate precise implementation patterns
+- Syntax-highlighted code results with direct links to the source repository line numbers on GitHub
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-238 (User item #240).
+An indispensable search tool for library authors, systems programmers, and full-stack developers researching real-world API implementations and edge-case syntax.

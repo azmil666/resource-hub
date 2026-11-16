@@ -13,15 +13,17 @@ dateAdded: "2026-09-20"
 
 # UI Live
 
-## Overview
+## Why Use It
 
-UI Live is a library that provides a curated ui inspiration library featuring real-world design components with direct figma export capabilities
+Engineers and designers often struggle to translate conceptual design inspiration into concrete, production-ready component structures that account for real-world constraints. UI Live is a curated digital library showcasing real-world web UI components extracted from top modern software products. It enables developers to inspect actual interaction states, visual hierarchy, and responsive layouts, while providing direct export capabilities to Figma.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Curated repository of real-world production UI components: navigation headers, pricing cards, settings panels, and footers
+- Direct copy-to-Figma functionality preserving vector layers, auto-layouts, and typographic hierarchies
+- Filterable component taxonomy allowing targeted searches by layout type, business vertical, and styling patterns
+- High-resolution visual breakdowns emphasizing practical usability and modern web design standards
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-133 (User item #135).
+Ideal for design engineers and product teams designing modern web applications, design systems, and SaaS interfaces in Figma and React.

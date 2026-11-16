@@ -15,15 +15,17 @@ dateAdded: "2026-08-14"
 
 # GStack
 
-## Overview
+## Why Use It
 
-GStack is a github repository that provides claude code skill and workflow suite tailored for startup engineering teams by garry tan.
+Startup engineering teams need rapid prototyping speed while maintaining high code quality and avoiding regression debt. GStack provides an opinionated suite of Claude Code skills and prompt playbooks that automate rapid scaffolding, pull request reviews, test generation, and architectural consistency. It packages battle-tested startup engineering patterns into modular agent tools ready for immediate terminal use.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Turnkey Claude Code skills optimized for agile startup development cycles and rapid MVP deployment
+- Automated pull request review and test generation prompts that catch regressions before production
+- Standardized code generation patterns enforcing modern TypeScript, Next.js, and database conventions
+- Lightweight, modular architecture that easily adapts to custom team agent configurations
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-059 (User item #57).
+Fits into Claude Code CLI setups for startup founders and early-stage engineering teams building with modern TypeScript, Node.js, and React.

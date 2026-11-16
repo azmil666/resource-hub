@@ -15,15 +15,17 @@ dateAdded: "2026-09-09"
 
 # SQL - Data With Baraa
 
-## Overview
+## Why Use It
 
-SQL - Data With Baraa is a video that provides data with baraa - baraa khatib salkini's practical, visual sql training course covering queries, database design, and data analytics
+Mastering SQL syntax alone is often insufficient for writing high-performance queries, designing normalized database schemas, and performing complex analytical transformations. Data With Baraa is a highly visual, hands-on SQL educational channel that deconstructs relational database concepts, indexing strategies, and data analytics queries through animated diagrams and real-world datasets. It equips engineers with practical database query intuition.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Visual step-by-step tutorials breaking down complex SQL joins, subqueries, CTEs, and window functions
+- Practical schema normalization and database modeling lessons using enterprise-style relational architectures
+- Query optimization and performance tuning principles, explaining execution plans and index usage
+- Real-world analytics scenarios demonstrating data extraction, aggregation, and business intelligence reporting
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-174 (User item #176).
+An ideal learning guide for software engineers, data analysts, and backend developers working with PostgreSQL, MySQL, SQL Server, or SQLite.

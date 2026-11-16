@@ -17,16 +17,17 @@ dateAdded: "2026-10-18"
 
 # It's 2 AM and Production is Down
 
-## Overview
+## Why Use It
 
-A real-world engineering case study walking through a critical production outage, debugging live database deadlocks, network timeouts, and remediation protocols.
+Experiencing an unexpected production outage under high stress frequently leads to panicked debugging, uncoordinated hotfixes, and extended downtime. This technical video breakdown deconstructs real-world production incident response methodologies, systematic root-cause troubleshooting, and post-incident blameless post-mortems. It equips engineering teams with structured mental models to navigate high-stakes production emergencies calmly and effectively.
 
-## Useful for
+## Key Capabilities
 
-- Learning incident response workflows and post-mortem best practices
-- Debugging distributed microservices and database lock contention under pressure
-- Building resilient alert systems and telemetry dashboards
+- Systematic troubleshooting frameworks: isolating blast radiuses, checking telemetry dashboards, and rolling back bad deployments
+- Triage communication protocols establishing clear incident commander roles and stakeholder updates
+- Deep dive into common production failure modes: connection pool exhaustion, memory leaks, split-brain DNS, and cascading timeouts
+- Best practices for conducting blameless post-mortems, writing root-cause analyses (RCAs), and creating preventative action items
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-013.
+Essential viewing for DevOps engineers, Site Reliability Engineers (SREs), and on-call backend developers operating mission-critical production infrastructure.

@@ -17,16 +17,17 @@ dateAdded: "2026-08-30"
 
 # Vox Explainer Skill
 
-## Overview
+## Why Use It
 
-Vox Explainer Skill is a custom Claude Code agent skill that helps developers draft and animate documentary-style motion graphics and explainer scripts with natural pacing.
+Technical explainers often feel sterile or visually disjointed when generated with standard automated animation templates. Vox Explainer Skill is a custom Claude Code agent skill inspired by documentary-style visual journalism, guiding AI coding agents to script, storyboard, and generate layered motion graphics. It teaches agents to apply editorial storytelling structures, tactile collage aesthetics, and synchronized kinetic charts.
 
-## Useful for
+## Key Capabilities
 
-- Scripting and storyboarding documentary-style educational videos
-- Generating motion graphic cues and visual directions for video tools
-- Avoiding typical generic AI animation aesthetics
+- Opinionated prompt playbooks encoding visual journalism techniques, paper-cut textures, and archival collage aesthetics
+- Integration with React-based video engines (Remotion) for programmatic frame rendering and timeline orchestration
+- Automated narrative structuring breaking complex technical topics into clear, digestible visual chapters
+- Seamless agent execution inside the Claude Code CLI for rapid scripting and asset coordination
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-025.
+Pairs with Claude Code CLI and Remotion within React/TypeScript setups for developer educators and technical communicators producing documentary-style video content.

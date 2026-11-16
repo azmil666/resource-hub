@@ -14,15 +14,17 @@ dateAdded: "2026-10-13"
 
 # Applied ML
 
-## Overview
+## Why Use It
 
-Applied ML is a github repository that provides eugene yan's curated github collection of real-world machine learning engineering papers, system designs, and production lessons
+Academic machine learning papers frequently ignore the messy realities of production systems: data drift, inference latency, distributed caching, and feature store synchronization. Applied ML (curated by Eugene Yan) is an authoritative open-source collection of production engineering papers, technical blog posts, and system architectures from tech giants (Netflix, Uber, Airbnb, Meta). It shifts the focus from theoretical model architectures to real-world MLOps and infrastructure reliability.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern learning workflows
-- Streamlining developer tooling and productivity
+- Exhaustive directory of production ML architectures organized by problem domain: recommendation engines, search rankings, LLM serving, and fraud detection
+- Real-world case studies detailing feature engineering at scale, offline-to-online metric divergence, and A/B testing
+- Battle-tested MLOps blueprints covering vector indexing, model monitoring, canary deployments, and low-latency feature stores
+- Continuous community curation ensuring relevant, high-signal engineering documentation from leading industry teams
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-199 (User item #201).
+The premier reading list for ML engineers, data platform architects, and backend developers designing scalable production machine learning pipelines.

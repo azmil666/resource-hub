@@ -14,15 +14,17 @@ dateAdded: "2026-09-13"
 
 # Boxicons
 
-## Overview
+## Why Use It
 
-Boxicons is a library that provides curated developer resource for icon library.
+Finding a comprehensive, visually cohesive icon system that supports regular, solid, and animated logo variants without bloated font packages is a common frontend challenge. Boxicons is an open-source icon library featuring over 1,600 vector icons designed on a precise 24px grid for consistent visual rhythm across web and mobile applications. It offers multiple integration paths, from pure SVG sprites to lightweight web components and web fonts.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- 1,600+ icons organized across Regular, Solid, and brand Logo categories on a standard 24px grid
+- Flexible distribution formats: standalone SVG files, web component customs (`<box-icon>`), and CSS web fonts
+- Built-in CSS animations providing smooth hover effects, spinning loaders, and pulse transitions out of the box
+- Minimal asset footprint with zero external dependencies, compatible with tree-shaking bundlers
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-057 (User item #55).
+Pairs with HTML5, React, Vue, and vanilla JavaScript applications requiring lightweight, dependable UI iconography.

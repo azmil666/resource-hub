@@ -14,16 +14,17 @@ dateAdded: "2026-10-26"
 
 # Weight Space Programming
 
-## Overview
+## Why Use It
 
-This video introduces weight space programming: treating neural network parameter weights as first-class objects to edit capabilities without gradient descent.
+Traditional deep learning treats neural network weights as a black-box parameter set optimized solely through gradient descent, making surgical post-training alterations difficult. This advanced technical explainer introduces weight space programming: treating neural network parameter weights as first-class coordinate representations that can be directly analyzed, transformed, and edited. It unpacks emerging paradigms in model merging, neural functional representation, and direct parameter arithmetic.
 
-## Useful for
+## Key Capabilities
 
-- Exploring modern neural network editing and weight-space manipulation
-- Understanding model merging, task arithmetic, and steering vectors
-- Researching advanced deep learning mechanistic interpretability
+- Conceptual breakdown of neural weight spaces as geometric manifolds rather than arbitrary matrix collections
+- Exploration of model merging techniques (such as task arithmetic and spherical linear interpolation / SLERP)
+- Analysis of neural functionals capable of operating directly on the weights of other neural networks
+- Practical implications for creating multi-task models and editing neural behaviors without fine-tuning compute costs
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-014.
+Essential viewing for machine learning researchers, model fine-tuners, and AI systems architects working with PyTorch and open-weights foundation models.

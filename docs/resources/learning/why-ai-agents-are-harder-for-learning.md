@@ -15,16 +15,17 @@ dateAdded: "2026-10-27"
 
 # Why AI Agents Are Harder for Learning
 
-## Overview
+## Why Use It
 
-An insightful analysis into why autonomous AI agents face compounding errors, state space explosions, and difficulty in sample-efficient reinforcement learning.
+While single-turn LLM reasoning has matured rapidly, multi-step autonomous AI agents frequently fail on prolonged tasks due to compounding error rates and context degradation. This systems engineering video explores why autonomous AI agents present unique mathematical and architectural challenges for reinforcement learning and state management. It deconstructs error drift, exploration in unbounded action spaces, and long-horizon reward attribution.
 
-## Useful for
+## Key Capabilities
 
-- Understanding agentic loop failures and error propagation
-- Comparing supervised fine-tuning with reinforcement learning for agents
-- Designing robust autonomous agent architectures
+- Mathematical analysis of compounding error drift across sequential autonomous tool-calling steps
+- Examination of state space explosion and memory management challenges in multi-turn agent execution loops
+- Exploration of reinforcement learning from human feedback (RLHF) limitations when applied to autonomous agent trajectories
+- Practical mitigation strategies: deterministic task planners, self-reflection validation loops, and structured sandboxing
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-012.
+Critical analysis for AI engineers, agent framework developers, and researchers building autonomous coding and reasoning harnesses (LangChain, CrewAI, AutoGen).

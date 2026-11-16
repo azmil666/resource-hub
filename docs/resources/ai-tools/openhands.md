@@ -15,16 +15,17 @@ dateAdded: "2026-08-22"
 
 # OpenHands
 
-## Overview
+## Why Use It
 
-OpenHands (formerly OpenDevin) is an open-source platform enabling autonomous AI software agents to modify code, run bash commands, and develop applications.
+Proprietary AI software engineers operate behind closed platforms, limiting enterprise customization, local verification, and private repository integration. OpenHands (formerly OpenDevin) is an open-source autonomous agent platform that writes code, executes bash commands, browses documentation, and resolves complex GitHub issues within secure sandboxed environments. It provides developers and enterprises with complete architectural transparency, customizable agent loops, and support for any LLM backend.
 
-## Useful for
+## Key Capabilities
 
-- Autonomous software development and bug fixing via AI agents
-- Automating tool creation for local businesses and developers
-- Benchmarking AI agent code generation workflows
+- Fully sandboxed execution engine running commands, tests, and file modifications inside isolated Docker containers
+- Multi-agent orchestration architecture supporting planners, bash executors, and web browser subagents
+- Automated GitHub integration capable of ingesting issues, creating feature branches, and authoring pull requests
+- Broad model compatibility supporting Anthropic Claude, OpenAI, Ollama, and any OpenAI-compatible API
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-003.
+Pairs with Docker, GitHub Actions, and enterprise CI/CD pipelines to automate repetitive bug fixing, dependency upgrades, and test scaffolding.

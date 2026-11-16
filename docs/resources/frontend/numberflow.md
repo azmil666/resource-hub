@@ -14,15 +14,17 @@ dateAdded: "2026-09-28"
 
 # NumberFlow
 
-## Overview
+## Why Use It
 
-NumberFlow is a library that provides a dependency-free, accessible react component for smoothly animating and transitioning numbers, prices, and counters
+Animating dynamic numbers (like shopping cart totals, financial metrics, and live stat counters) usually requires complex odometer libraries that lack layout animation, cause layout shift, or break screen readers. NumberFlow is a lightweight, zero-dependency React component that smoothly transitions numeric changes with continuous digit sliding animations. It handles decimal formatting, currency symbols, and sign changes while maintaining full accessibility and layout stability.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Smooth, continuous digit sliding animations calculated via localized FLIP layout transitions
+- Zero external dependencies with minimal bundle footprint and full support for server-side rendering (SSR)
+- Native internationalization support respecting Intl.NumberFormat for currency, percentages, and locales
+- Full screen reader accessibility announcing value updates via appropriate ARIA live attributes
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-085 (User item #87).
+The go-to numeric transition component for React, Next.js, and Tailwind CSS applications building financial dashboards, SaaS pricing tables, and checkout carts.

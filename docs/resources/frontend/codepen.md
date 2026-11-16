@@ -16,15 +16,17 @@ featured: true
 
 # CodePen
 
-## Overview
+## Why Use It
 
-CodePen is a website that provides an online social development environment and front-end sandbox for testing, showcasing, and sharing html, css, and js snippets
+Prototyping isolated frontend animations, layout experiments, or UI components within a full local development repository introduces unnecessary build tooling and environment friction. CodePen provides an instant, browser-based social development sandbox for writing HTML, CSS, and JavaScript with real-time live preview. It serves as both a rapid testing playground for frontend engineers and an open community gallery for discovering cutting-edge web design techniques.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Multi-panel in-browser editor with instant live preview and preprocessor support (Sass, Less, PostCSS, Babel, TypeScript)
+- Zero-configuration external resource importing allowing rapid inclusion of libraries like GSAP, Three.js, and Tailwind CSS
+- Collaborative pairing features including Professor Mode and Live View for real-time team debugging
+- Shareable pen embeds with custom themes for embedding interactive code demos in documentation and blog posts
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-215 (User item #217).
+An essential sandbox for frontend developers, UI engineers, and educators testing CSS tricks, sharing reproducible bug reproductions, and building creative web demos.

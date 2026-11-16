@@ -17,16 +17,17 @@ dateAdded: "2026-09-27"
 
 # Model Viewer
 
-## Overview
+## Why Use It
 
-`\<model-viewer\>` is an open-source web component created by Google that enables anyone to embed interactive 3D GLTF/GLB models and mobile AR directly into HTML with a single tag.
+Embedding interactive 3D models and mobile augmented reality (AR) typically requires heavy WebGL boilerplate, custom shader compilation, and divergent platform code for iOS Quick Look and Android Scene Viewer. Google's `<model-viewer>` is an open-source, production-grade Web Component that renders interactive 3D GLTF/GLB models directly in HTML with a single declarative tag. It handles responsive canvas resizing, physically based rendering (PBR), and native mobile AR handoffs automatically.
 
-## Useful for
+## Key Capabilities
 
-- Embedding 3D interactive product models on e-commerce and portfolio sites
-- Triggering native augmented reality (AR) on iOS (Quick Look) and Android (Scene Viewer)
-- Customizing lighting, environment maps, camera angles, and animations via simple HTML attributes
+- Declarative HTML custom element (`<model-viewer src="model.glb">`) requiring zero custom JavaScript for 3D rendering
+- One-click native AR activation on iOS (ARKit Quick Look) and Android (ARCore Scene Viewer / WebXR)
+- Physically Based Rendering (PBR) with customizable HDR lighting environment maps, exposure, and shadow softness
+- Configurable camera controls, auto-rotation, hotspots, and skeletal animation playback via standard HTML attributes
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-023.
+The standard 3D web component for e-commerce product visualizers, portfolio showcases, and interactive educational sites across any web stack.

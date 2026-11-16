@@ -14,15 +14,17 @@ dateAdded: "2026-09-18"
 
 # Shapes Gallery
 
-## Overview
+## Why Use It
 
-Shapes Gallery is a library that provides a growing library of free, clean, copy-paste svg vector shapes built for immediate use in web and design projects
+Modern web design trends frequently feature geometric badges, abstract background shapes, and 3D accent glyphs that are time-consuming to model from scratch. Shapes Gallery is a curated repository of free 2D and 3D geometric primitives, abstract graphic elements, and chromatic gradients ready for immediate web use. It provides developers and designers with modular visual building blocks to elevate hero banners and feature sections.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Diverse collection of 2D vector shapes and pre-rendered 3D geometric primitives
+- Clean SVG and transparent high-resolution PNG exports ready for drag-and-drop web integration
+- Compatible with modern web builders and design tools including Figma, Framer, and custom codebases
+- Free for personal and commercial digital projects with zero licensing attribution requirements
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-089 (User item #91).
+Pairs with Framer, Webflow, React, and Tailwind CSS for designing modern landing pages, hero banners, and feature callouts.

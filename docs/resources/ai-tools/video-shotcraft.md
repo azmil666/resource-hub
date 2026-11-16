@@ -17,16 +17,17 @@ dateAdded: "2026-08-28"
 
 # Video Shotcraft
 
-## Overview
+## Why Use It
 
-Video Shotcraft empowers coding agents to plan cinematic camera angles, focal lengths, camera trajectories, and lighting schemes for 3D and AI video workflows.
+AI video generation models often produce erratic camera movements, inconsistent focal lengths, and disjointed scene pacing when prompted with unstructured text. Video Shotcraft is an agent skill for Claude Code that equips coding agents with cinematic camera direction principles, shot vocabulary, and storyboard planning schemas. It translates narrative concepts into mathematically precise camera coordinates, framing instructions, and prompt sequences for video models.
 
-## Useful for
+## Key Capabilities
 
-- Planning cinematic camera cuts and angles for 3D and video tools
-- Drafting shot lists and framing instructions for motion designers
-- Composing realistic camera motion in virtual 3D scenes
+- Structured prompt frameworks enforcing cinematic camera terminology (dolly, pan, tilt, focal length, depth of field)
+- Multi-scene storyboard composition schemas ensuring temporal and visual continuity across video clips
+- Integration with Claude Code allowing natural-language review and programmatic generation of shot lists
+- Parameterized prompt templates compatible with modern generative video engines (Runway, Sora, Kling, Luma)
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-032.
+Integrates with Claude Code CLI and generative video production pipelines for technical directors, creative technologists, and video developers.

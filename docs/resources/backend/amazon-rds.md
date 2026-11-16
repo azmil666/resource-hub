@@ -14,15 +14,17 @@ dateAdded: "2026-08-31"
 
 # Amazon RDS
 
-## Overview
+## Why Use It
 
-Amazon RDS is a website that provides aws's managed relational database service supporting postgresql, mysql, and mariadb with a 12-month free tier
+Self-hosting relational databases in production requires ongoing overhead for OS patching, storage provisioning, multi-AZ replication, and automated disaster recovery. Amazon Relational Database Service (RDS) provides a fully managed database infrastructure supporting leading relational engines (PostgreSQL, MySQL, MariaDB, Oracle, SQL Server). It abstracts low-level administrative operations while offering enterprise-grade durability, automated backups, and read replica scaling.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Managed deployments for multiple popular relational engines with automatic version upgrades and patch management
+- Multi-AZ synchronous replication providing automated failover and high availability for mission-critical workloads
+- Automated point-in-time recovery and snapshot management with granular retention windows
+- Native integration with AWS IAM database authentication, AWS KMS encryption at rest, and VPC network isolation
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-242 (User item #244).
+The standard relational data tier for AWS-hosted backend architectures built with Node.js, Python, Java, Go, or Ruby, managed via Terraform, AWS CDK, or CloudFormation.

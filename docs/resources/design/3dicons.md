@@ -16,15 +16,17 @@ featured: true
 
 # 3Dicons
 
-## Overview
+## Why Use It
 
-3Dicons is a library that provides an open-source library of over 1,400 beautifully rendered 3d icons available in multiple angles and color styles for free
+Creating custom 3D iconography requires advanced 3D modeling skills in Blender or Cinema 4D and hours of render time, making it impractical for rapid web design. 3Dicons is an open-source library of over 1,400 pre-rendered, high-resolution 3D icons crafted by Vijay Verma, released under CC0 for unrestricted commercial use. It equips developers and designers with visually rich 3D assets rendered from multiple perspective angles and distinct color finishes.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Over 1,400 rendered 3D icons covering tech, business, multimedia, navigation, and developer tooling concepts
+- Multiple rendering styles including clay, gradient, color, and premium metallic finishes
+- Rendered across 4 camera perspectives (front, angle-left, angle-right, top) for dynamic UI placement
+- Multi-format asset downloads including high-resolution PNGs, full Figma component libraries, and editable Blender source files
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-220 (User item #222).
+Perfect for marketing landing pages, SaaS onboarding flows, hero sections, and mobile application banners built with modern web frameworks.

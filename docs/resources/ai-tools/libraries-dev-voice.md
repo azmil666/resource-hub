@@ -15,15 +15,17 @@ dateAdded: "2026-08-17"
 
 # Libraries.dev Voice
 
-## Overview
+## Why Use It
 
-Libraries.dev Voice is a library that provides an audio-reactive react component (voice-glow) that generates glowing visualizers for voice input, dictation, and voice ai agents
+Building responsive audio-reactive visualizers for voice AI assistants typically involves wrestling with the Web Audio API, frequency analysis math, and canvas rendering loops. Libraries.dev Voice provides voice-glow, an out-of-the-box audio-reactive React component that transforms live audio streams into aesthetic glowing orb and wave animations. It provides real-time visual feedback for dictation, speech recognition, and conversational voice agents with minimal configuration.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Real-time audio stream frequency analysis powered by the native Web Audio API
+- Hardware-accelerated CSS and canvas rendering producing smooth ambient glow effects
+- Configurable sensitivity, color gradients, glow radius, and responsiveness thresholds
+- Lightweight component architecture with zero heavy third-party audio processing dependencies
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-084 (User item #86).
+Pairs with WebRTC, Web Audio, and voice agent frameworks (OpenAI Realtime API, LiveKit, ElevenLabs) in React and Next.js applications.
