@@ -13,15 +13,17 @@ dateAdded: "2026-10-07"
 
 # GitDiagram
 
-## Overview
+## Why Use It
 
-GitDiagram is a tool that provides an open-source tool that instantly converts any github repository into an interactive architectural diagram using ai
+Understanding the structural relationships, service boundaries, and folder hierarchies of unfamiliar codebases is difficult when relying solely on file directory trees. GitDiagram is an open-source tool that inspects any GitHub repository and automatically generates an interactive, high-level architectural diagram using AI. It translates complex directory structures into visual system topologies, enabling developers to grasp codebase structure at a glance.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern github workflows
-- Streamlining developer tooling and productivity
+- Instant URL-driven diagram generation converting GitHub repositories into interactive architectural maps
+- Visual system decomposition showing module hierarchies, package boundaries, and data flow relationships
+- Interactive diagram navigation allowing users to click through nodes to inspect underlying folder contents
+- Open-source codebase allowing developers to self-host and customize diagram generation prompts
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-245 (User item #247).
+A valuable onboarding and architecture review tool for engineering teams, open-source maintainers, and technical writers documenting complex codebases.

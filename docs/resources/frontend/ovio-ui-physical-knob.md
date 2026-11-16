@@ -14,15 +14,17 @@ dateAdded: "2026-09-28"
 
 # Ovio UI Physical Knob
 
-## Overview
+## Why Use It
 
-Ovio UI Physical Knob is a documentation that provides a tactile, rotary dial react component with tick marks and value display supporting drag, flick, scroll, and keyboard controls
+Simulating hardware-grade rotary dials and tactile audio equipment knobs on the web often results in clunky, unresponsive cursor interactions with broken touch ergonomics. Ovio UI Physical Knob is an engineered rotary dial component for React that delivers tactile interaction fidelity through pointer dragging, momentum flicking, mousewheel scrolling, and accessible keyboard navigation. It provides realistic rotary input mechanics for digital audio workstations, synthesizer plugins, and hardware control interfaces.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Multi-modal interaction support: pointer drag, velocity-based flicking, mouse wheel scrolling, and keyboard arrow controls
+- Customizable radial tick marks, rotation boundaries, sensitivity coefficients, and value displays
+- Hardware-accelerated CSS transform rendering maintaining smooth 60 FPS rotation tracking
+- Built-in numeric clamping, step intervals, and accessible ARIA slider attributes
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-086 (User item #88).
+Perfect for Web Audio API applications, music production interfaces, hardware emulation dashboards, and creative coding projects in React and Next.js.

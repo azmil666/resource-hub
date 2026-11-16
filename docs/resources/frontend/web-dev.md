@@ -13,15 +13,17 @@ dateAdded: "2026-10-05"
 
 # web.dev
 
-## Overview
+## Why Use It
 
-web.dev is a website that provides google's official web development resource offering modern performance audits, best practices, and frontend engineering tips
+Keeping pace with shifting web standards, evolving browser capabilities, and search engine Core Web Vitals requirements is essential for building fast, accessible web applications. Google's web.dev is the authoritative developer portal providing in-depth technical guidance, performance audits, and modern architectural standards. It equips engineering teams with actionable techniques to optimize Core Web Vitals (LCP, INP, CLS) and adopt modern web platform capabilities.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Authoritative guidance on optimizing Core Web Vitals (Largest Contentful Paint, Interaction to Next Paint, Cumulative Layout Shift)
+- Deep architectural articles covering Progressive Web Apps (PWAs), modern storage APIs, and WebAssembly
+- In-browser Lighthouse auditing tools providing diagnostic performance scores and optimization recommendations
+- Practical case studies from engineering teams achieving measurable performance and business gains on the web
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-216 (User item #218).
+Indispensable reference and diagnostic resource for frontend architects, performance engineers, and web developers across all frameworks.

@@ -14,15 +14,17 @@ dateAdded: "2026-10-02"
 
 # Reveal.js
 
-## Overview
+## Why Use It
 
-Reveal.js is a library that provides an open-source html presentation framework for creating fully featured, interactive slide decks using web technologies
+Traditional presentation tools lock slides into proprietary binary formats, preventing version control, code syntax highlighting, and responsive web embedding. Reveal.js is an open-source HTML presentation framework that enables developers to author beautiful slide decks using standard HTML, CSS, and Markdown. It brings version control, custom CSS theming, and programmatic slide interactions into executive and technical presentations.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Rich slide presentation features: 2D slide layouts (vertical nested slides), smooth slide transitions, and touch navigation
+- Built-in syntax highlighting (highlight.js) supporting live code editing and line-by-line step highlighting
+- Markdown slide authoring allowing presentations to be authored entirely in clean .md documents
+- Speaker notes view with timer, slide previews, and headless PDF export capabilities via browser print stylesheets
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-095 (User item #97).
+The standard presentation framework for software engineers, conference speakers, and technical educators authoring slide decks with HTML, Markdown, and Git.

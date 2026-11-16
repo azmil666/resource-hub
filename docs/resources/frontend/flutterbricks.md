@@ -13,15 +13,17 @@ dateAdded: "2026-09-25"
 
 # FlutterBricks
 
-## Overview
+## Why Use It
 
-FlutterBricks is a website that provides a collection of pre-built, copy-paste flutter ui widgets, screens, and illustrations available via web and a vs code extension
+Mobile developers often waste hours rebuilding standard mobile screens like profile settings, login walls, and pricing tables. FlutterBricks provides a modular UI component library and companion VS Code extension that enables developers to insert fully designed Flutter widgets and screens directly into their editor. It eliminates repetitive UI scaffolding, allowing teams to focus on core domain logic.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Expansive collection of pre-designed Flutter widgets: animated buttons, search bars, modals, and complete application screens
+- Dedicated VS Code extension for searching and inserting Flutter widget code directly into active Dart files
+- Fully customizable Dart styling parameters with clean, readable code structure
+- Out-of-the-box light and dark mode theming support with responsive layout constraints
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-142 (User item #144).
+Indispensable for Flutter developers using VS Code or Android Studio looking to accelerate prototype velocity and UI construction.

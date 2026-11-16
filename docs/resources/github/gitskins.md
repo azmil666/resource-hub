@@ -16,16 +16,17 @@ dateAdded: "2026-10-08"
 
 # GitSkins
 
-## Overview
+## Why Use It
 
-GitSkins is a visual web designer for building modern GitHub profile READMEs, metric counters, tech stack badges, and contribution banners.
+Crafting an engaging, professional GitHub profile README that highlights projects, skills, and contribution activity often requires tedious markdown table formatting and custom SVG badge hacking. GitSkins is a visual web design studio and generator that streamlines authoring dynamic GitHub profile READMEs with themed badges, stat counters, and tech stack cards. It generates clean, optimized Markdown and HTML snippets ready for immediate profile embedding.
 
-## Useful for
+## Key Capabilities
 
-- Creating standout personal GitHub profile pages
-- Designing custom repository headers, badges, and banners
-- Generating copy-paste Markdown for developer portfolios
+- Visual drag-and-drop builder for designing cohesive GitHub profile README sections
+- Dynamic widgets: live GitHub contribution stats, streak counters, top languages, and social links
+- Extensive collection of pre-styled themes, color palettes, and modern developer icon badges
+- One-click copy for clean Markdown and SVG embed snippets compatible with GitHub's rendering engine
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-051.
+Ideal for software engineers, developer advocates, and job seekers creating polished personal branding on their GitHub profiles.

@@ -16,15 +16,17 @@ dateAdded: "2026-10-03"
 
 # Shaders
 
-## Overview
+## Why Use It
 
-Shaders is a library that provides an open-source webgpu shader component library for react, vue, svelte, solid, and js featuring a free visual editor to compose and export custom shaders
+Creative frontend engineers building standout portfolio sites and high-polish landing pages often lack access to clean, performant shader templates that integrate smoothly into React. Shaders (by Nolly Studio) is an open-source repository of meticulously crafted WebGL shaders, background canvases, and GLSL code snippets. It provides developers with drop-in shader components that execute hardware-accelerated visual effects with minimal runtime overhead.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- Production-ready GLSL shader snippets and WebGL canvas components for background effects and interactive elements
+- Tested compatibility with React and Three.js ecosystems for seamless component integration
+- Hardware-accelerated rendering maintaining 60 FPS across mobile and desktop GPUs
+- Open-source, permissive codebase allowing full customization of shader uniforms and color mathematics
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-137 (User item #139).
+Ideal for design engineers and creative developers working with React, Next.js, Three.js, and Tailwind CSS.

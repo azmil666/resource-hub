@@ -16,15 +16,17 @@ dateAdded: "2026-09-27"
 
 # Microsoft Web Dev for Beginners
 
-## Overview
+## Why Use It
 
-Microsoft Web Dev for Beginners is a github repository that provides microsoft's 12-week, 24-lesson open-source curriculum teaching html, css, and javascript through project-based learning
+Novice programmers learning web development are often inundated with modern meta-frameworks before mastering foundational browser runtimes, DOM manipulation, and asynchronous programming. Microsoft's Web Dev for Beginners is a 12-week, 24-lesson comprehensive open-source curriculum that teaches core web development fundamentals through hands-on project construction. It emphasizes vanilla HTML, CSS, and JavaScript, building solid technical foundations without framework distraction.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern frontend workflows
-- Streamlining developer tooling and productivity
+- 24 comprehensive structured lessons complete with pre- and post-lesson quizzes, rubrics, and project challenges
+- Project-based pedagogy teaching DOM interaction, browser APIs, asynchronous fetch operations, and game loops
+- Visual sketch notes, architecture diagrams, and clear step-by-step code walkthroughs
+- Accessible, community-translated open-source repository with zero vendor tooling lock-in
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-204 (User item #206).
+A premier curriculum for coding bootcamps, university computer science students, and junior engineers building mastery over vanilla web technologies.

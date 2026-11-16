@@ -15,16 +15,17 @@ dateAdded: "2026-09-27"
 
 # Needle Engine
 
-## Overview
+## Why Use It
 
-Needle Engine is a fast, lightweight 3D web runtime and toolchain that seamlessly exports scenes, animations, and C# logic from Unity and Blender into pure HTML/TypeScript web apps.
+Exporting interactive 3D scenes and games from professional authoring suites like Unity or Blender to the web traditionally meant dealing with bloated WebAssembly runtimes or rewriting logic in Three.js. Needle Engine provides a fast, modular 3D web runtime and compilation pipeline that exports scenes, animations, materials, and physics directly from Unity and Blender into lightweight WebGL and WebXR applications. It preserves visual fidelity while producing minimal JavaScript bundles with instant load times.
 
-## Useful for
+## Key Capabilities
 
-- Exporting Unity or Blender 3D projects directly to the web with zero plugins
-- Creating cross-platform WebXR and VR experiences in the browser
-- Interactive 3D landing pages with fast load times and clean TypeScript code
+- Direct export toolchain for Unity and Blender converting scene hierarchies, PBR materials, and animations to glTF/GLB
+- Ultra-fast, lightweight web runtime built on top of Three.js and WebGL/WebGPU with tiny download footprints
+- Built-in multi-user networking and WebXR support for cross-platform VR/AR headsets and web browsers
+- Full TypeScript and JavaScript component architecture for scripting game mechanics and interactive logic
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-021.
+Pairs with Unity, Blender, Vite, and Three.js for interactive 3D product configurators, virtual showrooms, and browser games.
