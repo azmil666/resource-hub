@@ -9,12 +9,14 @@ import CategoryOverview from './components/CategoryOverview.vue';
 import CategoryPage from './components/CategoryPage.vue';
 import ResourceCard from './components/ResourceCard.vue';
 import ResourceMeta from './components/ResourceMeta.vue';
+import ResourceRelated from './components/ResourceRelated.vue';
 
 export default {
   extends: DefaultTheme,
   Layout() {
     return h(DefaultTheme.Layout, null, {
-      'doc-before': () => h(ResourceMeta)
+      'doc-before': () => h(ResourceMeta),
+      'doc-after': () => h(ResourceRelated)
     });
   },
   enhanceApp({ app }) {
@@ -24,6 +26,7 @@ export default {
     app.component('CategoryPage', CategoryPage);
     app.component('ResourceCard', ResourceCard);
     app.component('ResourceMeta', ResourceMeta);
+    app.component('ResourceRelated', ResourceRelated);
 
     // Global ergonomic shortcut: Pressing `/` opens search or focuses filter input
     if (typeof window !== 'undefined') {

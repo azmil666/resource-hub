@@ -14,15 +14,17 @@ dateAdded: "2026-08-01"
 
 # Agentic Skills
 
-## Overview
+## Why Use It
 
-Agentic Skills is a library that provides curated directory and ecosystem of specialized skills and tool definitions for ai agents.
+As AI coding assistants and autonomous agents proliferate, engineers often reinvent common tools, workflows, and protocol handlers from scratch. Agentic Skills functions as an open ecosystem and curated directory of pre-packaged, standardized agent skills compatible with Anthropic's Model Context Protocol (MCP) and custom agent harnesses. It significantly accelerates agent development by providing modular, battle-tested tool specifications.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Curated directory of interoperable skill packages categorized by engineering domain
+- Standardized JSON/YAML capability schemas compatible with modern LLM function calling
+- One-line installation commands and integration guides for leading agent CLI frameworks
+- Community benchmarking and security evaluations for third-party execution tools
 
-## Notes
+## Stack Fit
 
-Source entry: SRC-061 (User item #59).
+Ideal for developers and engineering teams configuring custom agent harnesses, Claude Desktop sidecars, or CLI agents who need ready-to-use domain tools.

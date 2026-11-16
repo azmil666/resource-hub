@@ -15,16 +15,17 @@ dateAdded: "2026-08-06"
 
 # Choppity
 
-## Overview
+## Why Use It
 
-Choppity is a web-based AI video editor that automatically identifies key moments in podcasts, adds dynamic subtitles, and animates framing for vertical screens.
+Repurposing long-form technical talks, podcasts, and screencasts into short clips for social discovery is tedious and labor-intensive. Choppity uses AI speech recognition and facial tracking to automatically identify the most compelling moments in video footage, add animated subtitles, and reframe videos for vertical formats. It automates content distribution for developer advocates and creators.
 
-## Useful for
+## Key Capabilities
 
-- Automated podcast video editing and short extraction
-- Adding dynamic animated captions to video clips
-- Re-framing horizontal interview videos for TikTok, Reels, and Shorts
+- Automated highlight detection that analyzes speech cadence and visual cues to locate viral clips
+- Dynamic auto-reframe with intelligent speaker tracking for 9:16 vertical video platforms
+- Word-level animated subtitle generation with customizable fonts, colors, and positioning
+- Multi-track timeline editor allowing quick manual fine-tuning and asset overlays
 
-## Notes
+## Stack Fit
 
-Cataloged from source ID: SRC-005.
+Perfect for developer advocates, conference speakers, and tech educators repurposing technical recordings into high-impact social clips.

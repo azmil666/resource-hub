@@ -16,17 +16,19 @@ status: "published"
 dateAdded: "2026-08-07"
 ---
 
-# Claude Code skill for vid to not look like ai
+# Claude Code Skill for Hand-Drawn Technical Videos
 
-## Overview
+## Why Use It
 
-Claude Code skill for vid to not look like ai is a github repository that provides curated developer resource for claude code skill for vid to not look like ai.
+AI-generated videos often suffer from telltale artifacts: stiff character motion, synthetic camera pans, and sterile visual pacing that alienates technical audiences. This specialized Claude Code skill injects hand-drawn animation principles, realistic timing jitter, and authentic visual imperfections into programmatic video scripts. It ensures developer explainer videos look hand-crafted and authentic.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Codified rules for hand-drawn aesthetic styling, textured strokes, and organic framerate drops
+- Presets for human-like whiteboard sketching, handwritten annotations, and tactile paper textures
+- Direct compatibility with Remotion, canvas, and programmatic SVG animation pipelines
+- Prompt instructions tailored for AI agents to prevent generic corporate explainer tropes
 
-## Notes
+## Stack Fit
 
-Source entry: SRC-029 (User item #27).
+Use when collaborating with Claude Code or terminal agents to produce authentic technical explainer animations, whiteboard breakdowns, and product tutorials.

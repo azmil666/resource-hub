@@ -17,16 +17,17 @@ dateAdded: "2026-08-10"
 
 # Elephant Goldfish Model
 
-## Overview
+## Why Use It
 
-An experimental Google research toolkit that uses dual-agent architectures (short-term memory and long-term memory) to review complex codebases and software designs.
+Balancing long-term strategic architectural goals ("elephant memory") with rapid, tactical execution loops ("goldfish agility") is a chronic challenge in complex software teams. Google's open-source Elephant Goldfish Model establishes a mental model and concrete rubric for managing cognitive context, architectural decision records, and agent task decomposition. It helps engineering leads design resilient, scalable software systems.
 
-## Useful for
+## Key Capabilities
 
-- Experimenting with multi-agent architecture reviews
-- Applying cognitive memory models to automated code auditing
-- Researching AI-driven system design analysis
+- Structured framework for separating persistent architectural boundaries from transient sprint tasks
+- Operational rubrics for agent memory management and context-window optimization
+- Architectural review patterns designed to prevent premature technical debt and system bloat
+- Open-source guidance and real-world case studies distilled from large-scale Google engineering initiatives
 
-## Notes
+## Stack Fit
 
-Cataloged from source ID: SRC-049.
+Valuable for software architects, engineering managers, and senior developers structuring complex software projects or designing agent memory systems.

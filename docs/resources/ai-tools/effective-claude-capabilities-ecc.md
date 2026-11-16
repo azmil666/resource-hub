@@ -17,16 +17,17 @@ dateAdded: "2026-08-10"
 
 # Effective Claude Capabilities (ECC)
 
-## Overview
+## Why Use It
 
-ECC is a curated repository of battle-tested skills, instructions, and prompt setups designed to maximize the autonomy and code quality of Claude Code.
+Standard system prompts for Claude Code and LLM agents often lead to verbose responses, unnecessary explanations, or suboptimal code edits. Effective Claude Capabilities (ECC) is a curated repository of battle-tested agent instructions, custom skills, and behavioral rules optimized for high-leverage engineering workflows. It transforms default agent behavior into sharp, senior-level engineering output.
 
-## Useful for
+## Key Capabilities
 
-- Supercharging Claude Code with structured engineering skills
-- Improving autonomous code generation and bug resolution
-- Setting up reproducible developer skills across engineering teams
+- Optimized agent prompt configurations that eliminate conversational filler and enforce clean diffs
+- Specialized domain skills covering architecture review, security auditing, and test generation
+- Standardized rule files compatible with Claude Desktop, Claude Code, and custom agent sidecars
+- Benchmark-tested configurations that conserve token context while improving code accuracy
 
-## Notes
+## Stack Fit
 
-Cataloged from source ID: SRC-038.
+Essential configuration repository for developers and DevOps teams fine-tuning Claude Code and agentic workflows for enterprise use.

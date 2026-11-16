@@ -15,15 +15,17 @@ dateAdded: "2026-08-03"
 
 # Arc UI
 
-## Overview
+## Why Use It
 
-Arc UI is a library that provides a registry of animated react components and complete interface blocks built for shadcn/ui and next.js, installable via cli or mcp
+Building distinctive, production-grade animated user interfaces requires deep knowledge of CSS orchestration, Framer Motion, and accessible component primitives. Arc UI provides a curated registry of copy-paste animated React components and complete layout blocks inspired by modern SaaS benchmarks. It bridges the gap between static component libraries and dynamic, fluid web interfaces.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Copy-paste React and Tailwind CSS components with zero lock-in
+- Fluid physics-based animations built with Framer Motion and modern CSS transitions
+- Accessible interactive primitives with keyboard navigation and ARIA attributes built-in
+- Comprehensive dark mode support designed with deep black surfaces and subtle border lighting
 
-## Notes
+## Stack Fit
 
-Source entry: SRC-080 (User item #82).
+Ideal for Next.js, Vite, and React engineers crafting high-converting landing pages, interactive product dashboards, and modern developer documentation.

@@ -15,15 +15,17 @@ featured: true
 
 # Cursor
 
-## Overview
+## Why Use It
 
-Cursor is a tool that provides an ai-native code editor built on vs code featuring deep codebase indexing, multi-file edits, and autonomous coding agents
+Legacy code editors were retrofitted with AI chat sidebars that lack semantic context over your entire project, leading to hallucinated imports and shallow code suggestions. Cursor is an AI-native fork of VS Code engineered from the ground up for deep codebase indexing, multi-file edits (Composer), and predictive tab-completions. It fundamentally elevates developer productivity by understanding project-wide context.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Full codebase vector indexing for instant, context-aware answers and semantic symbol search
+- Composer mode for orchestrating multi-file code generation, refactoring, and automated fixes
+- Supercharged Copilot tab-completion that predicts multi-line edits and cursor movements
+- Full compatibility with all existing VS Code extensions, themes, and keybindings
 
-## Notes
+## Stack Fit
 
-Source entry: SRC-224 (User item #226).
+The definitive AI-first IDE for modern software engineers working on complex, multi-file codebases in TypeScript, Python, Rust, and Go.

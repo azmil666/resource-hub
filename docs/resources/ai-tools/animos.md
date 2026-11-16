@@ -13,15 +13,17 @@ dateAdded: "2026-08-02"
 
 # Animos
 
-## Overview
+## Why Use It
 
-Animos is a tool that provides a browser-based motion template tool that lets designers turn static ui mockups and visuals into seamless looping showcase videos in seconds
+Creating polished, professional motion graphics and UI micro-interaction demos typically requires complex software suites like After Effects with steep learning curves. Animos streamlines this by offering a browser-first motion template engine that converts UI screenshots, code snippets, and product screens into high-framerate animations. It enables frontend engineers and product teams to author visual assets in minutes.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Browser-native canvas and WebGL rendering engine with instant real-time playback
+- Pre-built motion presets for device mockups, code syntax highlighting, and UI interactions
+- High-resolution video and transparent WebM/GIF export optimized for documentation and landing pages
+- Timeline-based keyframing with physics-based spring transitions and easing curves
 
-## Notes
+## Stack Fit
 
-Source entry: SRC-078 (User item #80).
+Perfect for developer advocates, product designers, and frontend authors creating visual demos, changelog animations, and social share graphics.

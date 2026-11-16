@@ -13,15 +13,17 @@ dateAdded: "2026-08-05"
 
 # Brandmark
 
-## Overview
+## Why Use It
 
-Brandmark is a tool that provides a generative ai logo design tool that builds unique logos, color palettes, business cards, and social media graphics in minutes
+Early-stage open-source projects and developer tools often launch with generic or missing visual branding because hiring a design agency is cost-prohibitive. Brandmark uses generative design algorithms to construct bespoke vector logos, balanced color palettes, typography pairings, and brand asset packages. It equips developer products with credible, polished visual identities immediately.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Generative vector logo composition with infinite customizable variations
+- Automated generation of brand guidelines, typography scales, and cohesive hex color palettes
+- Production-ready SVG, PNG, and favicon exports formatted for app icons and web headers
+- Full stationery, social banner, and asset mockups generated in real time
 
-## Notes
+## Stack Fit
 
-Source entry: SRC-160 (User item #162).
+Great for solo developers, open-source maintainers, and indie hackers seeking a cohesive visual brand and vector assets for new software repositories.
