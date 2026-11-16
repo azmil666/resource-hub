@@ -211,56 +211,233 @@ p, li {
 }
 
 /* ==========================================================================
-   Vercel / Linear Local Search Modal Styling
+   Vercel / Linear Local Search Command Palette Modal Overrides
    ========================================================================== */
 
-.VPLocalSearchBox .modal,
+.VPLocalSearchBox {
+  --vp-local-search-bg: #0A0A0A;
+  --vp-local-search-result-bg: transparent;
+  --vp-local-search-result-border: transparent;
+  --vp-local-search-result-selected-bg: #161616;
+  --vp-local-search-result-selected-border: #282828;
+  --vp-local-search-highlight-bg: rgba(7, 255, 225, 0.18);
+  --vp-local-search-highlight-text: #07FFE1;
+}
+
+.VPLocalSearchBox .backdrop {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.VPLocalSearchBox .shell,
 .DocSearch-Modal {
-  background-color: var(--vp-c-bg-elv) !important;
-  border: 1px solid var(--vp-c-border-hover) !important;
+  background-color: #0A0A0A !important;
+  border: 1px solid #282828 !important;
   border-radius: 12px !important;
-  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.85) !important;
+  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  padding: 16px !important;
+  max-width: 680px !important;
 }
 
 .VPLocalSearchBox .search-bar {
-  border-bottom: 1px solid var(--vp-c-border) !important;
+  background-color: #121212 !important;
+  border: 1px solid #282828 !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  transition: border-color var(--hub-transition), box-shadow var(--hub-transition) !important;
+}
+
+.VPLocalSearchBox .search-bar:focus-within {
+  border-color: rgba(7, 255, 225, 0.5) !important;
+  box-shadow: 0 0 0 1px rgba(7, 255, 225, 0.3) !important;
 }
 
 .VPLocalSearchBox .search-input {
   font-family: var(--vp-font-family-base) !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
+  color: #EDEDED !important;
+}
+
+.VPLocalSearchBox .search-input::placeholder {
+  color: #666666 !important;
+}
+
+.VPLocalSearchBox .results {
+  gap: 4px !important;
+  padding: 6px 0 !important;
+}
+
+.VPLocalSearchBox .result {
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  background-color: transparent !important;
+  transition: background-color 140ms ease, border-color 140ms ease !important;
+}
+
+.VPLocalSearchBox .result:hover,
+.VPLocalSearchBox .result.selected {
+  background-color: #161616 !important;
+  border-color: #282828 !important;
+}
+
+.VPLocalSearchBox .title.main {
+  color: #EDEDED !important;
+  font-weight: 600 !important;
+  font-size: 0.92rem !important;
+  letter-spacing: -0.015em !important;
+}
+
+.VPLocalSearchBox .title-icon {
+  color: #07FFE1 !important;
+  opacity: 0.9 !important;
+}
+
+.VPLocalSearchBox .titles mark,
+.VPLocalSearchBox .excerpt mark {
+  background-color: rgba(7, 255, 225, 0.18) !important;
+  color: #07FFE1 !important;
+  border-radius: 3px !important;
+  padding: 1px 4px !important;
+  font-weight: 600 !important;
+}
+
+.VPLocalSearchBox .excerpt {
+  color: #888888 !important;
+  font-size: 0.8rem !important;
+}
+
+.VPLocalSearchBox .search-keyboard-shortcuts {
+  border-top: 1px solid #1F1F1F !important;
+  padding-top: 12px !important;
+  margin-top: 8px !important;
+  color: #666666 !important;
+  font-size: 0.75rem !important;
+}
+
+.VPLocalSearchBox .search-keyboard-shortcuts kbd {
+  background: #141414 !important;
+  border: 1px solid #282828 !important;
+  color: #999999 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  font-family: var(--vp-font-family-mono) !important;
+  font-size: 0.7rem !important;
+  padding: 2px 5px !important;
 }
 
 /* ==========================================================================
-   Documentation Measure & Clean Typography
+   Documentation Measure, SaaS Markdown Typography & Spacing
    ========================================================================== */
 
 .vp-doc {
-  max-width: 76ch;
+  max-width: 80ch;
+  line-height: 1.7;
+}
+
+/* Hide redundant markdown h1 on resource pages since saas-header renders the primary title */
+.saas-header ~ .main .vp-doc > div > h1:first-child,
+.content-container:has(.saas-header) .vp-doc > div > h1:first-child {
+  display: none !important;
+}
+
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.7;
+  font-size: 0.98rem;
+  color: var(--vp-c-text-2);
+  margin-bottom: 1rem;
+}
+
+.vp-doc strong {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
 }
 
 .vp-doc h1 {
-  font-size: 2.15rem;
+  font-size: 2.35rem;
   font-weight: 700;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
   margin-bottom: 1.25rem;
+  color: var(--vp-c-text-1);
 }
 
 .vp-doc h2 {
   font-size: 1.35rem;
   font-weight: 600;
   letter-spacing: -0.025em;
-  margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
+  margin-top: 2.75rem;
+  margin-bottom: 0.85rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--vp-c-border);
+  color: var(--vp-c-text-1);
 }
 
+.vp-doc h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--vp-c-text-1);
+}
+
+/* Premium SaaS Links with Subtle Underline Offset */
+.vp-doc a:not([class]) {
+  color: var(--vp-c-text-1);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: #444444;
+  transition: text-decoration-color var(--hub-transition), color var(--hub-transition);
+}
+
+.vp-doc a:not([class]):hover {
+  text-decoration-color: var(--vp-c-text-1);
+  color: #FFFFFF;
+}
+
+/* Intentional SaaS Callout Blockquotes */
+.vp-doc blockquote {
+  border-left: 3px solid var(--vp-c-brand-1);
+  background-color: var(--vp-c-bg-elv);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.35rem;
+  margin: 1.75rem 0;
+  color: var(--vp-c-text-2);
+  font-style: normal;
+  border-top: 1px solid var(--vp-c-border);
+  border-right: 1px solid var(--vp-c-border);
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.vp-doc blockquote p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* Lists */
+.vp-doc ul,
+.vp-doc ol {
+  padding-left: 1.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.vp-doc li {
+  margin-bottom: 0.35rem;
+}
+
+.vp-doc li::marker {
+  color: var(--vp-c-text-3);
+}
+
+/* Tables */
 .vp-doc table {
   border-collapse: collapse;
-  margin: 1.5rem 0;
+  margin: 1.75rem 0;
   width: 100%;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--vp-c-border);
 }
@@ -268,7 +445,7 @@ p, li {
 .vp-doc th,
 .vp-doc td {
   border: 1px solid var(--vp-c-border);
-  padding: 0.65rem 0.95rem;
+  padding: 0.75rem 1rem;
   font-size: 0.88rem;
 }
 
@@ -278,9 +455,10 @@ p, li {
   color: var(--vp-c-text-1);
 }
 
+/* Inline Code & Pre */
 .vp-doc :not(pre) > code {
   font-size: 0.85em;
-  padding: 0.15em 0.4em;
+  padding: 0.15em 0.45em;
   border-radius: 4px;
   background-color: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-border);

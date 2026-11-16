@@ -48,7 +48,7 @@ function openVitePressSearch() {
 
       <!-- Center Vercel / Linear Command Bar Search -->
       <div class="search-trigger-container">
-        <button class="search-trigger-box" @click="openVitePressSearch" aria-label="Open search dialog">
+        <button class="search-trigger-box" @click="openVitePressSearch" aria-label="Open command palette search">
           <svg class="search-lens" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/>
             <path d="m21 21-4.3-4.3"/>
@@ -56,10 +56,9 @@ function openVitePressSearch() {
           <span class="search-label">
             Search {{ totalCount > 0 ? `${totalCount} resources` : 'library' }} by title, stack, or tag...
           </span>
-          <div class="key-hints">
-            <kbd class="key-hint">⌘K</kbd>
-            <span class="hint-sep">or</span>
-            <kbd class="key-hint">/</kbd>
+          <div class="command-pill" aria-hidden="true">
+            <kbd class="kbd-mod">⌘</kbd>
+            <kbd class="kbd-char">K</kbd>
           </div>
         </button>
       </div>
@@ -255,7 +254,7 @@ function openVitePressSearch() {
 /* Center Command Bar Search */
 .search-trigger-container {
   width: 100%;
-  max-width: 580px;
+  max-width: 600px;
   margin-bottom: 2rem;
   z-index: 1;
 }
@@ -264,57 +263,68 @@ function openVitePressSearch() {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.85rem 1.15rem;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 10px;
-  color: var(--vp-c-text-2);
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  gap: 0.85rem;
+  padding: 0.85rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #333333;
+  border-radius: 12px;
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
   transition: border-color var(--hub-transition), box-shadow var(--hub-transition), transform var(--hub-transition);
 }
 
-.search-trigger-box:hover {
-  border-color: var(--vp-c-border-hover);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 24px -4px rgba(0, 0, 0, 0.4);
+.search-trigger-box:hover,
+.search-trigger-box:focus-visible {
+  border-color: rgba(7, 255, 225, 0.5);
+  box-shadow: 0 0 24px -2px rgba(7, 255, 225, 0.22), 0 0 0 1px rgba(7, 255, 225, 0.25);
   transform: translateY(-1px);
+}
+
+.search-trigger-box:hover .search-lens,
+.search-trigger-box:focus-visible .search-lens {
+  color: #07FFE1;
 }
 
 .search-lens {
   color: var(--vp-c-text-3);
   flex-shrink: 0;
+  transition: color var(--hub-transition);
 }
 
 .search-label {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--vp-c-text-3);
   flex-grow: 1;
   text-align: left;
+  letter-spacing: -0.01em;
 }
 
-.key-hints {
-  display: flex;
+.command-pill {
+  display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  flex-shrink: 0;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 3px 8px;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: border-color var(--hub-transition);
 }
 
-.key-hint {
-  font-size: 0.72rem;
+.search-trigger-box:hover .command-pill {
+  border-color: rgba(7, 255, 225, 0.35);
+}
+
+.kbd-mod,
+.kbd-char {
   font-family: var(--vp-font-family-mono);
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 4px;
-  padding: 2px 6px;
-  color: var(--vp-c-text-2);
-}
-
-.hint-sep {
-  font-size: 0.7rem;
-  color: var(--vp-c-text-3);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  line-height: 1;
 }
 
 /* Action Buttons */
