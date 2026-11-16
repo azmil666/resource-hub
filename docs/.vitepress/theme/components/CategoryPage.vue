@@ -49,7 +49,7 @@ const resourcesInCategory = computed(() => {
 .category-header-block {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--vp-c-border);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .breadcrumb-trail {
@@ -60,7 +60,7 @@ const resourcesInCategory = computed(() => {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--vp-c-text-3);
   text-decoration: none;
   transition: color var(--hub-transition);
@@ -74,20 +74,21 @@ const resourcesInCategory = computed(() => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
+  flex-wrap: wrap;
 }
 
 .cat-page-title {
   margin: 0;
-  font-size: 1.85rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--vp-c-text-1);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   line-height: 1.2;
 }
 
 .count-tag {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-family: var(--vp-font-family-mono);
   background-color: var(--vp-c-bg-soft);
   color: var(--vp-c-text-2);
@@ -98,7 +99,7 @@ const resourcesInCategory = computed(() => {
 
 .cat-page-desc {
   margin: 0;
-  font-size: 0.96rem;
+  font-size: 0.95rem;
   color: var(--vp-c-text-2);
   line-height: 1.55;
   max-width: 65ch;

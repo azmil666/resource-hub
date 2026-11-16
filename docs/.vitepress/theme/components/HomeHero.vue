@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { data as allResources } from '../data/resources.data';
-import { CATEGORIES } from '../data/categories';
 import ResourceCard from './ResourceCard.vue';
 import CategoryOverview from './CategoryOverview.vue';
 
@@ -12,7 +11,7 @@ const featuredResources = computed(() => {
 });
 
 const recentResources = computed(() => {
-  return allResources.slice(0, 4);
+  return allResources.slice(0, 6);
 });
 
 function openVitePressSearch() {
@@ -27,14 +26,27 @@ function openVitePressSearch() {
 
 <template>
   <div class="home-layout">
-    <!-- Editorial Hero -->
+    <!-- Ambient Glow & High-Impact Hero -->
     <header class="hero-block">
-      <h1 class="hero-heading">Developer Resource Hub</h1>
+      <div class="ambient-glow" aria-hidden="true"></div>
+
+      <div class="hero-badge-wrap">
+        <span class="hero-badge">
+          <span class="badge-dot"></span>
+          Curated Knowledge Directory • {{ totalCount }} Resources
+        </span>
+      </div>
+
+      <h1 class="hero-heading">
+        The Modern Developer<br />
+        <span class="gradient-text">Resource Hub</span>
+      </h1>
+
       <p class="hero-summary">
-        A curated, high-performance library of developer utilities, design systems, APIs, and technical references. Built for discovery, speed, and long-term utility.
+        A minimalist, high-contrast library of developer utilities, UI design systems, APIs, and engineering references. Engineered for rapid discovery.
       </p>
 
-      <!-- Prominent Search Interface -->
+      <!-- Center Vercel / Linear Command Bar Search -->
       <div class="search-trigger-container">
         <button class="search-trigger-box" @click="openVitePressSearch" aria-label="Open search dialog">
           <svg class="search-lens" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -42,48 +54,56 @@ function openVitePressSearch() {
             <path d="m21 21-4.3-4.3"/>
           </svg>
           <span class="search-label">
-            Search {{ totalCount > 0 ? `${totalCount} resources` : 'library' }} by title, technology, or tag...
+            Search {{ totalCount > 0 ? `${totalCount} resources` : 'library' }} by title, stack, or tag...
           </span>
-          <kbd class="key-hint">⌘K</kbd>
+          <div class="key-hints">
+            <kbd class="key-hint">⌘K</kbd>
+            <span class="hint-sep">or</span>
+            <kbd class="key-hint">/</kbd>
+          </div>
         </button>
       </div>
 
-      <!-- Linear / MUJI Action Buttons -->
+      <!-- Linear Action Buttons -->
       <div class="hero-actions-row">
         <a href="/resources/" class="btn-solid">
-          Browse Directory
+          <span>Browse All Resources</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
         </a>
         <a href="/categories" class="btn-outline">
           View Categories
         </a>
         <a href="/contribute" class="btn-ghost">
-          Suggest a Resource
+          Suggest a Resource →
         </a>
       </div>
     </header>
 
-    <!-- Category Section -->
+    <!-- Categories Section -->
     <section class="content-section">
       <div class="section-title-bar">
         <div>
-          <h2 class="section-heading">Browse by Category</h2>
-          <p class="section-subtext">Organized collections across engineering, design, and developer workflows.</p>
+          <h2 class="section-heading">Browse by Discipline</h2>
+          <p class="section-subtext">10 curated categories spanning full-stack development, design, and developer tools.</p>
         </div>
-        <a href="/categories" class="section-action-link">All 10 categories →</a>
+        <a href="/categories" class="section-action-link">All Categories →</a>
       </div>
       <CategoryOverview />
     </section>
 
-    <!-- Recently Added Section -->
+    <!-- Recently Added Section (Strict Grid) -->
     <section v-if="allResources.length > 0" class="content-section">
       <div class="section-title-bar">
         <div>
           <h2 class="section-heading">Recently Added</h2>
-          <p class="section-subtext">The latest additions to the resource collection.</p>
+          <p class="section-subtext">The latest tools and references added to the catalog.</p>
         </div>
-        <a href="/resources/" class="section-action-link">View all in directory →</a>
+        <a href="/resources/" class="section-action-link">Open Directory ({{ totalCount }}) →</a>
       </div>
-      <div class="resources-stack">
+      <div class="resources-grid">
         <ResourceCard
           v-for="res in recentResources"
           :key="res.urlPath"
@@ -92,52 +112,51 @@ function openVitePressSearch() {
       </div>
     </section>
 
-    <!-- Featured Section -->
+    <!-- Featured Spotlight Section -->
     <section class="content-section">
       <div class="section-title-bar">
         <div>
-          <h2 class="section-heading">Featured Resources</h2>
-          <p class="section-subtext">Curated foundational tools and exceptional utilities.</p>
+          <h2 class="section-heading">Spotlight Resources</h2>
+          <p class="section-subtext">Foundational benchmarks and standout open-source utilities.</p>
         </div>
       </div>
 
-      <div v-if="featuredResources.length > 0" class="resources-stack">
+      <div v-if="featuredResources.length > 0" class="resources-grid">
         <ResourceCard
           v-for="res in featuredResources"
           :key="res.urlPath"
           :resource="res"
         />
       </div>
-      <!-- Friendly Duolingo-style empty state with clear next action -->
       <div v-else class="empty-guide-box">
         <div class="empty-icon-circle">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
           </svg>
         </div>
-        <h3 class="empty-guide-title">Featured selections will appear here</h3>
+        <h3 class="empty-guide-title">Curated spotlights will appear here</h3>
         <p class="empty-guide-text">
-          Hand-picked spotlights will be featured as resources are cataloged. All resources remain immediately browsable in the directory.
+          Hand-picked highlights will appear as community suggestions are verified. All 251 resources are immediately browsable in the directory.
         </p>
         <div class="empty-actions">
-          <a href="/resources/" class="btn-outline-small">Browse Directory</a>
-          <a href="/contribute" class="btn-ghost-small">Suggest a Spotlight Resource</a>
+          <a href="/resources/" class="btn-solid-small">Browse Directory</a>
+          <a href="/contribute" class="btn-outline-small">Suggest Spotlight</a>
         </div>
       </div>
     </section>
 
-    <!-- Minimalist Contribution Footer Banner -->
+    <!-- Minimalist Contribution Callout -->
     <section class="editorial-callout">
       <div class="callout-text-wrap">
-        <h3 class="callout-heading">Suggest a valuable tool</h3>
+        <h3 class="callout-heading">Know a high-utility resource?</h3>
         <p class="callout-desc">
-          Know a high-utility library, design system, or reference? Submissions are community-driven, reviewed for quality, and open-source.
+          Developer Resource Hub is open-source and community-maintained. Suggest libraries, frameworks, or guides via simple Markdown PRs.
         </p>
       </div>
       <div class="callout-actions">
         <a href="/contribute" class="btn-solid-small">Suggest Resource</a>
         <a href="https://github.com/azmil666/resource-hub" target="_blank" rel="noopener noreferrer" class="btn-outline-small">
-          GitHub ↗
+          GitHub Repository ↗
         </a>
       </div>
     </section>
@@ -146,39 +165,99 @@ function openVitePressSearch() {
 
 <style scoped>
 .home-layout {
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 3rem 1.5rem 5rem 1.5rem;
+  padding: 0 1.5rem 4rem 1.5rem;
 }
 
-/* Hero Section */
+/* Hero Block & Ambient Glow */
 .hero-block {
-  text-align: left;
-  padding-bottom: 2.75rem;
-  border-bottom: 1px solid var(--vp-c-border);
+  position: relative;
+  padding: 4.5rem 1rem 3.5rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ambient-glow {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  max-width: 100vw;
+  height: 380px;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 20%,
+    rgba(7, 255, 225, 0.15) 0%,
+    rgba(255, 229, 0, 0.04) 40%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+
+.hero-badge-wrap {
+  margin-bottom: 1.25rem;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--vp-c-text-2);
+  background-color: var(--vp-c-bg-elv);
+  border: 1px solid var(--vp-c-border);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #07FFE1;
+  box-shadow: 0 0 8px rgba(7, 255, 225, 0.8);
 }
 
 .hero-heading {
-  font-size: 2.6rem;
+  margin: 0 0 1.25rem 0;
+  font-size: 3.25rem;
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.035em;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
   color: var(--vp-c-text-1);
-  margin: 0 0 1rem 0;
+  z-index: 1;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--vp-c-text-1) 30%, var(--vp-c-text-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-summary {
-  font-size: 1.12rem;
+  margin: 0 auto 2.25rem auto;
+  max-width: 620px;
+  font-size: 1.05rem;
   line-height: 1.6;
   color: var(--vp-c-text-2);
-  max-width: 62ch;
-  margin: 0 0 1.75rem 0;
-  text-wrap: pretty;
+  letter-spacing: -0.01em;
+  z-index: 1;
 }
 
+/* Center Command Bar Search */
 .search-trigger-container {
-  max-width: 620px;
-  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 580px;
+  margin-bottom: 2rem;
+  z-index: 1;
 }
 
 .search-trigger-box {
@@ -186,18 +265,22 @@ function openVitePressSearch() {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  background-color: var(--vp-c-bg-alt);
+  padding: 0.85rem 1.15rem;
+  background-color: var(--vp-c-bg-elv);
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
+  border-radius: 10px;
+  color: var(--vp-c-text-2);
   cursor: pointer;
-  transition: border-color var(--hub-transition), background-color var(--hub-transition);
-  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color var(--hub-transition), box-shadow var(--hub-transition), transform var(--hub-transition);
 }
 
 .search-trigger-box:hover {
-  border-color: var(--vp-c-text-2);
-  background-color: var(--vp-c-bg);
+  border-color: var(--vp-c-border-hover);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 24px -4px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
 }
 
 .search-lens {
@@ -206,82 +289,101 @@ function openVitePressSearch() {
 }
 
 .search-label {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--vp-c-text-3);
   flex-grow: 1;
+  text-align: left;
+}
+
+.key-hints {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
 }
 
 .key-hint {
   font-size: 0.72rem;
   font-family: var(--vp-font-family-mono);
-  background-color: var(--vp-c-bg);
+  background-color: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-border);
-  padding: 2px 6px;
   border-radius: 4px;
+  padding: 2px 6px;
+  color: var(--vp-c-text-2);
+}
+
+.hint-sep {
+  font-size: 0.7rem;
   color: var(--vp-c-text-3);
 }
 
+/* Action Buttons */
 .hero-actions-row {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
+  z-index: 1;
 }
 
-/* Button styles - Linear / MUJI aesthetic */
 .btn-solid {
   display: inline-flex;
   align-items: center;
-  padding: 0.55rem 1.15rem;
+  gap: 0.45rem;
+  padding: 0.65rem 1.25rem;
+  background-color: var(--vp-c-brand-1);
+  color: var(--vp-c-bg) !important;
   font-size: 0.88rem;
-  font-weight: 500;
-  background-color: var(--vp-c-text-1);
-  color: var(--vp-c-bg);
-  border-radius: 5px;
+  font-weight: 600;
+  border-radius: 6px;
   text-decoration: none;
-  transition: opacity var(--hub-transition);
+  transition: opacity var(--hub-transition), transform var(--hub-transition);
 }
 
 .btn-solid:hover {
-  opacity: 0.88;
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
-  padding: 0.55rem 1.15rem;
+  padding: 0.65rem 1.25rem;
+  background-color: var(--vp-c-bg-elv);
+  color: var(--vp-c-text-1) !important;
+  border: 1px solid var(--vp-c-border);
   font-size: 0.88rem;
   font-weight: 500;
-  background-color: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-1);
-  border-radius: 5px;
+  border-radius: 6px;
   text-decoration: none;
-  transition: border-color var(--hub-transition), background-color var(--hub-transition);
+  transition: border-color var(--hub-transition), background-color var(--hub-transition), transform var(--hub-transition);
 }
 
 .btn-outline:hover {
-  border-color: var(--vp-c-text-1);
+  border-color: var(--vp-c-border-hover);
   background-color: var(--vp-c-bg-hover);
+  transform: translateY(-1px);
 }
 
 .btn-ghost {
   display: inline-flex;
   align-items: center;
-  padding: 0.55rem 0.85rem;
+  padding: 0.65rem 1rem;
+  color: var(--vp-c-text-2) !important;
   font-size: 0.88rem;
-  color: var(--vp-c-text-2);
+  font-weight: 500;
   text-decoration: none;
   transition: color var(--hub-transition);
 }
 
 .btn-ghost:hover {
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-1) !important;
 }
 
 /* Content Sections */
 .content-section {
-  margin-top: 3.25rem;
+  margin-top: 3.5rem;
 }
 
 .section-title-bar {
@@ -289,53 +391,52 @@ function openVitePressSearch() {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.65rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--vp-c-border);
+  margin-bottom: 1.5rem;
 }
 
 .section-heading {
-  margin: 0 0 0.2rem 0;
-  font-size: 1.3rem;
+  margin: 0;
+  font-size: 1.35rem;
   font-weight: 600;
+  letter-spacing: -0.025em;
   color: var(--vp-c-text-1);
-  letter-spacing: -0.02em;
 }
 
 .section-subtext {
-  margin: 0;
-  font-size: 0.88rem;
-  color: var(--vp-c-text-3);
+  margin: 0.25rem 0 0 0;
+  font-size: 0.86rem;
+  color: var(--vp-c-text-2);
 }
 
 .section-action-link {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--vp-c-text-2);
   text-decoration: none;
-  font-weight: 500;
   white-space: nowrap;
   transition: color var(--hub-transition);
 }
 
 .section-action-link:hover {
   color: var(--vp-c-text-1);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
-.resources-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+/* Resources Strict Grid */
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1rem;
 }
 
-/* Friendly Empty State (Duolingo reference) */
+/* Empty Spotlight Guide Box */
 .empty-guide-box {
   padding: 2.5rem 1.5rem;
   text-align: center;
-  background-color: var(--vp-c-bg-alt);
-  border: 1px dashed var(--vp-c-border);
-  border-radius: 6px;
+  background-color: var(--vp-c-bg-elv);
+  border: 1px solid var(--vp-c-border);
+  border-radius: var(--hub-card-radius, 8px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -345,12 +446,12 @@ function openVitePressSearch() {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: var(--vp-c-bg-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--vp-c-text-2);
-  margin-bottom: 0.75rem;
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-3);
+  margin-bottom: 0.85rem;
 }
 
 .empty-guide-title {
@@ -361,79 +462,67 @@ function openVitePressSearch() {
 }
 
 .empty-guide-text {
-  margin: 0 0 1.25rem 0;
-  font-size: 0.86rem;
-  color: var(--vp-c-text-3);
-  max-width: 50ch;
+  margin: 0 auto 1.25rem auto;
+  max-width: 480px;
+  font-size: 0.85rem;
   line-height: 1.5;
+  color: var(--vp-c-text-2);
 }
 
 .empty-actions {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 0.65rem;
-  justify-content: center;
 }
 
 .btn-solid-small {
-  padding: 0.4rem 0.85rem;
-  font-size: 0.82rem;
-  font-weight: 500;
-  background-color: var(--vp-c-text-1);
-  color: var(--vp-c-bg);
-  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.95rem;
+  background-color: var(--vp-c-brand-1);
+  color: var(--vp-c-bg) !important;
+  border-radius: 5px;
   text-decoration: none;
   transition: opacity var(--hub-transition);
 }
 
 .btn-solid-small:hover {
-  opacity: 0.88;
+  opacity: 0.9;
 }
 
 .btn-outline-small {
-  padding: 0.4rem 0.85rem;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  background-color: var(--vp-c-bg);
+  padding: 0.45rem 0.95rem;
+  background-color: var(--vp-c-bg-elv);
+  color: var(--vp-c-text-1) !important;
   border: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-1);
-  border-radius: 4px;
+  border-radius: 5px;
   text-decoration: none;
   transition: border-color var(--hub-transition);
 }
 
 .btn-outline-small:hover {
-  border-color: var(--vp-c-text-1);
+  border-color: var(--vp-c-border-hover);
 }
 
-.btn-ghost-small {
-  padding: 0.4rem 0.85rem;
-  font-size: 0.82rem;
-  color: var(--vp-c-text-2);
-  text-decoration: none;
-}
-
-.btn-ghost-small:hover {
-  color: var(--vp-c-text-1);
-}
-
-/* Editorial Callout */
+/* Bottom Callout Banner */
 .editorial-callout {
-  margin-top: 4rem;
+  margin-top: 4.5rem;
+  padding: 2rem 2.25rem;
+  background-color: var(--vp-c-bg-elv);
+  border: 1px solid var(--vp-c-border);
+  border-radius: var(--hub-card-radius, 8px);
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1.5rem 1.75rem;
-  background-color: var(--vp-c-bg-alt);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
+  flex-wrap: wrap;
 }
 
 .callout-heading {
-  margin: 0 0 0.3rem 0;
-  font-size: 1.08rem;
+  margin: 0 0 0.25rem 0;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--vp-c-text-1);
 }
@@ -442,19 +531,24 @@ function openVitePressSearch() {
   margin: 0;
   font-size: 0.86rem;
   color: var(--vp-c-text-2);
-  max-width: 58ch;
-  line-height: 1.5;
+  max-width: 540px;
 }
 
 .callout-actions {
   display: flex;
   align-items: center;
   gap: 0.65rem;
+  flex-shrink: 0;
 }
 
-@media (max-width: 640px) {
+/* Mobile responsive breakpoints */
+@media (max-width: 768px) {
   .hero-heading {
-    font-size: 2rem;
+    font-size: 2.35rem;
+  }
+  .section-title-bar {
+    flex-direction: column;
+    align-items: flex-start;
   }
   .editorial-callout {
     flex-direction: column;

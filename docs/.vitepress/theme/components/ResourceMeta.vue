@@ -7,74 +7,76 @@ const { frontmatter } = useData();
 
 const categoryMeta = computed(() => getCategory(frontmatter.value.category));
 
-const pricingClass = computed(() => {
+const pricingDotClass = computed(() => {
   switch (frontmatter.value.pricing) {
     case 'free':
-      return 'badge-free';
+      return 'dot-free';
     case 'freemium':
-      return 'badge-freemium';
+      return 'dot-freemium';
     case 'paid':
-      return 'badge-paid';
+      return 'dot-paid';
     default:
-      return 'badge-unknown';
+      return 'dot-unknown';
   }
 });
 </script>
 
 <template>
-  <div v-if="frontmatter.title && frontmatter.category && frontmatter.url" class="resource-meta-banner">
+  <div v-if="frontmatter.title && frontmatter.category && frontmatter.url" class="doc-meta-header">
     <!-- Breadcrumb Trail -->
-    <nav class="resource-breadcrumb" aria-label="Breadcrumb">
-      <a href="/resources/">Resources</a>
-      <span class="sep">/</span>
-      <a :href="`/resources/${frontmatter.category}/`">{{ categoryMeta.name }}</a>
-      <span class="sep">/</span>
-      <span class="current">{{ frontmatter.title }}</span>
+    <nav class="doc-breadcrumbs" aria-label="Breadcrumbs">
+      <a href="/resources/" class="crumb-link">Resources</a>
+      <span class="crumb-sep">/</span>
+      <a :href="`/resources/${frontmatter.category}/`" class="crumb-link">{{ categoryMeta.name }}</a>
+      <span class="crumb-sep">/</span>
+      <span class="crumb-current">{{ frontmatter.title }}</span>
     </nav>
 
-    <!-- Metadata Grid -->
-    <div class="meta-strip">
-      <div class="meta-col">
-        <span class="meta-label">Category</span>
-        <a :href="`/resources/${frontmatter.category}/`" class="meta-val link-val">
+    <!-- Technical Spec Strip -->
+    <div class="meta-spec-grid">
+      <div class="spec-cell">
+        <span class="spec-label">Category</span>
+        <a :href="`/resources/${frontmatter.category}/`" class="spec-value-link">
           {{ categoryMeta.name }}
         </a>
       </div>
 
-      <div class="meta-col">
-        <span class="meta-label">Type</span>
-        <span class="meta-val">{{ frontmatter.type || 'website' }}</span>
+      <div class="spec-cell">
+        <span class="spec-label">Type</span>
+        <span class="spec-value mono">{{ frontmatter.type || 'website' }}</span>
       </div>
 
-      <div class="meta-col">
-        <span class="meta-label">Pricing</span>
-        <span class="pricing-pill" :class="pricingClass">{{ frontmatter.pricing || 'unknown' }}</span>
+      <div class="spec-cell">
+        <span class="spec-label">Pricing</span>
+        <span class="spec-pricing-pill">
+          <span class="status-dot" :class="pricingDotClass"></span>
+          {{ frontmatter.pricing || 'unknown' }}
+        </span>
       </div>
 
-      <div v-if="frontmatter.status && frontmatter.status !== 'published'" class="meta-col">
-        <span class="meta-label">Status</span>
-        <span class="status-pill">{{ frontmatter.status }}</span>
+      <div v-if="frontmatter.status && frontmatter.status !== 'published'" class="spec-cell">
+        <span class="spec-label">Status</span>
+        <span class="spec-status-pill">{{ frontmatter.status }}</span>
       </div>
     </div>
 
-    <!-- Actions & Tags Row -->
-    <div class="action-footer">
+    <!-- Official Site Action & Tags Row -->
+    <div class="meta-action-row">
       <a
         :href="frontmatter.url"
         target="_blank"
         rel="noopener noreferrer"
-        class="official-link-btn"
+        class="official-website-btn"
       >
         <span>Visit Official Website</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 3h6v6"/>
-          <path d="M10 14 21 3"/>
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <line x1="7" y1="17" x2="17" y2="7"/>
+          <polyline points="7 7 17 7 17 17"/>
         </svg>
       </a>
 
-      <div v-if="frontmatter.tags && frontmatter.tags.length > 0" class="meta-tags-container">
-        <span v-for="tag in frontmatter.tags" :key="tag" class="meta-tag-pill">
+      <div v-if="frontmatter.tags && frontmatter.tags.length > 0" class="meta-tags-list">
+        <span v-for="tag in frontmatter.tags" :key="tag" class="meta-tag-item">
           #{{ tag }}
         </span>
       </div>
@@ -83,184 +85,185 @@ const pricingClass = computed(() => {
 </template>
 
 <style scoped>
-.resource-meta-banner {
-  margin: 1.25rem 0 2rem 0;
-  padding: 1.15rem 1.35rem;
-  background-color: var(--vp-c-bg-alt);
+.doc-meta-header {
+  margin: 1.5rem 0 2rem 0;
+  padding: 1.25rem 1.35rem;
+  background-color: var(--vp-c-bg-elv);
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
+  border-radius: var(--hub-card-radius, 8px);
+  box-shadow: var(--hub-card-shadow);
 }
 
-.resource-breadcrumb {
+/* Breadcrumbs */
+.doc-breadcrumbs {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.8rem;
-  color: var(--vp-c-text-3);
-  margin-bottom: 0.95rem;
+  font-size: 0.78rem;
+  margin-bottom: 1.15rem;
+  flex-wrap: wrap;
 }
 
-.resource-breadcrumb a {
+.crumb-link {
   color: var(--vp-c-text-2);
   text-decoration: none;
   transition: color var(--hub-transition);
 }
 
-.resource-breadcrumb a:hover {
+.crumb-link:hover {
   color: var(--vp-c-text-1);
 }
 
-.sep {
-  opacity: 0.45;
+.crumb-sep {
+  color: var(--vp-c-text-3);
+  opacity: 0.6;
 }
 
-.current {
+.crumb-current {
   color: var(--vp-c-text-1);
   font-weight: 500;
 }
 
-.meta-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.75rem;
-  padding-bottom: 0.95rem;
-  border-bottom: 1px solid var(--vp-c-border);
+/* Technical Spec Strip */
+.meta-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid var(--vp-c-divider);
 }
 
-.meta-col {
+.spec-cell {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.25rem;
 }
 
-.meta-label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--vp-c-text-3);
+.spec-label {
+  font-size: 0.68rem;
+  font-family: var(--vp-font-family-mono);
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vp-c-text-3);
 }
 
-.meta-val {
+.spec-value {
   font-size: 0.88rem;
-  color: var(--vp-c-text-1);
   font-weight: 500;
-  text-transform: capitalize;
+  color: var(--vp-c-text-1);
 }
 
-.link-val {
+.spec-value.mono {
+  font-family: var(--vp-font-family-mono);
+  text-transform: lowercase;
+}
+
+.spec-value-link {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
   text-decoration: none;
   transition: color var(--hub-transition);
 }
 
-.link-val:hover {
+.spec-value-link:hover {
+  color: var(--vp-c-brand-1);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.pricing-pill {
-  display: inline-block;
-  padding: 1px 7px;
-  font-size: 0.75rem;
-  border-radius: 3px;
+.spec-pricing-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-family: var(--vp-font-family-mono);
+  color: var(--vp-c-text-1);
   text-transform: capitalize;
-  font-weight: 500;
-  width: fit-content;
 }
 
-.badge-free {
-  background-color: rgba(34, 197, 94, 0.06);
-  color: #15803d;
-  border: 1px solid rgba(34, 197, 94, 0.2);
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
-.dark .badge-free {
-  background-color: rgba(74, 222, 128, 0.08);
-  color: #4ade80;
-  border-color: rgba(74, 222, 128, 0.22);
+.dot-free {
+  background-color: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
 }
 
-.badge-freemium {
-  background-color: rgba(100, 116, 139, 0.07);
-  color: #475569;
-  border: 1px solid rgba(100, 116, 139, 0.2);
+.dot-freemium {
+  background-color: #06b6d4;
+  box-shadow: 0 0 6px rgba(6, 182, 212, 0.4);
 }
 
-.dark .badge-freemium {
-  background-color: rgba(148, 163, 184, 0.08);
-  color: #94a3b8;
-  border-color: rgba(148, 163, 184, 0.22);
+.dot-paid {
+  background-color: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
 }
 
-.badge-paid {
-  background-color: rgba(217, 119, 6, 0.06);
-  color: #b45309;
-  border: 1px solid rgba(217, 119, 6, 0.2);
+.dot-unknown {
+  background-color: #71717a;
 }
 
-.dark .badge-paid {
-  background-color: rgba(251, 191, 36, 0.08);
-  color: #fbbf24;
-  border-color: rgba(251, 191, 36, 0.22);
-}
-
-.badge-unknown {
-  background-color: var(--vp-c-bg);
-  color: var(--vp-c-text-3);
+.spec-status-pill {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-family: var(--vp-font-family-mono);
+  background-color: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-border);
-}
-
-.status-pill {
-  font-size: 0.75rem;
+  color: #f59e0b;
   padding: 1px 6px;
-  border-radius: 3px;
-  background-color: var(--vp-c-bg);
-  color: var(--vp-c-text-3);
-  border: 1px solid var(--vp-c-border);
-  text-transform: capitalize;
+  border-radius: 4px;
 }
 
-.action-footer {
+/* Action & Tags Row */
+.meta-action-row {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  padding-top: 0.95rem;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
-.official-link-btn {
+.official-website-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.84rem;
-  font-weight: 500;
-  background-color: var(--vp-c-text-1);
-  color: var(--vp-c-bg);
-  padding: 0.4rem 0.95rem;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  background-color: var(--vp-c-brand-1);
+  color: var(--vp-c-bg) !important;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 6px;
   text-decoration: none;
-  transition: opacity var(--hub-transition);
+  transition: opacity var(--hub-transition), transform var(--hub-transition);
 }
 
-.official-link-btn:hover {
-  opacity: 0.88;
+.official-website-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
-.meta-tags-container {
+.meta-tags-list {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 0.35rem;
+  flex-wrap: wrap;
 }
 
-.meta-tag-pill {
+.meta-tag-item {
   font-size: 0.72rem;
   font-family: var(--vp-font-family-mono);
   color: var(--vp-c-text-2);
   background-color: var(--vp-c-bg);
-  padding: 1px 6px;
-  border-radius: 3px;
   border: 1px solid var(--vp-c-border);
+  padding: 2px 7px;
+  border-radius: 4px;
 }
 </style>

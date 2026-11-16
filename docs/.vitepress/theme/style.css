@@ -1,74 +1,84 @@
 /**
- * Developer Resource Hub — Monochromatic Editorial Theme
- * Refined under Impeccable Design Skill Principles.
- * Influenced by Linear, Pentagram, MUJI, Aesop & Apple.
+ * Developer Resource Hub — Vercel & Linear-Inspired Theme
+ * High-contrast, minimalist, polished dark-mode-first aesthetic.
  */
 
 :root {
-  /* System Typography */
-  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif;
-  --vp-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  /* Modern Sans-Serif Font Stack (Geist / Inter / System) */
+  --vp-font-family-base: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --vp-font-family-mono: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
 
   /* Monochromatic Brand - Light Theme */
-  --vp-c-brand-1: #171717;
-  --vp-c-brand-2: #2d2d2d;
-  --vp-c-brand-3: #484848;
-  --vp-c-brand-soft: rgba(23, 23, 23, 0.05);
+  --vp-c-brand-1: #000000;
+  --vp-c-brand-2: #171717;
+  --vp-c-brand-3: #2d2d2d;
+  --vp-c-brand-soft: rgba(0, 0, 0, 0.04);
 
-  /* Light Theme Neutral Surfaces & Contrast Tuned Values */
+  /* Light Theme Surfaces & Crisp Borders */
   --vp-c-bg: #ffffff;
-  --vp-c-bg-alt: #f7f7f5;
+  --vp-c-bg-alt: #fafafa;
   --vp-c-bg-elv: #ffffff;
-  --vp-c-bg-soft: #f0f0ed;
-  --vp-c-bg-hover: #f2f2ef;
+  --vp-c-bg-soft: #f4f4f5;
+  --vp-c-bg-hover: #f0f0f2;
 
-  --vp-c-border: #e5e5e2;
-  --vp-c-divider: #e5e5e2;
-  --vp-c-gutter: #e5e5e2;
+  --vp-c-border: #e4e4e7;
+  --vp-c-border-hover: #d4d4d8;
+  --vp-c-divider: #e4e4e7;
+  --vp-c-gutter: #e4e4e7;
 
-  --vp-c-text-1: #171717;
-  --vp-c-text-2: #5a5a5a;
-  --vp-c-text-3: #7c7c7c;
+  --vp-c-text-1: #09090b;
+  --vp-c-text-2: #71717a;
+  --vp-c-text-3: #a1a1aa;
 
-  --vp-c-default-1: #242424;
-  --vp-c-default-2: #5a5a5a;
-  --vp-c-default-3: #7c7c7c;
-  --vp-c-default-soft: #f0f0ed;
+  --vp-c-default-1: #09090b;
+  --vp-c-default-2: #71717a;
+  --vp-c-default-3: #a1a1aa;
+  --vp-c-default-soft: #f4f4f5;
 
-  /* Motion token (Apple / Framer reference: natural ease-out deceleration) */
-  --hub-transition: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* Custom Hub Motion & Surface Variables */
+  --hub-transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --hub-card-radius: 8px;
+  --hub-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --hub-card-shadow-hover: 0 8px 24px -4px rgba(0, 0, 0, 0.08);
 }
 
 .dark {
-  /* Monochromatic Brand - Dark Theme */
-  --vp-c-brand-1: #f5f5f5;
-  --vp-c-brand-2: #e0e0e0;
-  --vp-c-brand-3: #c4c4c4;
-  --vp-c-brand-soft: rgba(245, 245, 245, 0.07);
+  /* Monochromatic High-Contrast Brand - Dark Theme (Vercel / Linear) */
+  --vp-c-brand-1: #ffffff;
+  --vp-c-brand-2: #f0f0f0;
+  --vp-c-brand-3: #d4d4d4;
+  --vp-c-brand-soft: rgba(255, 255, 255, 0.06);
 
-  /* Dark Theme Neutral Surfaces & Contrast Tuned Values */
-  --vp-c-bg: #111111;
-  --vp-c-bg-alt: #181818;
-  --vp-c-bg-elv: #1a1a1a;
-  --vp-c-bg-soft: #222222;
-  --vp-c-bg-hover: #1c1c1c;
+  /* Deep Black Surfaces */
+  --vp-c-bg: #000000;
+  --vp-c-bg-alt: #0a0a0a;
+  --vp-c-bg-elv: #0f0f0f;
+  --vp-c-bg-soft: #141414;
+  --vp-c-bg-hover: #181818;
 
-  --vp-c-border: #2d2d2d;
-  --vp-c-divider: #2d2d2d;
-  --vp-c-gutter: #2d2d2d;
+  /* Crisp 1px Separation Borders */
+  --vp-c-border: #222222;
+  --vp-c-border-hover: #383838;
+  --vp-c-divider: #1c1c1c;
+  --vp-c-gutter: #181818;
 
-  --vp-c-text-1: #f5f5f5;
-  --vp-c-text-2: #a8a8a8;
-  --vp-c-text-3: #7c7c7c;
+  /* High-Contrast Crisp Typography */
+  --vp-c-text-1: #ededed;
+  --vp-c-text-2: #a1a1a1;
+  --vp-c-text-3: #666666;
 
-  --vp-c-default-1: #e0e0e0;
-  --vp-c-default-2: #a8a8a8;
-  --vp-c-default-3: #7c7c7c;
-  --vp-c-default-soft: #222222;
+  --vp-c-default-1: #ededed;
+  --vp-c-default-2: #a1a1a1;
+  --vp-c-default-3: #666666;
+  --vp-c-default-soft: #141414;
+
+  /* Subtle Card Glow & Elevation */
+  --hub-card-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --hub-card-shadow-hover: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 12px 32px -8px rgba(0, 0, 0, 0.7);
 }
 
 /* ==========================================================================
-   Base Typography & Browser Surfaces (Impeccable Craft Floor)
+   Base Typography & Global Surfaces
    ========================================================================== */
 
 *,
@@ -88,17 +98,18 @@ body {
   color: var(--vp-c-text-1);
   background-color: var(--vp-c-bg);
   line-height: 1.6;
+  letter-spacing: -0.01em;
 }
 
 /* Themed Text Selection */
 ::selection {
-  background-color: #dcdcd8;
-  color: #111111;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .dark ::selection {
-  background-color: #383838;
-  color: #f5f5f5;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 /* Accessible, crisp focus rings */
@@ -106,30 +117,20 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--vp-c-text-1);
+  outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
 }
 
-/* Headings & Paragraph Wrap */
+/* Headings & Precision Tracking */
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: var(--vp-c-text-1);
+  font-weight: 600;
 }
 
 p, li {
   text-wrap: pretty;
-}
-
-/* Editorial underline offset on standard prose links */
-.vp-doc a:not([class]) {
-  text-underline-offset: 3px;
-  text-decoration-color: var(--vp-c-border);
-  transition: text-decoration-color var(--hub-transition);
-}
-
-.vp-doc a:not([class]):hover {
-  text-decoration-color: var(--vp-c-text-1);
 }
 
 /* Tabular Numerals for metrics, counters, and dates */
@@ -139,14 +140,15 @@ p, li {
 .category-count,
 .count-badge,
 .count-tag,
-.status-bar,
+.cat-count,
 .tab-count,
 .results-count,
 .tag-more {
   font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' on;
 }
 
-/* Custom Minimal Scrollbar */
+/* Custom Minimalist Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -158,65 +160,99 @@ p, li {
 
 ::-webkit-scrollbar-thumb {
   background: var(--vp-c-border);
-  border-radius: 3px;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--vp-c-text-3);
+  background: var(--vp-c-border-hover);
 }
 
 /* ==========================================================================
-   VitePress Layout Overrides & Refinements
+   VitePress Layout Overrides & Navigation
    ========================================================================== */
 
 .VPNav {
   border-bottom: 1px solid var(--vp-c-border) !important;
-  background-color: var(--vp-c-bg) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.dark .VPNav {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  border-bottom: 1px solid var(--vp-c-border) !important;
 }
 
 .VPSidebar {
   border-right: 1px solid var(--vp-c-border) !important;
-  background-color: var(--vp-c-bg-alt) !important;
+  background-color: var(--vp-c-bg) !important;
+}
+
+.VPSidebarItem .text {
+  font-size: 0.86rem !important;
+  letter-spacing: -0.01em !important;
+}
+
+.VPSidebarItem.is-active > .item > .link > .text {
+  color: var(--vp-c-text-1) !important;
+  font-weight: 600 !important;
 }
 
 .VPFooter {
   border-top: 1px solid var(--vp-c-border) !important;
-  background-color: var(--vp-c-bg-alt) !important;
-  padding: 2.25rem 1.5rem !important;
+  background-color: var(--vp-c-bg) !important;
+  padding: 2.5rem 1.5rem !important;
 }
 
 .VPFooter .message,
 .VPFooter .copyright {
-  font-size: 0.82rem !important;
+  font-size: 0.8rem !important;
   color: var(--vp-c-text-3) !important;
 }
 
-/* Clean up Search modal */
-.DocSearch-Modal,
-.VPLocalSearchBox .modal {
-  border: 1px solid var(--vp-c-border) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12) !important;
+/* ==========================================================================
+   Vercel / Linear Local Search Modal Styling
+   ========================================================================== */
+
+.VPLocalSearchBox .modal,
+.DocSearch-Modal {
+  background-color: var(--vp-c-bg-elv) !important;
+  border: 1px solid var(--vp-c-border-hover) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.85) !important;
 }
 
-/* Documentation Content Measure & Spacing (Pentagram / Linear) */
+.VPLocalSearchBox .search-bar {
+  border-bottom: 1px solid var(--vp-c-border) !important;
+}
+
+.VPLocalSearchBox .search-input {
+  font-family: var(--vp-font-family-base) !important;
+  font-size: 1rem !important;
+}
+
+/* ==========================================================================
+   Documentation Measure & Clean Typography
+   ========================================================================== */
+
 .vp-doc {
-  max-width: 72ch;
+  max-width: 76ch;
 }
 
 .vp-doc h1 {
-  font-size: 2rem;
+  font-size: 2.15rem;
   font-weight: 700;
-  letter-spacing: -0.03em;
-  margin-bottom: 1rem;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.25rem;
 }
 
 .vp-doc h2 {
   font-size: 1.35rem;
   font-weight: 600;
+  letter-spacing: -0.025em;
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
-  padding-top: 1rem;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--vp-c-border);
 }
 
@@ -224,17 +260,20 @@ p, li {
   border-collapse: collapse;
   margin: 1.5rem 0;
   width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--vp-c-border);
 }
 
 .vp-doc th,
 .vp-doc td {
   border: 1px solid var(--vp-c-border);
-  padding: 0.55rem 0.85rem;
+  padding: 0.65rem 0.95rem;
   font-size: 0.88rem;
 }
 
 .vp-doc th {
-  background-color: var(--vp-c-bg-alt);
+  background-color: var(--vp-c-bg-soft);
   font-weight: 600;
   color: var(--vp-c-text-1);
 }
@@ -242,14 +281,15 @@ p, li {
 .vp-doc :not(pre) > code {
   font-size: 0.85em;
   padding: 0.15em 0.4em;
-  border-radius: 3px;
+  border-radius: 4px;
   background-color: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-border);
   color: var(--vp-c-text-1);
+  font-family: var(--vp-font-family-mono);
 }
 
 /* ==========================================================================
-   Reduced Motion Accessibility (Apple / Impeccable)
+   Reduced Motion Accessibility
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {

@@ -28,7 +28,10 @@ const categoryCounts = computed(() => {
       </div>
       <p class="category-description">{{ cat.description }}</p>
       <div class="entry-footer">
-        <span class="explore-cue">Explore category →</span>
+        <span class="explore-cue">
+          Explore category
+          <span class="explore-arrow">→</span>
+        </span>
       </div>
     </a>
   </div>
@@ -37,25 +40,27 @@ const categoryCounts = computed(() => {
 <style scoped>
 .category-index-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
   margin: 1.25rem 0 2rem 0;
 }
 
 .category-entry {
   display: flex;
   flex-direction: column;
-  padding: 1.15rem 1.25rem;
-  background-color: var(--vp-c-bg);
+  padding: 1.25rem;
+  background-color: var(--vp-c-bg-elv);
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
+  border-radius: var(--hub-card-radius, 8px);
+  box-shadow: var(--hub-card-shadow);
   text-decoration: none;
-  transition: border-color var(--hub-transition), background-color var(--hub-transition);
+  transition: transform var(--hub-transition), border-color var(--hub-transition), box-shadow var(--hub-transition);
 }
 
 .category-entry:hover {
-  border-color: var(--vp-c-text-2);
-  background-color: var(--vp-c-bg-hover);
+  transform: translateY(-2px);
+  border-color: var(--vp-c-border-hover);
+  box-shadow: var(--hub-card-shadow-hover);
 }
 
 .entry-header {
@@ -63,46 +68,56 @@ const categoryCounts = computed(() => {
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .category-title {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--vp-c-text-1);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 
 .category-count {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--vp-c-text-3);
   font-family: var(--vp-font-family-mono);
   background-color: var(--vp-c-bg-soft);
   padding: 1px 6px;
-  border-radius: 3px;
+  border-radius: 4px;
   border: 1px solid var(--vp-c-border);
 }
 
 .category-description {
-  margin: 0 0 0.85rem 0;
-  font-size: 0.85rem;
-  line-height: 1.48;
+  margin: 0 0 1rem 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
   color: var(--vp-c-text-2);
   flex-grow: 1;
 }
 
 .entry-footer {
   margin-top: auto;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--vp-c-text-3);
   font-weight: 500;
+  display: flex;
+  align-items: center;
   transition: color var(--hub-transition);
 }
 
-.category-entry:hover .explore-cue {
+.explore-arrow {
+  display: inline-block;
+  margin-left: 0.35rem;
+  transition: transform var(--hub-transition);
+}
+
+.category-entry:hover .entry-footer {
   color: var(--vp-c-text-1);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+}
+
+.category-entry:hover .explore-arrow {
+  transform: translateX(4px);
 }
 </style>

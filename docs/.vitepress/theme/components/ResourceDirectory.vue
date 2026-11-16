@@ -21,7 +21,7 @@ const selectedPricing = ref('');
 const selectedTag = ref('');
 const sortBy = ref<'title-asc' | 'title-desc'>('title-asc');
 
-// Keyboard shortcut `/` to focus directory search input
+// Global shortcut '/' to focus directory search
 function handleGlobalKeydown(e: KeyboardEvent) {
   if (
     e.key === '/' &&
@@ -45,7 +45,7 @@ onUnmounted(() => {
   }
 });
 
-// Available types derived dynamically from data
+// Types derived dynamically from data
 const availableTypes = computed(() => {
   const set = new Set<string>();
   allResources.forEach(r => {
@@ -111,15 +111,17 @@ const filteredResources = computed(() => {
     });
 });
 
-const hasActiveFilters = computed(() => {
-  return Boolean(
-    searchQuery.value ||
-    (selectedCategory.value && selectedCategory.value !== props.initialCategory) ||
-    selectedType.value ||
-    selectedPricing.value ||
-    selectedTag.value
-  );
+const activeFilterCount = computed(() => {
+  let count = 0;
+  if (searchQuery.value) count++;
+  if (selectedCategory.value && selectedCategory.value !== props.initialCategory) count++;
+  if (selectedType.value) count++;
+  if (selectedPricing.value) count++;
+  if (selectedTag.value) count++;
+  return count;
 });
+
+const hasActiveFilters = computed(() => activeFilterCount.value > 0);
 
 function resetFilters() {
   searchQuery.value = '';
@@ -137,7 +139,7 @@ function selectCategory(slug: string) {
 
 <template>
   <div class="directory-view">
-    <!-- Filter Panel (Airbnb discoverability + Linear minimalism) -->
+    <!-- Filter Control Panel -->
     <div class="filter-panel">
       <!-- Search Input -->
       <div class="search-bar-wrap">
@@ -153,22 +155,25 @@ function selectCategory(slug: string) {
           class="directory-search-input"
           aria-label="Filter resources"
         />
-        <button
-          v-if="searchQuery"
-          class="clear-input-btn"
-          title="Clear search"
-          aria-label="Clear search"
-          @click="searchQuery = ''"
-        >
-          ×
-        </button>
+        <div class="search-trailing">
+          <button
+            v-if="searchQuery"
+            class="clear-input-btn"
+            title="Clear search"
+            aria-label="Clear search"
+            @click="searchQuery = ''"
+          >
+            ×
+          </button>
+          <kbd v-else class="key-indicator">/</kbd>
+        </div>
       </div>
 
-      <!-- Category Filter Pills (Airbnb scrollable/wrap style) -->
+      <!-- Category Filter Pills (Airbnb scrollable/wrap + Linear high-contrast active state) -->
       <div v-if="!initialCategory" class="category-tabs-wrap" role="tablist" aria-label="Category filter tabs">
         <button
           class="category-tab"
-          :class="{ active: selectedCategory === '' }"
+          :class="{ 'is-active': selectedCategory === '' }"
           role="tab"
           :aria-selected="selectedCategory === ''"
           @click="selectedCategory = ''"
@@ -180,7 +185,7 @@ function selectCategory(slug: string) {
           v-for="cat in CATEGORIES"
           :key="cat.slug"
           class="category-tab"
-          :class="{ active: selectedCategory === cat.slug }"
+          :class="{ 'is-active': selectedCategory === cat.slug }"
           role="tab"
           :aria-selected="selectedCategory === cat.slug"
           @click="selectCategory(cat.slug)"
@@ -190,35 +195,37 @@ function selectCategory(slug: string) {
         </button>
       </div>
 
-      <!-- Secondary Controls Row -->
+      <!-- Secondary Controls Row (Type, Pricing, Sort, Reset) -->
       <div class="secondary-controls-row">
-        <div class="control-group">
-          <label class="control-label" for="type-filter">Type:</label>
-          <select id="type-filter" v-model="selectedType" class="control-select">
-            <option value="">All Types</option>
-            <option v-for="t in availableTypes" :key="t" :value="t">
-              {{ t }}
-            </option>
-          </select>
-        </div>
+        <div class="select-filters-group">
+          <div class="control-group">
+            <label class="control-label" for="type-filter">Type</label>
+            <select id="type-filter" v-model="selectedType" class="control-select">
+              <option value="">All Types</option>
+              <option v-for="t in availableTypes" :key="t" :value="t">
+                {{ t }}
+              </option>
+            </select>
+          </div>
 
-        <div class="control-group">
-          <label class="control-label" for="pricing-filter">Pricing:</label>
-          <select id="pricing-filter" v-model="selectedPricing" class="control-select">
-            <option value="">All Pricing</option>
-            <option value="free">Free</option>
-            <option value="freemium">Freemium</option>
-            <option value="paid">Paid</option>
-            <option value="unknown">Unknown</option>
-          </select>
-        </div>
+          <div class="control-group">
+            <label class="control-label" for="pricing-filter">Pricing</label>
+            <select id="pricing-filter" v-model="selectedPricing" class="control-select">
+              <option value="">All Pricing</option>
+              <option value="free">Free</option>
+              <option value="freemium">Freemium</option>
+              <option value="paid">Paid</option>
+              <option value="unknown">Unknown</option>
+            </select>
+          </div>
 
-        <div class="control-group sort-control">
-          <label class="control-label" for="sort-order">Sort:</label>
-          <select id="sort-order" v-model="sortBy" class="control-select">
-            <option value="title-asc">A to Z</option>
-            <option value="title-desc">Z to A</option>
-          </select>
+          <div class="control-group">
+            <label class="control-label" for="sort-order">Sort</label>
+            <select id="sort-order" v-model="sortBy" class="control-select">
+              <option value="title-asc">A to Z</option>
+              <option value="title-desc">Z to A</option>
+            </select>
+          </div>
         </div>
 
         <button
@@ -226,18 +233,19 @@ function selectCategory(slug: string) {
           class="reset-filters-btn"
           @click="resetFilters"
         >
-          Reset filters
+          <span>Reset Filters</span>
+          <span class="reset-count tabular-nums">({{ activeFilterCount }})</span>
         </button>
       </div>
     </div>
 
-    <!-- Active Filter Status & Count -->
+    <!-- Active Filter Status & Count Line -->
     <div class="directory-status-line">
       <span class="results-count tabular-nums">
         Showing <strong>{{ filteredResources.length }}</strong> of {{ allResources.length }} {{ allResources.length === 1 ? 'resource' : 'resources' }}
       </span>
 
-      <div class="active-chips">
+      <div v-if="hasActiveFilters" class="active-chips">
         <span v-if="selectedCategory && !initialCategory" class="active-chip">
           Category: {{ getCategory(selectedCategory).name }}
           <button class="chip-remove" aria-label="Remove category filter" @click="selectedCategory = ''">×</button>
@@ -257,8 +265,8 @@ function selectCategory(slug: string) {
       </div>
     </div>
 
-    <!-- Resources Listing -->
-    <div v-if="filteredResources.length > 0" class="directory-list">
+    <!-- Resources Strict Grid -->
+    <div v-if="filteredResources.length > 0" class="directory-grid">
       <ResourceCard
         v-for="res in filteredResources"
         :key="res.urlPath"
@@ -266,7 +274,7 @@ function selectCategory(slug: string) {
       />
     </div>
 
-    <!-- Duolingo-inspired friendly empty state -->
+    <!-- Minimalist Empty State -->
     <div v-else class="directory-empty-state">
       <div class="empty-icon-box">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -276,19 +284,19 @@ function selectCategory(slug: string) {
           <line x1="8" y1="11" x2="14" y2="11"/>
         </svg>
       </div>
-      <h3 class="empty-heading">No matching resources</h3>
+      <h3 class="empty-heading">No matching resources found</h3>
       <p class="empty-message">
         {{
           allResources.length === 0
-            ? 'The resource collection is currently being cataloged. Resources will be published here.'
+            ? 'The resource collection is currently being cataloged.'
             : 'No resources match your active search terms or selected filters.'
         }}
       </p>
       <div class="empty-button-row">
-        <button v-if="hasActiveFilters" class="empty-btn-secondary" @click="resetFilters">
+        <button v-if="hasActiveFilters" class="btn-solid-small" @click="resetFilters">
           Clear Filters
         </button>
-        <a href="/contribute" class="empty-btn-primary">
+        <a href="/contribute" class="btn-outline-small">
           Suggest a Resource
         </a>
       </div>
@@ -298,20 +306,23 @@ function selectCategory(slug: string) {
 
 <style scoped>
 .directory-view {
-  margin: 1.5rem 0 3.5rem 0;
+  margin: 1.5rem 0 3rem 0;
 }
 
+/* Filter Panel Container */
 .filter-panel {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  padding: 1.15rem;
-  background-color: var(--vp-c-bg-alt);
+  gap: 1rem;
+  padding: 1.25rem;
+  background-color: var(--vp-c-bg-elv);
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
+  border-radius: var(--hub-card-radius, 8px);
+  box-shadow: var(--hub-card-shadow);
   margin-bottom: 1.25rem;
 }
 
+/* Search Bar Wrap */
 .search-bar-wrap {
   position: relative;
   display: flex;
@@ -321,37 +332,54 @@ function selectCategory(slug: string) {
 
 .search-icon {
   position: absolute;
-  left: 0.85rem;
+  left: 0.95rem;
   color: var(--vp-c-text-3);
   pointer-events: none;
 }
 
 .directory-search-input {
   width: 100%;
-  padding: 0.55rem 2rem 0.55rem 2.35rem;
-  font-size: 0.9rem;
+  padding: 0.65rem 3rem 0.65rem 2.6rem;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
-  border-radius: 5px;
+  border-radius: 6px;
   color: var(--vp-c-text-1);
-  outline: none;
-  transition: border-color var(--hub-transition);
+  font-size: 0.88rem;
+  font-family: var(--vp-font-family-base);
+  transition: border-color var(--hub-transition), box-shadow var(--hub-transition);
 }
 
 .directory-search-input:focus {
-  border-color: var(--vp-c-text-1);
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 1px var(--vp-c-brand-1);
+  outline: none;
+}
+
+.search-trailing {
+  position: absolute;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.key-indicator {
+  font-size: 0.72rem;
+  font-family: var(--vp-font-family-mono);
+  background-color: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 3px;
+  padding: 1px 6px;
+  color: var(--vp-c-text-3);
 }
 
 .clear-input-btn {
-  position: absolute;
-  right: 0.75rem;
   background: none;
   border: none;
   color: var(--vp-c-text-3);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   cursor: pointer;
+  padding: 0 0.25rem;
   line-height: 1;
-  padding: 2px 6px;
   transition: color var(--hub-transition);
 }
 
@@ -359,146 +387,179 @@ function selectCategory(slug: string) {
   color: var(--vp-c-text-1);
 }
 
-/* Category Tabs (Airbnb discoverability) */
+/* Category Tabs (Active high-contrast Vercel style) */
 .category-tabs-wrap {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  padding-top: 0.25rem;
-}
-
-@media (max-width: 640px) {
-  .category-tabs-wrap {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 0.4rem;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .category-tabs-wrap::-webkit-scrollbar {
-    display: none;
-  }
+  align-items: center;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .category-tab {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.76rem;
-  padding: 0.3rem 0.65rem;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
   color: var(--vp-c-text-2);
   cursor: pointer;
   white-space: nowrap;
-  transition: all var(--hub-transition);
+  flex-shrink: 0;
+  transition: background-color var(--hub-transition), color var(--hub-transition), border-color var(--hub-transition);
 }
 
 .category-tab:hover {
-  border-color: var(--vp-c-text-2);
   color: var(--vp-c-text-1);
+  border-color: var(--vp-c-border-hover);
+  background-color: var(--vp-c-bg-hover);
 }
 
-.category-tab.active {
-  background-color: var(--vp-c-text-1);
-  border-color: var(--vp-c-text-1);
-  color: var(--vp-c-bg);
+/* High-Contrast Active Category Pill */
+.category-tab.is-active {
+  background-color: var(--vp-c-brand-1);
+  color: var(--vp-c-bg) !important;
+  border-color: var(--vp-c-brand-1);
+  font-weight: 600;
 }
 
 .tab-count {
   font-size: 0.7rem;
-  opacity: 0.75;
+  font-family: var(--vp-font-family-mono);
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-3);
+  padding: 1px 5px;
+  border-radius: 3px;
+  transition: background-color var(--hub-transition), color var(--hub-transition);
 }
 
-/* Secondary Controls */
+.category-tab.is-active .tab-count {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--vp-c-bg);
+}
+
+.dark .category-tab.is-active .tab-count {
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #000000;
+}
+
+/* Secondary Controls Row */
 .secondary-controls-row {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
+  flex-wrap: wrap;
   padding-top: 0.65rem;
-  border-top: 1px solid var(--vp-c-border);
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.select-filters-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
 }
 
 .control-group {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .control-label {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--vp-c-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .control-select {
-  padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
+  padding: 0.3rem 0.65rem;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
-  border-radius: 4px;
+  border-radius: 5px;
   color: var(--vp-c-text-1);
-  outline: none;
+  font-size: 0.78rem;
+  font-family: var(--vp-font-family-base);
   cursor: pointer;
   transition: border-color var(--hub-transition);
 }
 
 .control-select:focus {
-  border-color: var(--vp-c-text-1);
+  border-color: var(--vp-c-brand-1);
+  outline: none;
 }
 
 .reset-filters-btn {
-  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background-color: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 5px;
   color: var(--vp-c-text-2);
-  background: none;
-  border: none;
-  padding: 0.2rem 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  margin-left: auto;
+  transition: color var(--hub-transition), border-color var(--hub-transition);
 }
 
 .reset-filters-btn:hover {
   color: var(--vp-c-text-1);
+  border-color: var(--vp-c-border-hover);
+}
+
+.reset-count {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.72rem;
 }
 
 /* Status Line & Active Chips */
 .directory-status-line {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.85rem;
-  margin-bottom: 0.85rem;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.results-count {
   font-size: 0.82rem;
-  color: var(--vp-c-text-3);
-  padding: 0 0.25rem;
+  color: var(--vp-c-text-2);
 }
 
 .results-count strong {
   color: var(--vp-c-text-1);
+  font-weight: 600;
 }
 
 .active-chips {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  flex-wrap: wrap;
 }
 
 .active-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.74rem;
-  background-color: var(--vp-c-bg-alt);
-  color: var(--vp-c-text-2);
-  padding: 1px 7px;
-  border-radius: 3px;
+  font-size: 0.72rem;
+  background-color: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-border);
+  color: var(--vp-c-text-2);
+  padding: 2px 7px;
+  border-radius: 4px;
 }
 
 .chip-remove {
@@ -506,94 +567,109 @@ function selectCategory(slug: string) {
   border: none;
   color: var(--vp-c-text-3);
   cursor: pointer;
-  font-weight: bold;
-  padding: 0 2px;
+  font-size: 0.9rem;
+  padding: 0;
+  line-height: 1;
 }
 
 .chip-remove:hover {
   color: var(--vp-c-text-1);
 }
 
-.directory-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+/* Strict Directory Grid */
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
 }
 
 /* Empty State */
 .directory-empty-state {
-  text-align: center;
   padding: 3.5rem 1.5rem;
-  background-color: var(--vp-c-bg-alt);
-  border: 1px dashed var(--vp-c-border);
-  border-radius: 6px;
+  text-align: center;
+  background-color: var(--vp-c-bg-elv);
+  border: 1px solid var(--vp-c-border);
+  border-radius: var(--hub-card-radius, 8px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .empty-icon-box {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: var(--vp-c-bg-soft);
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--vp-c-bg-soft);
   color: var(--vp-c-text-3);
-  margin-bottom: 0.85rem;
+  margin-bottom: 1rem;
 }
 
 .empty-heading {
   margin: 0 0 0.35rem 0;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--vp-c-text-1);
 }
 
 .empty-message {
-  margin: 0 0 1.35rem 0;
+  margin: 0 auto 1.5rem auto;
+  max-width: 440px;
   font-size: 0.86rem;
-  color: var(--vp-c-text-3);
-  max-width: 46ch;
-  line-height: 1.5;
+  line-height: 1.55;
+  color: var(--vp-c-text-2);
 }
 
 .empty-button-row {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 0.65rem;
-  justify-content: center;
 }
 
-.empty-btn-primary {
-  padding: 0.45rem 1rem;
-  font-size: 0.84rem;
-  font-weight: 500;
-  background-color: var(--vp-c-text-1);
-  color: var(--vp-c-bg);
-  border-radius: 4px;
+.btn-solid-small {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.95rem;
+  background-color: var(--vp-c-brand-1);
+  color: var(--vp-c-bg) !important;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
   text-decoration: none;
   transition: opacity var(--hub-transition);
 }
 
-.empty-btn-primary:hover {
-  opacity: 0.88;
+.btn-solid-small:hover {
+  opacity: 0.9;
 }
 
-.empty-btn-secondary {
-  padding: 0.45rem 1rem;
-  font-size: 0.84rem;
+.btn-outline-small {
+  font-size: 0.8rem;
   font-weight: 500;
-  background-color: var(--vp-c-bg);
+  padding: 0.45rem 0.95rem;
+  background-color: var(--vp-c-bg-elv);
+  color: var(--vp-c-text-1) !important;
   border: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-1);
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
   transition: border-color var(--hub-transition);
 }
 
-.empty-btn-secondary:hover {
-  border-color: var(--vp-c-text-1);
+.btn-outline-small:hover {
+  border-color: var(--vp-c-border-hover);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .directory-grid {
+    grid-template-columns: 1fr;
+  }
+  .secondary-controls-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>

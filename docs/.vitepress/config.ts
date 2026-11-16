@@ -14,8 +14,8 @@ export default defineConfig({
   lastUpdated: true,
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>' }],
-    ['meta', { name: 'theme-color', content: '#111111' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' }],
+    ['meta', { name: 'theme-color', content: '#000000' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Developer Resource Hub' }],
     ['meta', { property: 'og:description', content: 'A curated, high-performance library of developer tools, design resources, APIs, and references.' }],
@@ -28,15 +28,40 @@ export default defineConfig({
 
   themeConfig: {
     siteTitle: 'Developer Resource Hub',
-    logo: {
-      light: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="%23171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>',
-      dark: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="%23f5f5f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>'
-    },
+    logo: '/icon.svg',
 
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Browse', link: '/resources/' },
-      { text: 'Categories', link: '/categories' },
+      { text: 'Directory', link: '/resources/' },
+      {
+        text: 'Categories',
+        items: [
+          {
+            text: 'Engineering & Dev',
+            items: [
+              { text: 'Frontend Development', link: '/resources/frontend/' },
+              { text: 'Backend & APIs', link: '/resources/backend/' },
+              { text: 'AI Tools & Agents', link: '/resources/ai-tools/' },
+              { text: 'Developer Utilities', link: '/resources/utilities/' },
+              { text: 'GitHub & Open Source', link: '/resources/github/' }
+            ]
+          },
+          {
+            text: 'Design & Resources',
+            items: [
+              { text: 'Design & UI', link: '/resources/design/' },
+              { text: 'Learning & Guides', link: '/resources/learning/' },
+              { text: 'Website Inspiration', link: '/resources/inspiration/' },
+              { text: 'Productivity', link: '/resources/productivity/' },
+              { text: 'Miscellaneous', link: '/resources/miscellaneous/' }
+            ]
+          },
+          {
+            items: [
+              { text: 'All Categories Overview', link: '/categories' }
+            ]
+          }
+        ]
+      },
       { text: 'About', link: '/about' },
       { text: 'Contribute', link: '/contribute' }
     ],
@@ -44,28 +69,54 @@ export default defineConfig({
     sidebar: {
       '/resources/': [
         {
-          text: 'Directory',
+          text: 'Explore',
           items: [
-            { text: 'All Resources', link: '/resources/' },
-            { text: 'Categories', link: '/categories' }
+            { text: 'All Resources (251)', link: '/resources/' },
+            { text: 'Category Overview', link: '/categories' }
           ]
         },
         {
-          text: 'Categories',
+          text: 'Engineering & Dev',
           collapsed: false,
-          items: categorySidebarItems
+          items: [
+            { text: 'Frontend Development', link: '/resources/frontend/' },
+            { text: 'Backend & APIs', link: '/resources/backend/' },
+            { text: 'AI Tools & Agents', link: '/resources/ai-tools/' },
+            { text: 'Developer Utilities', link: '/resources/utilities/' },
+            { text: 'GitHub & Open Source', link: '/resources/github/' }
+          ]
         },
         {
-          text: 'Project',
+          text: 'Design & Resources',
+          collapsed: false,
           items: [
-            { text: 'About', link: '/about' },
-            { text: 'Contribute', link: '/contribute' }
+            { text: 'Design & UI', link: '/resources/design/' },
+            { text: 'Learning Resources', link: '/resources/learning/' },
+            { text: 'Website Inspiration', link: '/resources/inspiration/' },
+            { text: 'Productivity', link: '/resources/productivity/' },
+            { text: 'Miscellaneous', link: '/resources/miscellaneous/' }
+          ]
+        },
+        {
+          text: 'Hub Project',
+          collapsed: true,
+          items: [
+            { text: 'About Hub', link: '/about' },
+            { text: 'Contribute a Resource', link: '/contribute' }
           ]
         }
       ],
       '/categories': [
         {
-          text: 'Categories',
+          text: 'Overview',
+          items: [
+            { text: 'All Resources', link: '/resources/' },
+            { text: 'Category Index', link: '/categories' }
+          ]
+        },
+        {
+          text: 'Browse by Category',
+          collapsed: false,
           items: categorySidebarItems
         }
       ]
