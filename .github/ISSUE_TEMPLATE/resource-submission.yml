@@ -1,0 +1,125 @@
+name: Resource Submission
+description: Suggest a new developer tool, website, library, or educational resource.
+title: "[Resource]: "
+labels: ["resource-submission", "needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a resource for the **Developer Resource Hub**!
+        Please fill out the fields below so the community can evaluate and index it.
+
+  - type: input
+    id: resource-name
+    attributes:
+      label: Resource Name
+      description: The official name of the tool, website, or library.
+      placeholder: "e.g., Tailwind CSS"
+    validations:
+      required: true
+
+  - type: input
+    id: original-url
+    attributes:
+      label: Original URL
+      description: The canonical official website or repository URL.
+      placeholder: "https://tailwindcss.com"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Choose the primary category that best fits this resource.
+      options:
+        - Design & UI (design)
+        - Frontend Development (frontend)
+        - Backend & APIs (backend)
+        - AI Tools (ai-tools)
+        - Developer Utilities (utilities)
+        - Learning Resources (learning)
+        - GitHub & Open Source (github)
+        - Website Inspiration (inspiration)
+        - Productivity (productivity)
+        - Miscellaneous (miscellaneous)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: resource-type
+    attributes:
+      label: Resource Type
+      description: The format of this resource.
+      options:
+        - website
+        - tool
+        - github-repository
+        - tutorial
+        - course
+        - documentation
+        - article
+        - video
+        - library
+        - api
+        - other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: pricing
+    attributes:
+      label: Pricing Model
+      description: Is this resource free, freemium, or paid?
+      options:
+        - free
+        - freemium
+        - paid
+        - unknown
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Short Description
+      description: A concise, factual 1-2 sentence description of what this resource provides.
+      placeholder: "A utility-first CSS framework packed with classes that can be composed to build any design."
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Comma-separated lowercase tags for discovery.
+      placeholder: "css, frontend, styling, design-system"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-useful
+    attributes:
+      label: Why is it useful?
+      description: Explain practical workflows or real-world use cases where developers benefit from this resource.
+      placeholder: "Saves massive styling boilerplate, integrates easily with all modern frameworks, and provides great consistency."
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes (Optional)
+      description: Any licensing considerations, caveats, or personal tips.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Contribution Checklist
+      options:
+        - label: I confirmed this is not a duplicate of an existing resource.
+          required: true
+        - label: The resource is functional, active, and beneficial for developers.
+          required: true
