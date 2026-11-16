@@ -13,15 +13,17 @@ dateAdded: "2026-10-19"
 
 # Kubernetes Tutorials
 
-## Overview
+## Why Use It
 
-Kubernetes Tutorials is a documentation that provides official interactive tutorials and walkthroughs for deploying, scaling, and managing containerized apps on kubernetes
+Navigating Kubernetes' complex declarative resource model (Pods, Deployments, Services, Ingresses, PersistentVolumes) can be intimidating without hands-on terminal practice. The official Kubernetes Tutorials portal provides structured, interactive walkthroughs using in-browser Minikube terminals to deploy, scale, and manage containerized applications. It teaches developers how to configure cloud-native infrastructure declaratively using standard kubectl commands.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern learning workflows
-- Streamlining developer tooling and productivity
+- Interactive in-browser Linux terminal sandboxes executing real kubectl commands against live test clusters
+- Step-by-step walkthroughs covering cluster initialization, pod deployment, application scaling, and zero-downtime rolling updates
+- Practical service discovery tutorials demonstrating cluster internal networking, NodePort, and LoadBalancer configurations
+- Declarative configuration management teaching best practices for authoring Kubernetes YAML resource manifests
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-193 (User item #195).
+The authoritative starting point for backend developers, DevOps engineers, and cloud architects deploying containerized applications to Kubernetes.

@@ -13,15 +13,17 @@ dateAdded: "2026-10-09"
 
 # Dark Design
 
-## Overview
+## Why Use It
 
-Dark Design is a website that provides a curated showcase dedicated exclusively to the best dark-mode website designs and interfaces
+Designing effective dark-mode interfaces is fraught with contrast pitfalls, awkward saturated hues, and muddy elevation layers that strain user eyes. Dark Design curates the web's finest dark-themed production websites and UI interfaces, showcasing nuanced grayscale scales, subtle border highlights, and focused typography hierarchies. It serves as an empirical design reference for developers engineering high-contrast, accessible dark palettes.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern inspiration workflows
-- Streamlining developer tooling and productivity
+- Curated gallery of premier dark-mode websites across SaaS, developer tools, fintech, and creative studios
+- Practical reference for layered depth using subtle CSS borders, elevation shadows, and translucent alpha backgrounds
+- High-resolution visual snapshots of real production landing pages and dashboard screens
+- Filterable by product categories to quickly find domain-relevant dark UI patterns
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-134 (User item #136).
+Essential visual benchmark for frontend developers, design engineers, and UI designers building dark-mode systems in Tailwind CSS, CSS Variables, and Radix UI.

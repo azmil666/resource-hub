@@ -13,15 +13,17 @@ dateAdded: "2026-10-23"
 
 # Refactoring.Guru
 
-## Overview
+## Why Use It
 
-Refactoring.Guru is a tool that provides an illustrated, accessible guide to software design patterns, refactoring techniques, and solid principles across multiple languages
+Classic software engineering texts on design patterns are often abstract, academic, and difficult to translate into modern object-oriented code. Refactoring.Guru provides an illustrated, highly visual guide to software design patterns, code smells, refactoring techniques, and SOLID principles. It brings software architecture to life with clear real-world metaphors, UML class diagrams, and multi-language code implementations.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern learning workflows
-- Streamlining developer tooling and productivity
+- Comprehensive coverage of 22 classic Creational, Structural, and Behavioral design patterns
+- Pragmatic catalog of code smells (Bloaters, Object-Orientation Abusers, Dispensables) paired with targeted refactoring recipes
+- Multi-language code implementations with concrete examples in TypeScript, Python, Java, C#, C++, Go, and PHP
+- Visual UML class diagrams clearly illustrating inheritance relationships, interfaces, and composition patterns
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-189 (User item #191).
+Essential architectural reading for software engineers, tech leads, and object-oriented programmers striving for clean, maintainable, and extensible codebases.

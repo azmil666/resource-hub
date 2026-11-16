@@ -15,16 +15,17 @@ dateAdded: "2026-10-10"
 
 # Design Reference Standards
 
-## Overview
+## Why Use It
 
-A benchmark collection indexing foundational design references: Apple (animation), Duolingo (onboarding), Linear (UI), Pentagram (typography), MUJI (minimalism), Airbnb (search/filters), Aesop (art direction), Notion (dashboards), Stripe (layouts), and Framer (micro-interactions).
+Engineering teams often debate subjective UI and UX decisions without clear empirical benchmarks for industry-standard quality. Design Reference Standards indexes canonical, best-in-class product implementations across specific interaction verticals: Apple for fluid physics-based animations, Duolingo for habit-forming gamified onboarding, Linear for keyboard navigation, and Stripe for documentation typography. It provides an authoritative baseline for evaluating interface craft.
 
-## Useful for
+## Key Capabilities
 
-- Establishing visual hierarchy and interaction benchmarks
-- Guiding design systems and typography scales
-- Referencing gold-standard micro-interactions and transitions
+- Curated taxonomy of gold-standard product interfaces categorized by design discipline (animation, onboarding, typography, micro-interactions)
+- Detailed case studies deconstructing why specific industry benchmarks achieve exceptional user retention and ergonomics
+- Direct links to live products and video recordings analyzing interaction states frame by frame
+- Objective criteria for evaluating visual polish, tactile responsiveness, and layout hierarchy
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-039.
+An invaluable compass for product designers, design engineers, and technical founders establishing design systems and product polish standards in modern web and mobile apps.
