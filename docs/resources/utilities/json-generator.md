@@ -14,15 +14,17 @@ dateAdded: "2026-11-09"
 
 # JSON Generator
 
-## Overview
+## Why Use It
 
-JSON Generator is a tool that provides a web tool for generating custom, structured json mock datasets using javascript-like templates
+Manually authoring complex, nested JSON test payloads with relational links and realistic data distributions is time-consuming and error-prone. JSON Generator provides an interactive browser-based templating engine that generates complex, multi-record JSON mock datasets using simple JavaScript-like expressions. It enables developers to define schema loops, randomize conditional attributes, and generate thousands of realistic JSON records in seconds.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern utilities workflows
-- Streamlining developer tooling and productivity
+- Expressive template syntax supporting repeat loops, conditional properties, and embedded JavaScript functions
+- Rich built-in data generators for names, timestamps, coordinates, company profiles, and custom GUIDs
+- Real-time schema evaluation and instant JSON syntax highlighting with one-click export
+- In-browser endpoint generation allowing mock data templates to be consumed directly via temporary REST endpoints
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-106 (User item #108).
+Ideal for frontend developers, QA engineers, and mobile developers simulating complex backend API payloads and stress-testing state stores.

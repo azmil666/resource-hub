@@ -14,16 +14,17 @@ dateAdded: "2026-11-10"
 
 # OpenShorts
 
-## Overview
+## Why Use It
 
-OpenShorts is a lightweight online video utility for trimming, cropping, and formatting video segments into vertical social formats.
+Adapting landscape technical demos, webinars, and developer streams into mobile-friendly vertical video requires tedious manual cropping, keyframing, and subtitle alignment. OpenShorts is a streamlined web utility designed to automate the process of trimming, reframing, and formatting horizontal video recordings into high-impact vertical (9:16) shorts. It eliminates manual video editing overhead with browser-based trimming and automated subtitle rendering.
 
-## Useful for
+## Key Capabilities
 
-- Quick browser-based video clipping without heavy software
-- Cropping horizontal video clips into vertical aspect ratios
-- Content extraction for short-form video platforms
+- Fast browser-based video trimming and 9:16 vertical aspect ratio reframing
+- Automated speech-to-text subtitle generation with customizable font overlays and animated captions
+- Split-screen layout presets allowing simultaneous display of code screencasts and speaker webcams
+- Direct video rendering and export optimized for TikTok, YouTube Shorts, and Instagram Reels
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-006.
+A valuable creator utility for developer advocates, technical educators, and open-source maintainers publishing bite-sized video explainers on social platforms.

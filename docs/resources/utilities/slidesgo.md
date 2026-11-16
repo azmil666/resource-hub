@@ -13,15 +13,17 @@ dateAdded: "2026-11-12"
 
 # Slidesgo
 
-## Overview
+## Why Use It
 
-Slidesgo is a library that provides a massive library of free, customizable presentation templates for google slides and powerpoint
+Engineering leads and technical founders often waste hours formatting slide geometry, typography pairings, and color palettes when preparing conference talks or business proposals. Slidesgo provides a massive library of professionally designed, customizable presentation templates tailored for Google Slides and Microsoft PowerPoint. It allows technical communicators to rapidly adopt cohesive visual themes, infocards, and layout architectures for any speaking engagement.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern utilities workflows
-- Streamlining developer tooling and productivity
+- Thousands of professionally designed presentation decks categorized by topic: tech, business, education, and marketing
+- Direct one-click export into Google Slides and downloadable Microsoft PowerPoint (.pptx) templates
+- Included vector icon packs, infographic layouts, process flowcharts, and customizable timeline diagrams
+- Full thematic consistency with matching color palettes, typography hierarchies, and slide aspect ratios
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-100 (User item #102).
+A reliable presentation resource for engineering managers, tech leads, and developer advocates building polished conference decks and executive roadmap presentations.

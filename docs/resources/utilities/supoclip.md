@@ -16,16 +16,17 @@ dateAdded: "2026-11-13"
 
 # SupoClip
 
-## Overview
+## Why Use It
 
-SupoClip is a command-line and local utility that scans long-form video files, detects highlights and speech peaks, and automates cutting and exporting.
+Scouring through multi-hour conference recordings, livestreams, or coding sessions to find viral moments requires tedious manual scrubbing and timeline editing. SupoClip is an open-source command-line tool and local application that scans long-form video files, detects speech peaks and high-interest highlights using audio heuristics, and automatically cuts them into vertical short-form video clips. It runs entirely on local machines, preserving developer privacy and eliminating third-party API fees.
 
-## Useful for
+## Key Capabilities
 
-- Batch processing local video files into short clips
-- Automating video production without cloud subscriptions
-- Customizing speech-based clipping thresholds
+- Command-line automation scanning local video files and YouTube URLs for automated highlight extraction
+- Speech energy analysis and silence detection algorithms identifying natural speaking boundaries and climactic moments
+- Automated vertical video reframing and center-cropping optimized for YouTube Shorts and TikTok
+- Lightweight, scriptable Python and FFmpeg architecture suitable for headless server-side batch processing
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-036.
+A powerful command-line utility for Python developers, video automation engineers, and content creators building automated short-form video pipelines.
