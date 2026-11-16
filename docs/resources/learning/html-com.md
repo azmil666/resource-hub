@@ -20,7 +20,7 @@ Beginners entering web development often struggle to parse dense W3C specificati
 ## Key Capabilities
 
 - Clear, beginner-friendly guides explaining HTML document anatomy, head metadata, tags, and attributes
-- Comprehensive reference tables detailing semantic HTML5 tags (<article>, <section>, <nav>, <aside>)
+- Comprehensive reference tables detailing semantic HTML5 tags (`<article>`, `<section>`, `<nav>`, `<aside>`)
 - Practical tutorials covering tables, forms, media embeds, hyperlinks, and document accessibility
 - Downloadable PDF cheat sheets summarizing HTML tags and common CSS properties for quick desk reference
 

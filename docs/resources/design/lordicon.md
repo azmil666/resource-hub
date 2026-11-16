@@ -24,7 +24,7 @@ Static icons often fail to deliver engaging feedback during user interactions li
 
 - 8,900+ animated vector icons covering business, interface, multimedia, and celebratory themes
 - Powered by Lottie JSON, ensuring lightweight vector animations that scale infinitely without pixelation
-- Declarative interaction triggers: play on hover, click, viewport entry, or state morphing via Web Component (<lord-icon>)
+- Declarative interaction triggers: play on hover, click, viewport entry, or state morphing via Web Component (`<lord-icon>`)
 - In-browser customization of stroke widths, animation timing, and multi-color palettes prior to export
 
 ## Stack Fit & Workflow

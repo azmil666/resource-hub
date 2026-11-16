@@ -21,7 +21,7 @@ Writing raw WebGL or Three.js code for 3D and WebXR experiences involves complex
 
 ## Key Capabilities
 
-- Declarative HTML syntax (<a-scene>, <a-entity>, <a-box>) enabling rapid 3D scene scaffolding
+- Declarative HTML syntax (`<a-scene>`, `<a-entity>`, `<a-box>`) enabling rapid 3D scene scaffolding
 - Powerful Entity-Component-System (ECS) architecture providing modular, reusable physics, animation, and interaction behaviors
 - Cross-platform WebXR support out of the box for desktop VR headsets (Meta Quest, HTC Vive), mobile AR, and standard browsers
 - Seamless interoperability with existing web frameworks (React, Vue) and standard DOM APIs

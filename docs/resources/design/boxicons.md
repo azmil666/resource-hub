@@ -21,7 +21,7 @@ Finding a comprehensive, visually cohesive icon system that supports regular, so
 ## Key Capabilities
 
 - 1,600+ icons organized across Regular, Solid, and brand Logo categories on a standard 24px grid
-- Flexible distribution formats: standalone SVG files, web component customs (<box-icon>), and CSS web fonts
+- Flexible distribution formats: standalone SVG files, web component customs (`<box-icon>`), and CSS web fonts
 - Built-in CSS animations providing smooth hover effects, spinning loaders, and pulse transitions out of the box
 - Minimal asset footprint with zero external dependencies, compatible with tree-shaking bundlers
 
