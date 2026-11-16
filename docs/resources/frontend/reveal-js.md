@@ -9,6 +9,7 @@ tags:
   - frontend
   - javascript
 status: "published"
+dateAdded: "2026-10-02"
 ---
 
 # Reveal.js

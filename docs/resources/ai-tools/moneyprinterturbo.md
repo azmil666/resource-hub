@@ -6,11 +6,11 @@ type: "github-repository"
 url: "https://github.com/harry0703/MoneyPrinterTurbo"
 pricing: "free"
 tags:
-  - video-generation
-  - ai-video
+  - video
   - automation
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-20"
 ---
 
 # MoneyPrinterTurbo

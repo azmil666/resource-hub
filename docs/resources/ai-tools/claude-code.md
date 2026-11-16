@@ -10,6 +10,7 @@ tags:
   - claude-skill
   - ai-agents
 status: "published"
+dateAdded: "2026-08-07"
 ---
 
 # Claude Code

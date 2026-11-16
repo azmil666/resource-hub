@@ -7,10 +7,10 @@ url: "https://github.com/CapSoftware/Cap"
 pricing: "free"
 tags:
   - screen-recording
-  - loom-alternative
   - video
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-10-30"
 ---
 
 # Cap

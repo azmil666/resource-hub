@@ -9,6 +9,7 @@ tags:
   - productivity
   - open-source
 status: "published"
+dateAdded: "2026-10-31"
 ---
 
 # Cookiecutter Data Science

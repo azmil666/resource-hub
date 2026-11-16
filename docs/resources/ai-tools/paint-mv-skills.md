@@ -12,6 +12,7 @@ tags:
   - creative-coding
   - open-source
 status: "published"
+dateAdded: "2026-08-22"
 ---
 
 # Paint MV Skills

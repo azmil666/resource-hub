@@ -9,6 +9,7 @@ tags:
   - utilities
   - open-source
 status: "published"
+dateAdded: "2026-11-12"
 ---
 
 # Semgrep

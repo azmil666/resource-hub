@@ -7,12 +7,10 @@ url: "https://aframe.io"
 pricing: "free"
 tags:
   - 3d
-  - vr
-  - webxr
   - html
-  - threejs
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-09-21"
 ---
 
 # A-Frame

@@ -12,6 +12,7 @@ tags:
   - python
   - javascript
 status: "published"
+dateAdded: "2026-09-21"
 ---
 
 # 30 Seconds of Code

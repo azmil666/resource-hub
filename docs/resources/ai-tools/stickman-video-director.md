@@ -6,12 +6,13 @@ type: "github-repository"
 url: "https://github.com/kaomei/stickman-video-director"
 pricing: "free"
 tags:
-  - ai-video
+  - video
   - stickman
   - animation
   - humor
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-25"
 ---
 
 # Stickman Video Director

@@ -8,9 +8,9 @@ pricing: "free"
 tags:
   - ai-agents
   - machine-learning
-  - reinforcement-learning
-  - video
+  - videostatus: "published"
 status: "published"
+dateAdded: "2026-10-27"
 ---
 
 # Why AI Agents Are Harder for Learning

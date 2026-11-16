@@ -9,9 +9,10 @@ tags:
   - 3d
   - webgl
   - procedural
-  - node-based
-  - animation
+  - workflow
+  - animationstatus: "published"
 status: "published"
+dateAdded: "2026-09-29"
 ---
 
 # Polygonjs

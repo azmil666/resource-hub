@@ -10,6 +10,7 @@ tags:
   - video
   - typescript
 status: "published"
+dateAdded: "2026-10-26"
 ---
 
 # TypeScript - Programming with Mosh

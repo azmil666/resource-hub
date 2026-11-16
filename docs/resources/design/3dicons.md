@@ -10,6 +10,8 @@ tags:
   - icons
   - 3d
 status: "published"
+dateAdded: "2026-09-12"
+featured: true
 ---
 
 # 3Dicons

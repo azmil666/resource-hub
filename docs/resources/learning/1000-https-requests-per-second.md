@@ -12,6 +12,7 @@ tags:
   - architecture
   - video
 status: "published"
+dateAdded: "2026-10-12"
 ---
 
 # 1000 HTTPS Requests Per Second

@@ -10,6 +10,7 @@ tags:
   - video
   - javascript
 status: "published"
+dateAdded: "2026-10-19"
 ---
 
 # JavaScript - Chai aur Code

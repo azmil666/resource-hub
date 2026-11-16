@@ -9,9 +9,9 @@ tags:
   - react
   - video
   - typescript
-  - programmatic-video
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-10-02"
 ---
 
 # Remotion

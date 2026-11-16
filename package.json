@@ -9,7 +9,9 @@
     "docs:preview": "vitepress preview docs",
     "resource:add": "node scripts/add-resource.mjs",
     "resource:import": "node scripts/import-resources.mjs",
-    "resource:validate": "node scripts/validate-resources.mjs"
+    "resource:validate": "node scripts/validate-resources.mjs",
+    "resource:migrate-tags": "node scripts/migrate-tags.mjs",
+    "resource:backfill": "node scripts/backfill-frontmatter.mjs"
   },
   "keywords": [
     "developer-resources",

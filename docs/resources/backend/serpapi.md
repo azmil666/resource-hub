@@ -10,6 +10,7 @@ tags:
   - javascript
   - api
 status: "published"
+dateAdded: "2026-09-09"
 ---
 
 # SerpApi

@@ -6,11 +6,9 @@ type: "tool"
 url: "https://vizard.ai"
 pricing: "freemium"
 tags:
-  - video
-  - clipping
-  - ai-video
-  - subtitles
+  - videostatus: "published"
 status: "published"
+dateAdded: "2026-08-29"
 ---
 
 # Vizard AI

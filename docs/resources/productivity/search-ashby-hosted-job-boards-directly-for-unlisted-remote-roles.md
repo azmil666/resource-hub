@@ -3,11 +3,12 @@ title: "Search Ashby hosted job boards directly for unlisted remote roles"
 description: "site:[jobs.ashbyhq.com]() \"your job title\" remote"
 category: "productivity"
 type: "website"
-url: "http://jobs.ashbyhq.com"
+url: "https://jobs.ashbyhq.com"
 pricing: "unknown"
 tags:
   - productivity
 status: "published"
+dateAdded: "2026-11-05"
 ---
 
 # Search Ashby hosted job boards directly for unlisted remote roles

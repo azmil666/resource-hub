@@ -10,6 +10,7 @@ tags:
   - open-source
   - python
 status: "published"
+dateAdded: "2026-10-23"
 ---
 
 # Python Data Science Handbook

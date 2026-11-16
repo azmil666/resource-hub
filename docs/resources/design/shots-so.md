@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - design
 status: "published"
+dateAdded: "2026-09-19"
 ---
 
 # Shots.so

@@ -9,6 +9,7 @@ tags:
   - learning
   - open-source
 status: "published"
+dateAdded: "2026-10-13"
 ---
 
 # Applied ML

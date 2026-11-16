@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - frontend
 status: "published"
+dateAdded: "2026-09-25"
 ---
 
 # Flutter Component Library

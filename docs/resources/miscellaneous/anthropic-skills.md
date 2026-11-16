@@ -10,6 +10,7 @@ tags:
   - open-source
   - ai-agents
 status: "published"
+dateAdded: "2026-10-27"
 ---
 
 # Anthropic Skills

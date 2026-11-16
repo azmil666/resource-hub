@@ -7,10 +7,9 @@ url: "https://wayin.ai"
 pricing: "freemium"
 tags:
   - video
-  - clipping
-  - ai-video
-  - social-media
+  - social-mediastatus: "published"
 status: "published"
+dateAdded: "2026-08-30"
 ---
 
 # Wayin AI

@@ -6,12 +6,12 @@ type: "github-repository"
 url: "https://github.com/darkroomengineering/lenis"
 pricing: "free"
 tags:
-  - smooth-scroll
   - animation
   - javascript
   - webgl
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-09-26"
 ---
 
 # Lenis

@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - miscellaneous
 status: "published"
+dateAdded: "2026-10-28"
 ---
 
 # CryptoZombies

@@ -7,11 +7,9 @@ url: "https://github.com/chatwoot/chatwoot"
 pricing: "free"
 tags:
   - customer-support
-  - live-chat
-  - intercom-alternative
-  - helpdesk
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-09-02"
 ---
 
 # Chatwoot

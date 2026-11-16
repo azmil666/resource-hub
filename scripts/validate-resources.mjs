@@ -2,6 +2,7 @@
 
 /**
  * Resource Validation Tool for Developer Resource Hub.
+ * Optimized with concurrent batching and strict HTTPS protocol enforcement.
  *
  * Usage:
  *   npm run resource:validate [--check-urls]
@@ -18,7 +19,6 @@ import {
   isValidCategory
 } from './lib/categories.mjs';
 import {
-  slugify,
   normalizeUrl,
   parseMarkdownFrontmatter,
   getAllResourceFiles
@@ -28,6 +28,53 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const RESOURCES_DIR = path.resolve(ROOT_DIR, 'docs', 'resources');
+
+const CONCURRENCY_LIMIT = 15;
+const REQUEST_TIMEOUT_MS = 5000;
+
+async function checkUrlBatch(urlEntries) {
+  const results = [];
+  const queue = [...urlEntries];
+
+  async function worker() {
+    while (queue.length > 0) {
+      const item = queue.shift();
+      if (!item) break;
+      const [normUrl, file] = item;
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+      try {
+        const res = await fetch(normUrl, {
+          method: 'HEAD',
+          signal: controller.signal,
+          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DeveloperResourceHub/1.0)' }
+        }).catch(() => {
+          return fetch(normUrl, {
+            method: 'GET',
+            signal: controller.signal,
+            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DeveloperResourceHub/1.0)' }
+          });
+        });
+        clearTimeout(timer);
+
+        if (!res.ok && res.status !== 403 && res.status !== 401 && res.status !== 429) {
+          results.push({ file, message: `External URL returned HTTP ${res.status}: ${normUrl}` });
+        }
+      } catch (err) {
+        clearTimeout(timer);
+        results.push({
+          file,
+          message: `External URL unreachable (${err.name || err.message}): ${normUrl}`
+        });
+      }
+    }
+  }
+
+  const workers = Array.from({ length: Math.min(CONCURRENCY_LIMIT, urlEntries.length) }, () => worker());
+  await Promise.all(workers);
+  return results;
+}
 
 async function main() {
   const args = process.argv.slice(2);
@@ -111,6 +158,11 @@ async function main() {
         file: relativePath,
         message: `Invalid status "${frontmatter.status}". Valid: ${VALID_STATUSES.join(', ')}`
       });
+    } else if (frontmatter.status === 'needs-review') {
+      warnings.push({
+        file: relativePath,
+        message: `Resource is flagged with status "needs-review" (excluded from live directory).`
+      });
     }
 
     // 6. Validate tags
@@ -122,11 +174,14 @@ async function main() {
       }
     }
 
-    // 7. Validate URL format and uniqueness
+    // 7. Validate URL format and strictly enforce HTTPS
     if (frontmatter.url) {
       const trimmed = String(frontmatter.url).trim();
-      if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
-        errors.push({ file: relativePath, message: `URL must begin with http:// or https://: "${trimmed}"` });
+      if (!trimmed.startsWith('https://')) {
+        errors.push({
+          file: relativePath,
+          message: `Insecure URL protocol. Must use secure https://: "${trimmed}"`
+        });
       } else {
         try {
           new URL(trimmed);
@@ -141,7 +196,7 @@ async function main() {
           file: relativePath,
           message: `Duplicate URL "${trimmed}" (normalized: "${normalized}") previously defined in ${seenUrls.get(normalized)}`
         });
-      } else {
+      } else if (frontmatter.status === 'published') {
         seenUrls.set(normalized, relativePath);
       }
     }
@@ -161,17 +216,14 @@ async function main() {
     for (const match of linkMatches) {
       const target = match[2].trim();
       if (target.startsWith('/') || target.startsWith('./') || target.startsWith('../')) {
-        // Internal link check
         const cleanTarget = target.split('#')[0].split('?')[0];
         if (cleanTarget && !cleanTarget.endsWith('.html') && !cleanTarget.endsWith('.md') && !cleanTarget.endsWith('/')) {
-          // Verify if file or directory exists
           const resolved = target.startsWith('/')
             ? path.join(ROOT_DIR, 'docs', target)
             : path.resolve(path.dirname(filePath), target);
           try {
             await fs.access(resolved);
           } catch {
-            // Check if .md exists
             try {
               await fs.access(`${resolved}.md`);
             } catch {
@@ -186,39 +238,13 @@ async function main() {
     }
   }
 
-  // Optional live URL health check
+  // Concurrent live URL health check
   if (checkLiveUrls && seenUrls.size > 0) {
-    console.log(`Checking ${seenUrls.size} external URLs (timeout: 5s each)...`);
-    for (const [normUrl, file] of seenUrls.entries()) {
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 5000);
-        const res = await fetch(normUrl, {
-          method: 'HEAD',
-          signal: controller.signal,
-          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DeveloperResourceHub/1.0)' }
-        }).catch(() => {
-          // Fallback to GET in case HEAD is rejected
-          return fetch(normUrl, {
-            method: 'GET',
-            signal: controller.signal,
-            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DeveloperResourceHub/1.0)' }
-          });
-        });
-        clearTimeout(timeout);
-        if (!res.ok && res.status !== 403 && res.status !== 401) {
-          warnings.push({
-            file,
-            message: `External URL returned HTTP ${res.status}: ${normUrl}`
-          });
-        }
-      } catch (err) {
-        warnings.push({
-          file,
-          message: `External URL check failed (${err.name || err.message}): ${normUrl}`
-        });
-      }
-    }
+    console.log(`Checking ${seenUrls.size} external URLs (Concurrency: ${CONCURRENCY_LIMIT})...`);
+    const startTime = Date.now();
+    const urlWarnings = await checkUrlBatch(Array.from(seenUrls.entries()));
+    warnings.push(...urlWarnings);
+    console.log(`URL verification completed in ${((Date.now() - startTime) / 1000).toFixed(1)}s\n`);
   }
 
   // Output report

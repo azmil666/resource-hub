@@ -9,6 +9,8 @@ tags:
   - ai-tools
   - ai-agents
 status: "published"
+dateAdded: "2026-08-05"
+featured: true
 ---
 
 # Bolt.new

@@ -7,10 +7,10 @@ url: "https://www.choppity.com"
 pricing: "freemium"
 tags:
   - video
-  - clipping
   - podcasts
-  - ai-editor
+  - ai-toolsstatus: "published"
 status: "published"
+dateAdded: "2026-08-06"
 ---
 
 # Choppity

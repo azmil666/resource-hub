@@ -6,11 +6,12 @@ type: "github-repository"
 url: "https://github.com/storytold/craft-anything"
 pricing: "free"
 tags:
-  - ai-agent
+  - ai-agents
   - content-creation
   - developer-tools
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-09"
 ---
 
 # Craft Anything

@@ -3,11 +3,12 @@ title: "Search Lever hosted job boards directly for unlisted remote roles"
 description: "site:[jobs.lever.co]() \"your job title\" remote"
 category: "productivity"
 type: "website"
-url: "http://jobs.lever.co"
+url: "https://jobs.lever.co"
 pricing: "unknown"
 tags:
   - productivity
 status: "published"
+dateAdded: "2026-11-06"
 ---
 
 # Search Lever hosted job boards directly for unlisted remote roles

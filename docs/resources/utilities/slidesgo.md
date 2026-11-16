@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - utilities
 status: "published"
+dateAdded: "2026-11-12"
 ---
 
 # Slidesgo

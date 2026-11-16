@@ -12,6 +12,7 @@ tags:
   - storytelling
   - open-source
 status: "published"
+dateAdded: "2026-08-30"
 ---
 
 # Vox Explainer Skill

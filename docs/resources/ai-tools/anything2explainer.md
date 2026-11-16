@@ -8,10 +8,11 @@ pricing: "free"
 tags:
   - claude-skill
   - explainer
-  - video-generation
-  - ai
-  - open-source
+  - video
+  - ai-tools
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-02"
 ---
 
 # Anything2Explainer

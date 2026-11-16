@@ -12,6 +12,7 @@ tags:
   - google
   - open-source
 status: "published"
+dateAdded: "2026-08-10"
 ---
 
 # Elephant Goldfish Model

@@ -9,6 +9,7 @@ tags:
   - learning
   - python
 status: "published"
+dateAdded: "2026-10-15"
 ---
 
 # Django Getting Started

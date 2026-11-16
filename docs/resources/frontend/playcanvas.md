@@ -8,10 +8,10 @@ pricing: "freemium"
 tags:
   - 3d
   - webgl
-  - webgpu
   - game-engine
-  - collaboration
+  - collaborationstatus: "published"
 status: "published"
+dateAdded: "2026-09-29"
 ---
 
 # PlayCanvas

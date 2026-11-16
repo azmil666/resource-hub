@@ -9,6 +9,7 @@ tags:
   - ai-tools
   - api
 status: "published"
+dateAdded: "2026-08-12"
 ---
 
 # Gemini API

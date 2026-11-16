@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - ai-tools
 status: "published"
+dateAdded: "2026-08-20"
 ---
 
 # Ollama

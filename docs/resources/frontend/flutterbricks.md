@@ -8,6 +8,7 @@ pricing: "unknown"
 tags:
   - frontend
 status: "published"
+dateAdded: "2026-09-25"
 ---
 
 # FlutterBricks

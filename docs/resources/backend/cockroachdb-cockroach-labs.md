@@ -9,6 +9,7 @@ tags:
   - backend
   - database
 status: "published"
+dateAdded: "2026-09-03"
 ---
 
 # CockroachDB (Cockroach Labs)

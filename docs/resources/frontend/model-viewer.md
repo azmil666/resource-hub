@@ -9,9 +9,10 @@ tags:
   - 3d
   - webgl
   - augmented-reality
-  - web-components
-  - open-source
+  - frontend
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-09-27"
 ---
 
 # Model Viewer

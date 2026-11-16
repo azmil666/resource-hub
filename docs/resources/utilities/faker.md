@@ -9,6 +9,7 @@ tags:
   - utilities
   - javascript
 status: "published"
+dateAdded: "2026-11-08"
 ---
 
 # Faker

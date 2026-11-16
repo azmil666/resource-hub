@@ -9,6 +9,7 @@ tags:
   - design
   - svg
 status: "published"
+dateAdded: "2026-09-12"
 ---
 
 # Book of Shapes

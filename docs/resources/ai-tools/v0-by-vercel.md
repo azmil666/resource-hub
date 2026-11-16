@@ -10,6 +10,8 @@ tags:
   - react
   - css
 status: "published"
+dateAdded: "2026-08-28"
+featured: true
 ---
 
 # v0 by Vercel

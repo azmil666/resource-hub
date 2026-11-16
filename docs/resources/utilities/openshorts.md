@@ -7,10 +7,9 @@ url: "https://www.openshorts.app"
 pricing: "free"
 tags:
   - video
-  - clipping
-  - shorts
-  - youtube
+  - youtubestatus: "published"
 status: "published"
+dateAdded: "2026-11-10"
 ---
 
 # OpenShorts

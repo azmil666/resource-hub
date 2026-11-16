@@ -13,6 +13,7 @@ tags:
   - explainer
   - video
 status: "published"
+dateAdded: "2026-08-07"
 ---
 
 # Claude Code skill for vid to not look like ai

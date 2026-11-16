@@ -6,11 +6,12 @@ type: "website"
 url: "https://openart.ai"
 pricing: "freemium"
 tags:
-  - ai-art
+  - ai-tools
   - image-generation
-  - ai-video
-  - prompts
+  - video
+  - promptsstatus: "published"
 status: "published"
+dateAdded: "2026-08-21"
 ---
 
 # OpenArt AI

@@ -8,10 +8,11 @@ pricing: "free"
 tags:
   - security
   - privacy
-  - audio-analysis
+  - audio
   - hardware
-  - video
+  - videostatus: "published"
 status: "published"
+dateAdded: "2026-10-24"
 ---
 
 # Sound Leaks Your Exact Location

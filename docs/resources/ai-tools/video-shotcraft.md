@@ -12,6 +12,7 @@ tags:
   - video
   - open-source
 status: "published"
+dateAdded: "2026-08-28"
 ---
 
 # Video Shotcraft

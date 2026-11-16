@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - learning
 status: "published"
+dateAdded: "2026-10-24"
 ---
 
 # roadmap.sh

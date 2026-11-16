@@ -10,6 +10,7 @@ tags:
   - api
   - 3d
 status: "published"
+dateAdded: "2026-08-09"
 ---
 
 # ContentCore

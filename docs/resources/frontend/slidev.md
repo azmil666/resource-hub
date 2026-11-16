@@ -9,6 +9,7 @@ tags:
   - frontend
   - vue
 status: "published"
+dateAdded: "2026-10-03"
 ---
 
 # Slidev

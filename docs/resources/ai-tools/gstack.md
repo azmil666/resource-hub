@@ -10,6 +10,7 @@ tags:
   - open-source
   - claude-skill
 status: "published"
+dateAdded: "2026-08-14"
 ---
 
 # GStack

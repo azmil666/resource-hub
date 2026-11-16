@@ -9,6 +9,7 @@ tags:
   - backend
   - database
 status: "published"
+dateAdded: "2026-09-11"
 ---
 
 # W3Schools SQL Tutorial

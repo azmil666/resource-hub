@@ -6,11 +6,12 @@ type: "github-repository"
 url: "https://github.com/Anil-matcha/Open-Generative-AI"
 pricing: "free"
 tags:
-  - generative-ai
+  - ai-tools
   - image-generation
-  - ai-video
-  - open-source
+  - video
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-21"
 ---
 
 # Open Generative AI

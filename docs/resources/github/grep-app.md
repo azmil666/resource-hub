@@ -8,6 +8,7 @@ pricing: "unknown"
 tags:
   - github
 status: "published"
+dateAdded: "2026-10-08"
 ---
 
 # grep.app

@@ -11,7 +11,9 @@ const featuredResources = computed(() => {
 });
 
 const recentResources = computed(() => {
-  return allResources.slice(0, 6);
+  return [...allResources]
+    .sort((a, b) => (b.dateAdded || '').localeCompare(a.dateAdded || ''))
+    .slice(0, 6);
 });
 
 function openVitePressSearch() {

@@ -10,6 +10,8 @@ tags:
   - css
   - javascript
 status: "published"
+dateAdded: "2026-09-23"
+featured: true
 ---
 
 # CodePen

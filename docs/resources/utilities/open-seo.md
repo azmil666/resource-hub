@@ -8,10 +8,9 @@ pricing: "free"
 tags:
   - seo
   - analytics
-  - keyword-research
-  - semrush-alternative
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-11-10"
 ---
 
 # Open SEO

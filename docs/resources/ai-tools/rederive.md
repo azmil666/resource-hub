@@ -9,9 +9,9 @@ tags:
   - claude-skill
   - learning
   - developer-tools
-  - codebase
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-23"
 ---
 
 # Rederive

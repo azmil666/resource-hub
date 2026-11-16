@@ -8,10 +8,9 @@ pricing: "freemium"
 tags:
   - 3d
   - unity
-  - blender
-  - webgl
-  - webxr
+  - webglstatus: "published"
 status: "published"
+dateAdded: "2026-09-27"
 ---
 
 # Needle Engine

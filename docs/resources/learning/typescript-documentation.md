@@ -9,6 +9,7 @@ tags:
   - learning
   - typescript
 status: "published"
+dateAdded: "2026-10-25"
 ---
 
 # TypeScript Documentation

@@ -7,10 +7,10 @@ url: "https://github.com/OpenHands/OpenHands"
 pricing: "free"
 tags:
   - ai-agents
-  - coding-assistant
-  - autonomous-agent
-  - open-source
+  - ai-tools
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-22"
 ---
 
 # OpenHands

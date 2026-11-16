@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - inspiration
 status: "published"
+dateAdded: "2026-10-10"
 ---
 
 # It's All Widgets!

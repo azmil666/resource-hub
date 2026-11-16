@@ -8,10 +8,10 @@ pricing: "free"
 tags:
   - 3d
   - webgl
-  - webgpu
   - game-engine
-  - javascript
+  - javascriptstatus: "published"
 status: "published"
+dateAdded: "2026-09-22"
 ---
 
 # Babylon.js

@@ -6,11 +6,11 @@ type: "github-repository"
 url: "https://github.com/calcom/cal.diy"
 pricing: "free"
 tags:
-  - scheduling
-  - calendly-alternative
-  - calendar
-  - open-source
+  - productivity
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-10-30"
+featured: true
 ---
 
 # Cal.com

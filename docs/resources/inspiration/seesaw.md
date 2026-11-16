@@ -8,6 +8,7 @@ pricing: "unknown"
 tags:
   - inspiration
 status: "published"
+dateAdded: "2026-10-11"
 ---
 
 # SEESAW

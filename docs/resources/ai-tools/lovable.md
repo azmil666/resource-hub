@@ -9,6 +9,7 @@ tags:
   - ai-tools
   - react
 status: "published"
+dateAdded: "2026-08-18"
 ---
 
 # Lovable

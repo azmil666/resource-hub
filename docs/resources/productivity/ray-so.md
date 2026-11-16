@@ -8,6 +8,8 @@ pricing: "free"
 tags:
   - productivity
 status: "published"
+dateAdded: "2026-11-04"
+featured: true
 ---
 
 # Ray.so

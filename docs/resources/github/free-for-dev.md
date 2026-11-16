@@ -8,6 +8,7 @@ pricing: "freemium"
 tags:
   - github
 status: "published"
+dateAdded: "2026-10-07"
 ---
 
 # Free for Dev

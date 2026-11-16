@@ -7,11 +7,11 @@ url: "https://github.com/zhouxiaoka/autoclip"
 pricing: "free"
 tags:
   - video
-  - clipping
   - youtube
   - automation
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-11-07"
 ---
 
 # AutoClip

@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - frontend
 status: "published"
+dateAdded: "2026-10-02"
 ---
 
 # Shader Dev

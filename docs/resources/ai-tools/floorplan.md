@@ -6,12 +6,12 @@ type: "github-repository"
 url: "https://github.com/haydenschmitty/floorplan"
 pricing: "free"
 tags:
-  - codebase-map
-  - claude
-  - codex
+  - developer-tools
+  - ai-tools
   - visualization
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-11"
 ---
 
 # Floorplan

@@ -7,10 +7,10 @@ url: "https://github.com/Louis-CFM/coucou"
 pricing: "free"
 tags:
   - workflow
-  - team-workspace
-  - flow-management
-  - open-source
+  - collaboration
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-10-31"
 ---
 
 # Coucou

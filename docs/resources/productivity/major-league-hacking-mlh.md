@@ -8,6 +8,7 @@ pricing: "unknown"
 tags:
   - productivity
 status: "published"
+dateAdded: "2026-11-03"
 ---
 
 # Major League Hacking (MLH)

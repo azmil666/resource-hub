@@ -12,6 +12,7 @@ tags:
   - inspiration
   - showcase
 status: "published"
+dateAdded: "2026-10-10"
 ---
 
 # Mesh3D Gallery

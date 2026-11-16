@@ -11,6 +11,7 @@ tags:
   - claude-skill
   - ai-agents
 status: "published"
+dateAdded: "2026-08-16"
 ---
 
 # Learn Claude Code

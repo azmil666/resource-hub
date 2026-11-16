@@ -7,11 +7,11 @@ url: "https://github.com/FujiwaraChoki/supoclip"
 pricing: "free"
 tags:
   - video
-  - clipping
   - automation
   - cli
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-11-13"
 ---
 
 # SupoClip

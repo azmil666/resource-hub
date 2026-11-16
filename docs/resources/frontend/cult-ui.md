@@ -7,11 +7,11 @@ url: "https://github.com/nolly-studio/cult-ui"
 pricing: "free"
 tags:
   - react
-  - shadcn
-  - tailwind
+  - frontend
   - micro-interactions
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-09-24"
 ---
 
 # Cult UI

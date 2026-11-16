@@ -8,6 +8,7 @@ pricing: "freemium"
 tags:
   - ai-tools
 status: "published"
+dateAdded: "2026-08-14"
 ---
 
 # Groq

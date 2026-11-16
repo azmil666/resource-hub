@@ -10,6 +10,7 @@ tags:
   - javascript
   - api
 status: "published"
+dateAdded: "2026-10-25"
 ---
 
 # The Modern JavaScript Tutorial (javascript.info)

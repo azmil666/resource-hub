@@ -9,6 +9,7 @@ tags:
   - backend
   - database
 status: "published"
+dateAdded: "2026-09-05"
 ---
 
 # Microsoft Azure SQL / Databases

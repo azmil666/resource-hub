@@ -10,6 +10,8 @@ tags:
   - api
   - database
 status: "published"
+dateAdded: "2026-09-10"
+featured: true
 ---
 
 # Supabase

@@ -8,10 +8,9 @@ pricing: "free"
 tags:
   - project-management
   - agile
-  - kanban
-  - jira-alternative
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-11-04"
 ---
 
 # OpenProject

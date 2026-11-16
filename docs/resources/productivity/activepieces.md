@@ -8,6 +8,7 @@ pricing: "free"
 tags:
   - productivity
 status: "published"
+dateAdded: "2026-10-29"
 ---
 
 # Activepieces

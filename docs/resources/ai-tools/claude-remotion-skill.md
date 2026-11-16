@@ -7,11 +7,11 @@ url: "https://github.com/haidrrrry/claude-remotion-skill"
 pricing: "free"
 tags:
   - claude-skill
-  - remotion
-  - react
   - video
-  - open-source
+  - react
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-08"
 ---
 
 # Claude Remotion Skill

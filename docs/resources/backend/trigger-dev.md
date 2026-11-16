@@ -9,6 +9,7 @@ tags:
   - backend
   - typescript
 status: "published"
+dateAdded: "2026-09-10"
 ---
 
 # Trigger.dev

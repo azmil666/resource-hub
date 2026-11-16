@@ -9,6 +9,7 @@ tags:
   - learning
   - video
 status: "published"
+dateAdded: "2026-10-16"
 ---
 
 # ES6 - Coder's Gyan

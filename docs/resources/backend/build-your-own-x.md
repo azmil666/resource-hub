@@ -10,6 +10,8 @@ tags:
   - open-source
   - database
 status: "published"
+dateAdded: "2026-09-01"
+featured: true
 ---
 
 # Build Your Own X

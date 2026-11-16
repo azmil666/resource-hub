@@ -12,6 +12,7 @@ tags:
   - prompts
   - open-source
 status: "published"
+dateAdded: "2026-08-10"
 ---
 
 # Effective Claude Capabilities (ECC)

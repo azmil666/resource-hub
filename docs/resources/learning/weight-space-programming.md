@@ -7,10 +7,9 @@ url: "https://youtu.be/77hHgDkbtLI"
 pricing: "free"
 tags:
   - machine-learning
-  - neural-networks
-  - deep-learning
-  - video
+  - videostatus: "published"
 status: "published"
+dateAdded: "2026-10-26"
 ---
 
 # Weight Space Programming

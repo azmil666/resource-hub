@@ -7,11 +7,11 @@ url: "https://www.gitskins.com"
 pricing: "free"
 tags:
   - github
-  - profile-readme
   - design
   - badges
-  - templates
+  - templatesstatus: "published"
 status: "published"
+dateAdded: "2026-10-08"
 ---
 
 # GitSkins

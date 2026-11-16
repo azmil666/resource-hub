@@ -10,6 +10,7 @@ tags:
   - video
   - database
 status: "published"
+dateAdded: "2026-09-06"
 ---
 
 # NoSQL - Giraffe Academy

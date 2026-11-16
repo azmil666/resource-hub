@@ -9,6 +9,7 @@ tags:
   - productivity
   - api
 status: "published"
+dateAdded: "2026-10-29"
 ---
 
 # Automatisch

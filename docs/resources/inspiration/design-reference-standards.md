@@ -6,11 +6,11 @@ type: "other"
 url: "https://framer.com"
 pricing: "free"
 tags:
-  - design-systems
+  - design
   - benchmarks
-  - ui-ux
   - inspiration
-status: "needs-review"
+status: "published"
+dateAdded: "2026-10-10"
 ---
 
 # Design Reference Standards

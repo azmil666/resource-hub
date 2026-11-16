@@ -11,6 +11,7 @@ tags:
   - vue
   - javascript
 status: "published"
+dateAdded: "2026-10-03"
 ---
 
 # Shaders

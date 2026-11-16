@@ -6,11 +6,10 @@ type: "tool"
 url: "https://www.ssemble.com"
 pricing: "freemium"
 tags:
-  - video-editor
-  - clipping
-  - subtitles
-  - social-media
+  - video
+  - social-mediastatus: "published"
 status: "published"
+dateAdded: "2026-11-12"
 ---
 
 # Ssemble

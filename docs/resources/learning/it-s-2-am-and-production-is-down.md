@@ -12,6 +12,7 @@ tags:
   - production
   - video
 status: "published"
+dateAdded: "2026-10-18"
 ---
 
 # It's 2 AM and Production is Down

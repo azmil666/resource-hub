@@ -7,11 +7,11 @@ url: "https://github.com/bangtutorial/bang-motion"
 pricing: "free"
 tags:
   - claude-skill
-  - motion-design
   - animation
   - video
-  - open-source
+  - open-sourcestatus: "published"
 status: "published"
+dateAdded: "2026-08-03"
 ---
 
 # Bang Motion

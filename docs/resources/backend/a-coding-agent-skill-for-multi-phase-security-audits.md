@@ -10,6 +10,7 @@ tags:
   - open-source
   - ai-agents
 status: "published"
+dateAdded: "2026-08-31"
 ---
 
 # A coding-agent skill for multi-phase security audits
