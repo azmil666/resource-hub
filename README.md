@@ -1,7 +1,9 @@
 # Developer Resource Hub
 
+[![CI](https://github.com/azmil666/resource-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/azmil666/resource-hub/actions/workflows/ci.yml)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-azmil666%2Fresource--hub-181717?style=flat&logo=github)](https://github.com/azmil666/resource-hub)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![Framework: VitePress](https://img.shields.io/badge/Framework-VitePress%201.6-4b32c3.svg)](https://vitepress.dev/)
 [![Node Version](https://img.shields.io/badge/Node->=18.0.0-339933.svg?logo=node.js)](package.json)
 
@@ -275,13 +277,16 @@ resource-hub/
 ├── scripts/
 │   ├── add-resource.mjs           # Interactive resource creation CLI
 │   ├── import-resources.mjs       # Batch CSV / JSON resource importer
-│   ├── validate-resources.mjs     # Integrity validation script
+│   ├── validate-resources.mjs     # Integrity validation & concurrent URL checking script
+│   ├── migrate-tags.mjs           # Tag consolidation & normalization script
+│   ├── backfill-frontmatter.mjs   # Chronological dates & featured flags backfiller
 │   └── lib/
 │       ├── categories.mjs         # Category registry
 │       ├── csv-parser.mjs         # Zero-dependency RFC 4180 CSV parser
 │       └── resource-utils.mjs     # URL normalization & validation utilities
 ├── templates/
 │   └── resource-template.md       # Canonical Markdown resource template
+├── CODE_OF_CONDUCT.md             # Contributor Covenant Code of Conduct
 ├── CONTRIBUTING.md                # Repository contribution guidelines
 ├── IMPORT_REPORT.md               # Audit report of imported resource collection
 ├── LICENSE                        # MIT License

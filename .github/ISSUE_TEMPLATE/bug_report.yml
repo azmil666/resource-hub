@@ -1,0 +1,56 @@
+name: Bug Report
+description: Report a bug or issue with the website UI, directory search, or maintenance tooling.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please describe the problem so we can fix it.
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Description of the Bug
+      description: A clear and concise description of what the bug is.
+      placeholder: "The filter popover does not dismiss when pressing Escape on Safari."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How can maintainers reproduce the issue?
+      placeholder: |
+        1. Navigate to '/resources/'
+        2. Open the 'Type' filter popover
+        3. Press Escape key
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: "The popover should close and return focus to the trigger button."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser & Environment
+      description: Which browser or platform did you encounter this on?
+      options:
+        - Chrome / Chromium
+        - Safari
+        - Firefox
+        - Edge
+        - Mobile Safari (iOS)
+        - Mobile Chrome (Android)
+        - CLI / Node.js Tooling
+        - Other
+    validations:
+      required: false

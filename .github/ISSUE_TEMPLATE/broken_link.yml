@@ -1,0 +1,46 @@
+name: Broken or Outdated Link
+description: Report a broken, moved, or dead link in the developer catalog.
+title: "[Broken Link]: "
+labels: ["triage", "broken-link"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping keep the **Developer Resource Hub** accurate and up-to-date.
+        Please provide details about the dead or relocated resource below.
+
+  - type: input
+    id: resource-name
+    attributes:
+      label: Resource Name
+      description: The name of the tool, library, or website that is broken.
+      placeholder: "e.g., Coolshapes"
+    validations:
+      required: true
+
+  - type: input
+    id: current-url
+    attributes:
+      label: Current Broken URL
+      description: The URL currently listed in the hub that fails to load or returns HTTP 404.
+      placeholder: "https://example.com/broken-page"
+    validations:
+      required: true
+
+  - type: input
+    id: replacement-url
+    attributes:
+      label: Replacement / Canonical URL (if known)
+      description: If the resource moved to a new domain or repository, provide the updated link.
+      placeholder: "https://example.com/new-home"
+    validations:
+      required: false
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional Context
+      description: What happens when accessing the link (e.g., HTTP 404, domain parked, SSL certificate expired, renamed project)?
+      placeholder: "The site returns 404 Not Found and domain appears parked."
+    validations:
+      required: false
