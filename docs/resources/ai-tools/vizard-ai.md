@@ -13,16 +13,17 @@ dateAdded: "2026-08-29"
 
 # Vizard AI
 
-## Overview
+## Why Use It
 
-Vizard AI is an automated video editing software that repurposes webinars, presentations, and Zoom meetings into ready-to-share social video clips with speaker detection.
+Repurposing long-form webinars, technical talks, and podcast recordings into engaging short-form video requires hours of manual timeline scrubbing, transcript alignment, and framing adjustments. Vizard AI automates the clipping pipeline by analyzing video transcripts, identifying high-signal conversational moments, and cropping speaker video into vertical 9:16 aspect ratios. It automates subtitle synchronization and multi-speaker tracking for high-volume content distribution.
 
-## Useful for
+## Key Capabilities
 
-- Splitting 1-hour webinars into 10+ bite-sized social clips
-- Automated speaker tracking and dynamic video reframing
-- Multi-language transcription and animated captioning
+- Transcript-based semantic analysis identifying compelling soundbites and key presentation highlights
+- Automated dynamic speaker tracking that reframes horizontal 16:9 recordings into vertical 9:16 video
+- Synchronized subtitle burning with customizable fonts, colors, and word-level karaoke animations
+- Batch export engine generating dozens of ready-to-publish social clips from a single source video
 
-## Notes
+## Stack Fit & Workflow
 
-Cataloged from source ID: SRC-007.
+Fits into developer advocacy, podcasting, and media marketing workflows producing short-form video for YouTube Shorts, LinkedIn, TikTok, and Twitter/X.

@@ -15,15 +15,17 @@ dateAdded: "2026-09-02"
 
 # Cloudflare Workers
 
-## Overview
+## Why Use It
 
-Cloudflare Workers is a website that provides a serverless edge computing platform for deploying javascript, typescript, and ai workloads globally with zero cold starts
+Traditional serverless functions (like AWS Lambda) often suffer from noticeable cold starts, centralized routing latencies, and high operational complexity. Cloudflare Workers runs serverless code on Cloudflare's global edge network using lightweight V8 isolates instead of heavy virtual containers, achieving sub-millisecond cold starts globally. It allows developers to execute compute, transform HTTP traffic, and handle API requests directly adjacent to end users.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Sub-millisecond cold-start execution powered by lightweight Google V8 engine isolates
+- Native edge data storage integrations: Workers KV (key-value), D1 (relational SQLite), Hyperdrive, and R2 (object storage)
+- Full support for JavaScript, TypeScript, Python, and WebAssembly (Wasm) runtimes
+- Declarative infrastructure management and fast local development via the Wrangler CLI
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-125 (User item #127).
+The premier edge compute platform for Jamstack sites, API gateways, Remix/Next.js edge runtimes, and low-latency microservices.

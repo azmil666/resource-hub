@@ -15,15 +15,17 @@ dateAdded: "2026-08-26"
 
 # Sub-Agents Directory
 
-## Overview
+## Why Use It
 
-Sub-Agents Directory is a website that provides a curated, browsable collection of over 160 claude code sub-agent prompts and mcp server integrations organized across development categories
+Configuring specialized coding agents with appropriate system instructions, tool definitions, and domain constraints requires repetitive trial-and-error prompt engineering. Sub-Agents Directory catalogues over 160 battle-tested sub-agent prompt templates and Model Context Protocol (MCP) server configurations organized by development domains. It provides engineering teams with structured agent blueprints that can be directly pasted into Claude Code, Cursor, or custom agent harnesses.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Curated directory of 160+ sub-agent configurations spanning security auditing, database migration, refactoring, and UI design
+- Tested Model Context Protocol (MCP) server integration schemas for connecting external developer tools
+- One-click copy-paste prompt structures optimized for Claude Code CLI and custom agent runners
+- Categorized tagging system enabling quick discovery of task-specific agent harnesses
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-162 (User item #164).
+Designed for developers and engineering teams configuring Claude Code, Claude Desktop, Cursor, or agentic CI pipelines.

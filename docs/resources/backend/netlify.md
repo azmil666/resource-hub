@@ -13,15 +13,17 @@ dateAdded: "2026-09-05"
 
 # Netlify
 
-## Overview
+## Why Use It
 
-Netlify is a website that provides a web development and serverless hosting platform for building, deploying, and scaling modern static and jamstack sites
+Deploying modern Jamstack and hybrid frontend applications typically requires stitching together continuous integration pipelines, DNS routing, edge CDN caches, and serverless compute. Netlify provides an integrated web development platform that automates git-triggered builds, preview deployments, global CDN distribution, and serverless functions in a single workflow. It allows teams to ship performant web applications with zero infrastructure maintenance.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Automated continuous deployment connected directly to GitHub, GitLab, or Bitbucket repositories
+- Unique deploy preview URLs generated automatically for every pull request to streamline collaborative QA
+- Built-in serverless and edge functions executing TypeScript and JavaScript without server management
+- Integrated features for form handling, user authentication (Netlify Identity), and split-testing analytics
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-131 (User item #133).
+Pairs naturally with modern frontend frameworks (Astro, Next.js, Nuxt, SvelteKit, Gatsby) for shipping fast web applications and Jamstack sites.

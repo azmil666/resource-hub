@@ -15,15 +15,17 @@ dateAdded: "2026-09-06"
 
 # NoSQL - Giraffe Academy
 
-## Overview
+## Why Use It
 
-NoSQL - Giraffe Academy is a video that provides giraffe academy - mike dane's clear introductory tutorials explaining non-relational database concepts and document stores
+Developers transitioning from traditional relational databases often struggle to understand when and how to model data in non-relational document, key-value, and graph stores. Giraffe Academy's NoSQL video curriculum, hosted by Mike Dane, provides a lucid, first-principles breakdown of non-relational database concepts, schema design tradeoffs, and horizontal scaling mechanics. It gives beginners a clear conceptual framework before adopting specific NoSQL engines.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Conceptual walkthroughs comparing relational (SQL) and non-relational (NoSQL) database paradigms
+- Detailed explanations of core NoSQL data models: document stores, key-value caches, column-family, and graph databases
+- Best practices for denormalized schema design, embedding vs. referencing, and horizontal data partitioning
+- Visual diagrams and straightforward examples accessible to developers of all experience levels
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-175 (User item #177).
+A foundational learning resource for engineers preparing to build applications with MongoDB, DynamoDB, Redis, Firebase, or Cassandra.

@@ -13,15 +13,17 @@ dateAdded: "2026-08-26"
 
 # Stockimg.ai
 
-## Overview
+## Why Use It
 
-Stockimg.ai is a website that provides an all-in-one ai image generation platform for creating custom stock photos, logos, book covers, posters, and illustrations
+Sourcing royalty-free stock imagery or bespoke illustration assets often leads to generic visual cliches, restrictive licensing terms, or expensive design retainers. Stockimg.ai utilizes fine-tuned image generation models categorized by design vertical (such as UI illustrations, book covers, wallpapers, and logos) to produce purpose-built creative assets from natural language prompts. It streamlines asset generation for developers and design teams needing tailored visual components.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern ai-tools workflows
-- Streamlining developer tooling and productivity
+- Domain-specific generation models tuned for stock photography, book covers, UI illustrations, and brand marks
+- Granular aspect ratio and resolution controls tailored to social banners, mobile screens, and print formats
+- Built-in canvas editor for quick post-generation inpainting, background removal, and color adjustments
+- Direct exports in web-ready formats (PNG, JPG, SVG) with commercial licensing rights
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-159 (User item #161).
+Pairs with frontend UI prototyping, static site generators, and content marketing pipelines needing immediate visual asset generation.
