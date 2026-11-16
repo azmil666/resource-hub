@@ -1,6 +1,8 @@
 /**
- * Developer Resource Hub — Vercel & Linear-Inspired Theme
- * High-contrast, minimalist, polished dark-mode-first aesthetic.
+ * Developer Resource Hub — Tier-1 Production Design System
+ * Inspired by Vercel, Linear, and Awwwards.
+ * Monochromatic high-contrast, deep black surfaces, glassmorphic navigation,
+ * precision typography, and physics-based micro-interactions.
  */
 
 :root {
@@ -27,19 +29,29 @@
   --vp-c-gutter: #e4e4e7;
 
   --vp-c-text-1: #09090b;
-  --vp-c-text-2: #71717a;
-  --vp-c-text-3: #a1a1aa;
+  --vp-c-text-2: #64748b;
+  --vp-c-text-3: #94a3b8;
 
   --vp-c-default-1: #09090b;
-  --vp-c-default-2: #71717a;
-  --vp-c-default-3: #a1a1aa;
+  --vp-c-default-2: #64748b;
+  --vp-c-default-3: #94a3b8;
   --vp-c-default-soft: #f4f4f5;
 
-  /* Custom Hub Motion & Surface Variables */
+  /* Motion & Physics Tokens */
+  --ease-smooth-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce-subtle: cubic-bezier(0.34, 1.3, 0.64, 1);
+  --duration-quick: 140ms;
+  --duration-fast: 200ms;
+  --duration-medium: 300ms;
   --hub-transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  --hub-card-radius: 8px;
-  --hub-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --hub-card-shadow-hover: 0 8px 24px -4px rgba(0, 0, 0, 0.08);
+  --hub-card-radius: 10px;
+  --hub-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --hub-card-shadow-hover: 0 12px 28px -6px rgba(0, 0, 0, 0.08);
+
+  /* Glassmorphism Tokens */
+  --hub-glass-bg: rgba(255, 255, 255, 0.82);
+  --hub-glass-border: rgba(0, 0, 0, 0.08);
+  --hub-glass-blur: blur(16px);
 }
 
 .dark {
@@ -51,30 +63,35 @@
 
   /* Deep Black Surfaces */
   --vp-c-bg: #000000;
-  --vp-c-bg-alt: #0a0a0a;
-  --vp-c-bg-elv: #0f0f0f;
-  --vp-c-bg-soft: #141414;
+  --vp-c-bg-alt: #080808;
+  --vp-c-bg-elv: #0c0c0c;
+  --vp-c-bg-soft: #121212;
   --vp-c-bg-hover: #181818;
 
   /* Crisp 1px Separation Borders */
-  --vp-c-border: #222222;
-  --vp-c-border-hover: #383838;
-  --vp-c-divider: #1c1c1c;
-  --vp-c-gutter: #181818;
+  --vp-c-border: #1e1e1e;
+  --vp-c-border-hover: #333333;
+  --vp-c-divider: #181818;
+  --vp-c-gutter: #121212;
 
   /* High-Contrast Crisp Typography */
   --vp-c-text-1: #ededed;
-  --vp-c-text-2: #a1a1a1;
-  --vp-c-text-3: #666666;
+  --vp-c-text-2: #888888;
+  --vp-c-text-3: #555555;
 
   --vp-c-default-1: #ededed;
-  --vp-c-default-2: #a1a1a1;
-  --vp-c-default-3: #666666;
-  --vp-c-default-soft: #141414;
+  --vp-c-default-2: #888888;
+  --vp-c-default-3: #555555;
+  --vp-c-default-soft: #121212;
+
+  /* Glassmorphism Tokens (Dark) */
+  --hub-glass-bg: rgba(10, 10, 10, 0.72);
+  --hub-glass-border: rgba(255, 255, 255, 0.08);
+  --hub-glass-blur: blur(16px);
 
   /* Subtle Card Glow & Elevation */
   --hub-card-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
-  --hub-card-shadow-hover: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 12px 32px -8px rgba(0, 0, 0, 0.7);
+  --hub-card-shadow-hover: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 16px 40px -10px rgba(0, 0, 0, 0.8);
 }
 
 /* ==========================================================================
@@ -172,15 +189,11 @@ p, li {
    ========================================================================== */
 
 .VPNav {
-  border-bottom: 1px solid var(--vp-c-border) !important;
-  background-color: rgba(255, 255, 255, 0.8) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-}
-
-.dark .VPNav {
-  background-color: rgba(0, 0, 0, 0.8) !important;
-  border-bottom: 1px solid var(--vp-c-border) !important;
+  border-bottom: 1px solid var(--hub-glass-border) !important;
+  background-color: var(--hub-glass-bg) !important;
+  backdrop-filter: var(--hub-glass-blur) !important;
+  -webkit-backdrop-filter: var(--hub-glass-blur) !important;
+  transition: border-color var(--hub-transition);
 }
 
 .VPSidebar {
@@ -188,9 +201,27 @@ p, li {
   background-color: var(--vp-c-bg) !important;
 }
 
+/* Sleek Sidebar Active Indicator */
 .VPSidebarItem .text {
   font-size: 0.86rem !important;
   letter-spacing: -0.01em !important;
+  transition: color var(--hub-transition) !important;
+}
+
+.VPSidebarItem.is-active > .item {
+  position: relative;
+}
+
+.VPSidebarItem.is-active > .item::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--vp-c-brand-1);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--vp-c-brand-1);
 }
 
 .VPSidebarItem.is-active > .item > .link > .text {
@@ -218,39 +249,39 @@ p, li {
   --vp-local-search-bg: #0A0A0A;
   --vp-local-search-result-bg: transparent;
   --vp-local-search-result-border: transparent;
-  --vp-local-search-result-selected-bg: #161616;
+  --vp-local-search-result-selected-bg: #141414;
   --vp-local-search-result-selected-border: #282828;
-  --vp-local-search-highlight-bg: rgba(7, 255, 225, 0.18);
-  --vp-local-search-highlight-text: #07FFE1;
+  --vp-local-search-highlight-bg: rgba(255, 255, 255, 0.15);
+  --vp-local-search-highlight-text: #FFFFFF;
 }
 
 .VPLocalSearchBox .backdrop {
-  background: rgba(0, 0, 0, 0.75) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(0, 0, 0, 0.78) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
 }
 
 .VPLocalSearchBox .shell,
 .DocSearch-Modal {
   background-color: #0A0A0A !important;
-  border: 1px solid #282828 !important;
+  border: 1px solid #222222 !important;
   border-radius: 12px !important;
   box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
   padding: 16px !important;
-  max-width: 680px !important;
+  max-width: 660px !important;
 }
 
 .VPLocalSearchBox .search-bar {
-  background-color: #121212 !important;
-  border: 1px solid #282828 !important;
+  background-color: #111111 !important;
+  border: 1px solid #242424 !important;
   border-radius: 8px !important;
   padding: 4px 12px !important;
   transition: border-color var(--hub-transition), box-shadow var(--hub-transition) !important;
 }
 
 .VPLocalSearchBox .search-bar:focus-within {
-  border-color: rgba(7, 255, 225, 0.5) !important;
-  box-shadow: 0 0 0 1px rgba(7, 255, 225, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Force inner search input to be borderless and transparent so only .search-bar highlights */
@@ -302,8 +333,8 @@ p, li {
 
 .VPLocalSearchBox .result:hover,
 .VPLocalSearchBox .result.selected {
-  background-color: #161616 !important;
-  border-color: #282828 !important;
+  background-color: #141414 !important;
+  border-color: #242424 !important;
 }
 
 .VPLocalSearchBox .title.main {
@@ -314,14 +345,14 @@ p, li {
 }
 
 .VPLocalSearchBox .title-icon {
-  color: #07FFE1 !important;
-  opacity: 0.9 !important;
+  color: #FFFFFF !important;
+  opacity: 0.8 !important;
 }
 
 .VPLocalSearchBox .titles mark,
 .VPLocalSearchBox .excerpt mark {
-  background-color: rgba(7, 255, 225, 0.18) !important;
-  color: #07FFE1 !important;
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  color: #FFFFFF !important;
   border-radius: 3px !important;
   padding: 1px 4px !important;
   font-weight: 600 !important;
@@ -333,7 +364,7 @@ p, li {
 }
 
 .VPLocalSearchBox .search-keyboard-shortcuts {
-  border-top: 1px solid #1F1F1F !important;
+  border-top: 1px solid #1A1A1A !important;
   padding-top: 12px !important;
   margin-top: 8px !important;
   color: #666666 !important;
@@ -342,7 +373,7 @@ p, li {
 
 .VPLocalSearchBox .search-keyboard-shortcuts kbd {
   background: #141414 !important;
-  border: 1px solid #282828 !important;
+  border: 1px solid #242424 !important;
   color: #999999 !important;
   border-radius: 4px !important;
   box-shadow: none !important;
@@ -356,13 +387,16 @@ p, li {
    ========================================================================== */
 
 .vp-doc {
-  max-width: 80ch;
+  max-width: 82ch;
   line-height: 1.7;
 }
 
-/* Hide redundant markdown h1 on resource pages since saas-header renders the primary title */
-.saas-header ~ .main .vp-doc > div > h1:first-child,
-.content-container:has(.saas-header) .vp-doc > div > h1:first-child {
+/* Strict Suppression of Redundant Markdown H1 on Resource Detail Pages */
+.saas-header ~ .main .vp-doc h1:first-of-type,
+.saas-header ~ main .vp-doc h1:first-of-type,
+.content-container:has(.saas-header) .vp-doc h1:first-of-type,
+.content:has(.saas-header) .vp-doc h1:first-of-type,
+.VPDoc:has(.saas-header) .vp-doc h1:first-of-type {
   display: none !important;
 }
 
@@ -380,7 +414,7 @@ p, li {
 }
 
 .vp-doc h1 {
-  font-size: 2.35rem;
+  font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.2;

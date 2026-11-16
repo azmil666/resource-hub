@@ -17,10 +17,37 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' }],
     ['meta', { name: 'theme-color', content: '#000000' }],
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: 'Developer Resource Hub' }],
-    ['meta', { property: 'og:description', content: 'A curated, high-performance library of developer tools, design resources, APIs, and references.' }],
-    ['meta', { name: 'twitter:card', content: 'summary_large_image' }]
+    ['meta', { property: 'og:site_name', content: 'Developer Resource Hub' }],
+    ['meta', { property: 'og:image', content: 'https://developer-resource-hub.vercel.app/og-image.png' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: 'https://developer-resource-hub.vercel.app/og-image.png' }],
+    ['meta', { name: 'twitter:creator', content: '@azmil666' }]
   ],
+
+  transformHead({ pageData }) {
+    const head: [string, Record<string, string>][] = [];
+    const relativeClean = pageData.relativePath
+      .replace(/(^|\/)index\.md$/, '$1')
+      .replace(/\.md$/, '');
+    const canonical = `https://developer-resource-hub.vercel.app/${relativeClean}`.replace(/\/+$/, '') || 'https://developer-resource-hub.vercel.app';
+
+    head.push(['link', { rel: 'canonical', href: canonical }]);
+
+    if (pageData.frontmatter.title) {
+      const pageTitle = `${pageData.frontmatter.title} — Developer Resource Hub`;
+      head.push(['meta', { property: 'og:title', content: pageTitle }]);
+      head.push(['meta', { name: 'twitter:title', content: pageTitle }]);
+    }
+
+    if (pageData.frontmatter.description) {
+      head.push(['meta', { property: 'og:description', content: pageData.frontmatter.description }]);
+      head.push(['meta', { name: 'twitter:description', content: pageData.frontmatter.description }]);
+    }
+
+    return head;
+  },
 
   sitemap: {
     hostname: 'https://developer-resource-hub.vercel.app'
@@ -69,10 +96,11 @@ export default defineConfig({
     sidebar: {
       '/resources/': [
         {
-          text: 'Explore',
+          text: 'Master Catalog',
+          collapsed: false,
           items: [
-            { text: 'All Resources (251)', link: '/resources/' },
-            { text: 'Category Overview', link: '/categories' }
+            { text: 'Browse Directory', link: '/resources/' },
+            { text: 'Category Index', link: '/categories' }
           ]
         },
         {
@@ -87,7 +115,7 @@ export default defineConfig({
           ]
         },
         {
-          text: 'Design & Resources',
+          text: 'Design & Creative',
           collapsed: false,
           items: [
             { text: 'Design & UI', link: '/resources/design/' },
@@ -98,17 +126,17 @@ export default defineConfig({
           ]
         },
         {
-          text: 'Hub Project',
+          text: 'Community & Project',
           collapsed: true,
           items: [
-            { text: 'About Hub', link: '/about' },
-            { text: 'Contribute a Resource', link: '/contribute' }
+            { text: 'About Developer Hub', link: '/about' },
+            { text: 'Suggest a Resource', link: '/contribute' }
           ]
         }
       ],
       '/categories': [
         {
-          text: 'Overview',
+          text: 'Navigation',
           items: [
             { text: 'All Resources', link: '/resources/' },
             { text: 'Category Index', link: '/categories' }
