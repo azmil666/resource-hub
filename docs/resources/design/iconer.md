@@ -16,15 +16,17 @@ dateAdded: "2026-09-15"
 
 # Iconer
 
-## Overview
+## Why Use It
 
-Iconer is a library that provides a free icon library and search tool to customize, remix, and download royalty-free icons in svg, png, html, and jsx formats
+Switching between different icon packs across micro-frontends or projects often leads to inconsistent stroke weights, incompatible file formats, and manual color overrides. Iconer is a streamlined desktop-grade web application that aggregates popular open-source icon collections into a single, clutter-free workspace. It provides real-time vector editing tools to unify color schemes, stroke dimensions, and bounding boxes across different icon packs before export.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Curated aggregator indexing major open-source icon sets (Heroicons, Feather, Tabler, Lucide) in one interface
+- Real-time global stroke width, size, and hex color adjustments applied instantly across searched icons
+- Direct export to SVG, React JSX components, PNG, and base64 data URLs
+- Project-based icon collections enabling teams to curate, save, and batch-download cohesive icon sets
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-150 (User item #152).
+Fits into frontend design systems and prototyping workflows for React, Vue, Svelte, and Tailwind CSS applications.

@@ -14,15 +14,17 @@ dateAdded: "2026-09-10"
 
 # Trigger.dev
 
-## Overview
+## Why Use It
 
-Trigger.dev is a library that provides an open-source background jobs and ai workflow framework for writing reliable, long-running tasks directly in typescript
+Serverless platforms (like Vercel and AWS Lambda) enforce strict execution timeouts and lack native primitives for long-running AI generation tasks, scheduled cron jobs, and background workers. Trigger.dev is an open-source background jobs and workflow orchestration framework designed specifically for TypeScript developers, allowing tasks to run for hours without timeout restrictions. It executes jobs inside a real-time event-driven engine with full observability and automatic retries.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern backend workflows
-- Streamlining developer tooling and productivity
+- Zero-timeout background execution bypassing traditional 15-second serverless execution limits
+- Native TypeScript job definitions with end-to-end type safety, schema validation, and real-time step streaming
+- Real-time dashboard providing step-by-step execution telemetry, parameter inspection, and historical logs
+- Out-of-the-box support for AI model polling, webhook triggers, cron schedules, and delayed job dispatching
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-119 (User item #121).
+Pairs directly with Next.js (App Router), Remix, Node.js, and modern AI agent pipelines handling video rendering, long LLM chains, and asynchronous data processing.

@@ -13,15 +13,17 @@ dateAdded: "2026-09-19"
 
 # Shots.so
 
-## Overview
+## Why Use It
 
-Shots.so is a website that provides a browser-based mockup generator for wrapping screenshots and designs into clean device frames, backgrounds, and social visuals
+Preparing polished product screenshots for documentation, release notes, and social media announcements usually requires opening heavy design software to add frames, shadows, and padding. Shots.so is a fast, browser-based mockup studio that wraps raw screenshots into photorealistic device frames (iPhone, iPad, MacBook, browser tabs) with customizable canvas backgrounds. It runs entirely client-side, delivering crisp, exportable product visuals in seconds.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Diverse mockup frames including native macOS/Windows browser windows, smartphones, tablets, and smartwatches
+- Real-time canvas customization with customizable mesh gradients, blur levels, paddings, and drop shadows
+- Instant client-side rendering with export presets optimized for Twitter/X headers, LinkedIn cards, and Product Hunt
+- Responsive layout modes supporting side-by-side device comparisons and angled 3D tilts
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-218 (User item #220).
+Indispensable tool for developer advocates, open-source maintainers, and founders creating release visuals, documentation illustrations, and social media banners.

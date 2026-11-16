@@ -14,15 +14,17 @@ dateAdded: "2026-09-18"
 
 # Recent Design
 
-## Overview
+## Why Use It
 
-Recent Design is a tool that provides a design inspiration gallery showcasing fresh mobile and web ui alongside custom app icon designs
+Design engineers and frontend developers building polished web applications often need real-world architectural reference implementations rather than static Dribbble mockups. Recent Design curates live, production web interfaces and interactive components from world-class software companies (such as Linear, Vercel, and Raycast). It focuses on practical interaction details, typography choices, and layout architecture to inspire high-craft engineering.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Curated gallery of production digital products showcasing exceptional frontend execution and typography
+- Detailed breakdown of micro-interactions, spring animations, and layout transition patterns
+- Direct links to live applications and source assets for inspecting real DOM and CSS implementations
+- Filterable directory categorized by interface components: navigation bars, dialogs, hero sections, and settings views
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-135 (User item #137).
+An essential visual benchmark and design inspiration source for design engineers, frontend developers, and founders building high-polish web applications.

@@ -14,15 +14,17 @@ dateAdded: "2026-09-12"
 
 # Book of Shapes
 
-## Overview
+## Why Use It
 
-Book of Shapes is a website that provides a collection of minimal, generative, and customizable svg patterns (grid, radial, and flow) with adjustable parameters for web and figma projects
+Modern tech landing pages and developer documentation often rely on geometric background patterns, but hand-coding vector grids or flow fields is tedious and math-intensive. Book of Shapes is an interactive collection of minimal, generative SVG patterns offering real-time parameter controls for grid spacing, radial distributions, and algorithmic flows. It allows developers to customize geometric vector backdrops in the browser and export lightweight, responsive SVG code directly into web projects.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Generative SVG pattern algorithms generating grid matrices, radial starbursts, and organic mathematical flow fields
+- Interactive parameter controls for density, stroke weight, distortion, padding, and geometric frequency
+- Instant one-click SVG markup copying and clean file downloads optimized for minimal DOM footprint
+- Direct integration into Figma via component copy-paste alongside native web implementations
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-088 (User item #90).
+Pairs seamlessly with modern frontend UI frameworks (Next.js, Astro, Tailwind CSS) to craft subtle, performant background patterns and hero accents.

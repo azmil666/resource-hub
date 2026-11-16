@@ -13,15 +13,17 @@ dateAdded: "2026-09-17"
 
 # LS Graphics
 
-## Overview
+## Why Use It
 
-LS Graphics is a website that provides a design resource studio offering a vast collection of high-quality free and premium device, ui, and packaging mockups for figma and photoshop
+Presenting digital products and developer tools in raw screenshots often fails to convey product quality in portfolio case studies, marketing sites, and investor pitches. LS Graphics crafts high-resolution 3D device mockups, clay models, and UI presentation templates with realistic lighting, shadows, and reflection maps. It allows engineering teams and designers to showcase software interfaces inside meticulously modeled hardware frames.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Extensive collection of photorealistic and minimalist clay mockups for iPhone, iPad, MacBook, Pro Display, and multi-device scenes
+- High-resolution PSD and Figma templates featuring smart object layers for one-click screenshot replacement
+- Isolated background shadows and reflection passes allowing flexible placement on any website canvas
+- Generous selection of free mockup templates alongside enterprise-grade commercial presentation kits
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-138 (User item #140).
+Essential for developer advocates, product designers, and marketing engineers preparing app showcase imagery for landing pages, docs, and App Store banners.

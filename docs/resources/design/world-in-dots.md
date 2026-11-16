@@ -14,15 +14,17 @@ dateAdded: "2026-09-21"
 
 # World in Dots
 
-## Overview
+## Why Use It
 
-World in Dots is a website that provides a customizable dotted map generator for creating and downloading vector world and country maps as svg or png files
+Embedding global distribution maps or server region diagrams on tech landing pages typically involves heavy raster images or bulky GIS shapefiles. World in Dots is an interactive browser-based map generator that renders world and country maps as minimal, dotted matrix grids. It allows developers to customize dot density, pin locations, and color palettes, generating lightweight, scalable vector maps ready for web embedding.
 
-## Useful for
+## Key Capabilities
 
-- Practical applications in modern design workflows
-- Streamlining developer tooling and productivity
+- Algorithmic dotted map rendering covering global world projections and individual country boundaries
+- Granular customization of dot spacing, radius, shape (circle, square), and color themes
+- Interactive pin and marker placement for highlighting server regions, office hubs, and edge points of presence
+- Clean SVG and high-resolution PNG export with minimal file size and infinite resolution scaling
 
-## Notes
+## Stack Fit & Workflow
 
-Source entry: SRC-090 (User item #92).
+Perfect for infrastructure providers, global SaaS platforms, and enterprise landing pages built with React, Next.js, and Tailwind CSS.
