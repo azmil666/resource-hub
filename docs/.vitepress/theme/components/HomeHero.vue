@@ -136,7 +136,7 @@ function openVitePressSearch() {
       </div>
       <div class="callout-actions">
         <a href="/contribute" class="btn-solid-small">Suggest Resource</a>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-outline-small">
+        <a href="https://github.com/azmil666/resource-hub" target="_blank" rel="noopener noreferrer" class="btn-outline-small">
           GitHub ↗
         </a>
       </div>

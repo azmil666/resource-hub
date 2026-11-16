@@ -14,14 +14,15 @@ Please be respectful, constructive, and helpful when interacting with fellow con
 
 ## How to Suggest a Resource
 
-1. **GitHub Issues**: Open a new issue using the [Resource Submission template](.github/ISSUE_TEMPLATE/resource-submission.yml).
+1. **GitHub Issues**: Open a new issue using the [Resource Submission form](https://github.com/azmil666/resource-hub/issues/new?template=resource-submission.yml) or browse open [GitHub Issues](https://github.com/azmil666/resource-hub/issues).
 2. **Pull Requests**:
-   - Clone the repository: `git clone <repo-url>`
+   - Clone the repository: `git clone https://github.com/azmil666/resource-hub.git`
+   - Navigate to directory: `cd resource-hub`
    - Install dependencies: `npm install`
    - Use the CLI tool: `npm run resource:add`
    - Run validation: `npm run resource:validate`
    - Test build: `npm run docs:build`
-   - Open a Pull Request against `main`.
+   - Open a [Pull Request](https://github.com/azmil666/resource-hub/pulls) against `main`.
 
 ---
 

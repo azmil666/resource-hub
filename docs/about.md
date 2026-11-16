@@ -32,7 +32,7 @@ The project relies entirely on lightweight, modern static web standards:
 | **Language & Scripts** | Node.js ESM & TypeScript | Reproducible tooling for validation, duplicate detection, and CLI imports without bloat. |
 | **Search Engine** | VitePress Local Search | Client-side fuzzy search indexing all titles, tags, and page contents with zero external API dependencies. |
 | **Styling** | Native CSS Variables | System fonts, light/dark mode adaptation, and minimal bytes over the wire. |
-| **Hosting & CI** | Vercel & GitHub Actions | Global CDN delivery, instant preview builds, and transparent community pull request reviews. |
+| **Hosting & CI** | Vercel & GitHub Actions | Global CDN delivery, instant preview builds, and transparent community pull request reviews on [GitHub](https://github.com/azmil666/resource-hub). |
 
 ---
 
@@ -55,6 +55,6 @@ The library is organized across 10 extensible technical categories:
 
 ## Open Source & Licensing
 
-The codebase, design system, and documentation templates are open source under the **MIT License**.
+The codebase, design system, and documentation templates are open source under the **MIT License** and hosted on GitHub at [azmil666/resource-hub](https://github.com/azmil666/resource-hub).
 
 All resource listings link directly to their canonical creators and official documentation.

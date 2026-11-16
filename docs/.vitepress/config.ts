@@ -96,11 +96,11 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com' }
+      { icon: 'github', link: 'https://github.com/azmil666/resource-hub' }
     ],
 
     footer: {
-      message: 'Curated developer knowledge library. Open-source under MIT License.',
+      message: 'Curated developer knowledge library. Open-source on <a href="https://github.com/azmil666/resource-hub" target="_blank" rel="noopener noreferrer">GitHub</a> under MIT License.',
       copyright: 'Copyright © 2026 Developer Resource Hub.'
     }
   }

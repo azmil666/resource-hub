@@ -15,17 +15,18 @@ We welcome contributions from the developer community! Whether you want to recom
 
 If you don't want to write code, submit a resource directly through GitHub:
 
-1. Go to the [GitHub Issue Form](https://github.com).
-2. Choose **Resource Submission**.
-3. Fill in the title, URL, category, type, pricing, and why it is helpful.
-4. Our maintainers review the submission, run automated checks, and merge it into the catalog.
+1. Open the [GitHub Resource Submission Form](https://github.com/azmil666/resource-hub/issues/new?template=resource-submission.yml) (or browse open [GitHub Issues](https://github.com/azmil666/resource-hub/issues)).
+2. Fill in the title, URL, category, type, pricing, and why it is helpful.
+3. Our maintainers review the submission, run automated checks, and merge it into the catalog.
 
 ### 2. Add via Command Line (For Contributors with Local Clone)
 
 Clone the repository and run our interactive CLI:
 
 ```bash
-# 1. Install dependencies
+# 1. Clone repository and install dependencies
+git clone https://github.com/azmil666/resource-hub.git
+cd resource-hub
 npm install
 
 # 2. Run the interactive resource creator
@@ -91,9 +92,9 @@ To ensure the library remains high-signal, submissions are evaluated against the
 
 ---
 
-## Pre-commit Verification
+## Pre-commit Verification & Pull Requests
 
-Before opening a pull request, always run the validation suite and verify the build:
+Before opening a [Pull Request](https://github.com/azmil666/resource-hub/pulls), always run the validation suite and verify the build:
 
 ```bash
 # Validate frontmatter, URLs, tags, and internal paths
@@ -102,5 +103,7 @@ npm run resource:validate
 # Build the static site to ensure no compilation issues
 npm run docs:build
 ```
+
+Commit your changes to a feature branch and open a pull request against `main` on [GitHub](https://github.com/azmil666/resource-hub/pulls).
 
 Thank you for helping build a better, cleaner resource hub for developers worldwide!
