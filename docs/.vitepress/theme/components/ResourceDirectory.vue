@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { data as allResources } from '../data/resources.data';
 import { CATEGORIES, getCategory } from '../data/categories';
 import ResourceCard from './ResourceCard.vue';
@@ -13,12 +13,37 @@ const props = withDefaults(
   }
 );
 
+const searchInputRef = ref<HTMLInputElement | null>(null);
 const searchQuery = ref('');
 const selectedCategory = ref(props.initialCategory);
 const selectedType = ref('');
 const selectedPricing = ref('');
 const selectedTag = ref('');
 const sortBy = ref<'title-asc' | 'title-desc'>('title-asc');
+
+// Keyboard shortcut `/` to focus directory search input
+function handleGlobalKeydown(e: KeyboardEvent) {
+  if (
+    e.key === '/' &&
+    !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)
+  ) {
+    e.preventDefault();
+    searchInputRef.value?.focus();
+    searchInputRef.value?.select();
+  }
+}
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('keydown', handleGlobalKeydown);
+  }
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('keydown', handleGlobalKeydown);
+  }
+});
 
 // Available types derived dynamically from data
 const availableTypes = computed(() => {
@@ -89,7 +114,7 @@ const filteredResources = computed(() => {
 const hasActiveFilters = computed(() => {
   return Boolean(
     searchQuery.value ||
-    selectedCategory.value !== props.initialCategory ||
+    (selectedCategory.value && selectedCategory.value !== props.initialCategory) ||
     selectedType.value ||
     selectedPricing.value ||
     selectedTag.value
@@ -111,49 +136,65 @@ function selectCategory(slug: string) {
 </script>
 
 <template>
-  <div class="directory-container">
-    <!-- Controls Bar -->
-    <div class="controls-panel">
+  <div class="directory-view">
+    <!-- Filter Panel (Airbnb discoverability + Linear minimalism) -->
+    <div class="filter-panel">
       <!-- Search Input -->
-      <div class="search-box-wrap">
+      <div class="search-bar-wrap">
         <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/>
           <path d="m21 21-4.3-4.3"/>
         </svg>
         <input
+          ref="searchInputRef"
           v-model="searchQuery"
           type="text"
-          placeholder="Filter resources by name, description, tags..."
-          class="search-input"
+          placeholder="Filter resources by title, description, or tag... (Press / to focus)"
+          class="directory-search-input"
           aria-label="Filter resources"
         />
         <button
           v-if="searchQuery"
-          class="clear-search-btn"
+          class="clear-input-btn"
           title="Clear search"
+          aria-label="Clear search"
           @click="searchQuery = ''"
         >
           ×
         </button>
       </div>
 
-      <!-- Filter Row -->
-      <div class="filters-row">
-        <!-- Category Filter -->
-        <div class="filter-item">
-          <label class="filter-label" for="category-select">Category:</label>
-          <select id="category-select" v-model="selectedCategory" class="filter-select">
-            <option value="">All Categories ({{ allResources.length }})</option>
-            <option v-for="cat in CATEGORIES" :key="cat.slug" :value="cat.slug">
-              {{ cat.name }} ({{ categoryCounts[cat.slug] || 0 }})
-            </option>
-          </select>
-        </div>
+      <!-- Category Filter Pills (Airbnb scrollable/wrap style) -->
+      <div v-if="!initialCategory" class="category-tabs-wrap" role="tablist" aria-label="Category filter tabs">
+        <button
+          class="category-tab"
+          :class="{ active: selectedCategory === '' }"
+          role="tab"
+          :aria-selected="selectedCategory === ''"
+          @click="selectedCategory = ''"
+        >
+          <span>All</span>
+          <span class="tab-count tabular-nums">{{ allResources.length }}</span>
+        </button>
+        <button
+          v-for="cat in CATEGORIES"
+          :key="cat.slug"
+          class="category-tab"
+          :class="{ active: selectedCategory === cat.slug }"
+          role="tab"
+          :aria-selected="selectedCategory === cat.slug"
+          @click="selectCategory(cat.slug)"
+        >
+          <span>{{ cat.name }}</span>
+          <span class="tab-count tabular-nums">{{ categoryCounts[cat.slug] || 0 }}</span>
+        </button>
+      </div>
 
-        <!-- Type Filter -->
-        <div class="filter-item">
-          <label class="filter-label" for="type-select">Type:</label>
-          <select id="type-select" v-model="selectedType" class="filter-select">
+      <!-- Secondary Controls Row -->
+      <div class="secondary-controls-row">
+        <div class="control-group">
+          <label class="control-label" for="type-filter">Type:</label>
+          <select id="type-filter" v-model="selectedType" class="control-select">
             <option value="">All Types</option>
             <option v-for="t in availableTypes" :key="t" :value="t">
               {{ t }}
@@ -161,10 +202,9 @@ function selectCategory(slug: string) {
           </select>
         </div>
 
-        <!-- Pricing Filter -->
-        <div class="filter-item">
-          <label class="filter-label" for="pricing-select">Pricing:</label>
-          <select id="pricing-select" v-model="selectedPricing" class="filter-select">
+        <div class="control-group">
+          <label class="control-label" for="pricing-filter">Pricing:</label>
+          <select id="pricing-filter" v-model="selectedPricing" class="control-select">
             <option value="">All Pricing</option>
             <option value="free">Free</option>
             <option value="freemium">Freemium</option>
@@ -173,10 +213,9 @@ function selectCategory(slug: string) {
           </select>
         </div>
 
-        <!-- Sort Select -->
-        <div class="filter-item sort-item">
-          <label class="filter-label" for="sort-select">Sort:</label>
-          <select id="sort-select" v-model="sortBy" class="filter-select">
+        <div class="control-group sort-control">
+          <label class="control-label" for="sort-order">Sort:</label>
+          <select id="sort-order" v-model="sortBy" class="control-select">
             <option value="title-asc">A to Z</option>
             <option value="title-desc">Z to A</option>
           </select>
@@ -184,51 +223,42 @@ function selectCategory(slug: string) {
 
         <button
           v-if="hasActiveFilters"
-          class="reset-btn"
+          class="reset-filters-btn"
           @click="resetFilters"
         >
           Reset filters
         </button>
       </div>
+    </div>
 
-      <!-- Category Quick Pills -->
-      <div v-if="!initialCategory" class="category-pills">
-        <button
-          class="category-pill"
-          :class="{ active: selectedCategory === '' }"
-          @click="selectedCategory = ''"
-        >
-          All ({{ allResources.length }})
-        </button>
-        <button
-          v-for="cat in CATEGORIES"
-          :key="cat.slug"
-          class="category-pill"
-          :class="{ active: selectedCategory === cat.slug }"
-          @click="selectCategory(cat.slug)"
-        >
-          {{ cat.name }}
-          <span class="pill-count">{{ categoryCounts[cat.slug] || 0 }}</span>
-        </button>
+    <!-- Active Filter Status & Count -->
+    <div class="directory-status-line">
+      <span class="results-count tabular-nums">
+        Showing <strong>{{ filteredResources.length }}</strong> of {{ allResources.length }} {{ allResources.length === 1 ? 'resource' : 'resources' }}
+      </span>
+
+      <div class="active-chips">
+        <span v-if="selectedCategory && !initialCategory" class="active-chip">
+          Category: {{ getCategory(selectedCategory).name }}
+          <button class="chip-remove" aria-label="Remove category filter" @click="selectedCategory = ''">×</button>
+        </span>
+        <span v-if="selectedType" class="active-chip">
+          Type: {{ selectedType }}
+          <button class="chip-remove" aria-label="Remove type filter" @click="selectedType = ''">×</button>
+        </span>
+        <span v-if="selectedPricing" class="active-chip">
+          Pricing: {{ selectedPricing }}
+          <button class="chip-remove" aria-label="Remove pricing filter" @click="selectedPricing = ''">×</button>
+        </span>
+        <span v-if="selectedTag" class="active-chip">
+          Tag: #{{ selectedTag }}
+          <button class="chip-remove" aria-label="Remove tag filter" @click="selectedTag = ''">×</button>
+        </span>
       </div>
     </div>
 
-    <!-- Results Status Bar -->
-    <div class="status-bar">
-      <span class="count-text">
-        Showing <strong>{{ filteredResources.length }}</strong> of {{ allResources.length }} resources
-      </span>
-      <span v-if="selectedCategory" class="active-category-note">
-        Category: <strong>{{ getCategory(selectedCategory).name }}</strong>
-      </span>
-      <span v-if="selectedTag" class="active-tag-note">
-        Tag: <strong>#{{ selectedTag }}</strong>
-        <button class="remove-tag" @click="selectedTag = ''">×</button>
-      </span>
-    </div>
-
     <!-- Resources Listing -->
-    <div v-if="filteredResources.length > 0" class="resources-grid">
+    <div v-if="filteredResources.length > 0" class="directory-list">
       <ResourceCard
         v-for="res in filteredResources"
         :key="res.urlPath"
@@ -236,21 +266,29 @@ function selectCategory(slug: string) {
       />
     </div>
 
-    <!-- Empty State -->
-    <div v-else class="empty-state">
-      <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="8" y1="12" x2="16" y2="12"/>
-      </svg>
-      <h3 class="empty-title">No resources found</h3>
-      <p class="empty-desc">
-        {{ allResources.length === 0 ? 'No resources have been published yet.' : 'No resources match your active search or filter criteria.' }}
+    <!-- Duolingo-inspired friendly empty state -->
+    <div v-else class="directory-empty-state">
+      <div class="empty-icon-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          <line x1="11" y1="8" x2="11" y2="14"/>
+          <line x1="8" y1="11" x2="14" y2="11"/>
+        </svg>
+      </div>
+      <h3 class="empty-heading">No matching resources</h3>
+      <p class="empty-message">
+        {{
+          allResources.length === 0
+            ? 'The resource collection is currently being cataloged. Resources will be published here.'
+            : 'No resources match your active search terms or selected filters.'
+        }}
       </p>
-      <div class="empty-actions">
-        <button v-if="hasActiveFilters" class="clear-btn" @click="resetFilters">
+      <div class="empty-button-row">
+        <button v-if="hasActiveFilters" class="empty-btn-secondary" @click="resetFilters">
           Clear Filters
         </button>
-        <a href="/contribute" class="suggest-btn">
+        <a href="/contribute" class="empty-btn-primary">
           Suggest a Resource
         </a>
       </div>
@@ -259,22 +297,22 @@ function selectCategory(slug: string) {
 </template>
 
 <style scoped>
-.directory-container {
-  margin: 1.5rem 0 3rem 0;
+.directory-view {
+  margin: 1.5rem 0 3.5rem 0;
 }
 
-.controls-panel {
+.filter-panel {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  padding: 1rem;
+  padding: 1.15rem;
   background-color: var(--vp-c-bg-alt);
   border: 1px solid var(--vp-c-border);
   border-radius: 6px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.search-box-wrap {
+.search-bar-wrap {
   position: relative;
   display: flex;
   align-items: center;
@@ -288,23 +326,23 @@ function selectCategory(slug: string) {
   pointer-events: none;
 }
 
-.search-input {
+.directory-search-input {
   width: 100%;
-  padding: 0.55rem 2rem 0.55rem 2.4rem;
-  font-size: 0.92rem;
+  padding: 0.55rem 2rem 0.55rem 2.35rem;
+  font-size: 0.9rem;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
   border-radius: 5px;
   color: var(--vp-c-text-1);
   outline: none;
-  transition: border-color 0.15s ease;
+  transition: border-color var(--hub-transition);
 }
 
-.search-input:focus {
-  border-color: var(--vp-c-brand-1);
+.directory-search-input:focus {
+  border-color: var(--vp-c-text-1);
 }
 
-.clear-search-btn {
+.clear-input-btn {
   position: absolute;
   right: 0.75rem;
   background: none;
@@ -314,170 +352,248 @@ function selectCategory(slug: string) {
   cursor: pointer;
   line-height: 1;
   padding: 2px 6px;
+  transition: color var(--hub-transition);
 }
 
-.filters-row {
+.clear-input-btn:hover {
+  color: var(--vp-c-text-1);
+}
+
+/* Category Tabs (Airbnb discoverability) */
+.category-tabs-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-top: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  .category-tabs-wrap {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .category-tabs-wrap::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.category-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  padding: 0.3rem 0.65rem;
+  background-color: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 4px;
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--hub-transition);
+}
+
+.category-tab:hover {
+  border-color: var(--vp-c-text-2);
+  color: var(--vp-c-text-1);
+}
+
+.category-tab.active {
+  background-color: var(--vp-c-text-1);
+  border-color: var(--vp-c-text-1);
+  color: var(--vp-c-bg);
+}
+
+.tab-count {
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
+
+/* Secondary Controls */
+.secondary-controls-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--vp-c-border);
 }
 
-.filter-item {
+.control-group {
   display: flex;
   align-items: center;
   gap: 0.4rem;
 }
 
-.filter-label {
+.control-label {
   font-size: 0.78rem;
   font-weight: 500;
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-3);
 }
 
-.filter-select {
-  padding: 0.32rem 0.6rem;
-  font-size: 0.82rem;
+.control-select {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
   border-radius: 4px;
   color: var(--vp-c-text-1);
   outline: none;
   cursor: pointer;
+  transition: border-color var(--hub-transition);
 }
 
-.filter-select:focus {
-  border-color: var(--vp-c-brand-1);
+.control-select:focus {
+  border-color: var(--vp-c-text-1);
 }
 
-.reset-btn {
+.reset-filters-btn {
   font-size: 0.78rem;
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-text-2);
   background: none;
   border: none;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.4rem;
   cursor: pointer;
   text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-left: auto;
 }
 
-.category-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  padding-top: 0.25rem;
-  border-top: 1px solid var(--vp-c-border);
-}
-
-.category-pill {
-  font-size: 0.76rem;
-  padding: 0.25rem 0.6rem;
-  background-color: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 4px;
-  color: var(--vp-c-text-2);
-  cursor: pointer;
-  transition: all 0.12s ease;
-}
-
-.category-pill:hover {
-  border-color: var(--vp-c-brand-1);
+.reset-filters-btn:hover {
   color: var(--vp-c-text-1);
 }
 
-.category-pill.active {
-  background-color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
-  color: #ffffff;
-}
-
-.pill-count {
-  opacity: 0.75;
-  font-size: 0.7rem;
-  margin-left: 2px;
-}
-
-.status-bar {
+/* Status Line & Active Chips */
+.directory-status-line {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
+  gap: 0.85rem;
   margin-bottom: 0.85rem;
   font-size: 0.82rem;
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-3);
   padding: 0 0.25rem;
 }
 
-.active-tag-note {
+.results-count strong {
+  color: var(--vp-c-text-1);
+}
+
+.active-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.active-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  font-size: 0.74rem;
   background-color: var(--vp-c-bg-alt);
-  padding: 1px 6px;
+  color: var(--vp-c-text-2);
+  padding: 1px 7px;
   border-radius: 3px;
   border: 1px solid var(--vp-c-border);
 }
 
-.remove-tag {
+.chip-remove {
   background: none;
   border: none;
+  color: var(--vp-c-text-3);
   cursor: pointer;
   font-weight: bold;
+  padding: 0 2px;
 }
 
-.resources-grid {
+.chip-remove:hover {
+  color: var(--vp-c-text-1);
+}
+
+.directory-list {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
 }
 
-.empty-state {
+/* Empty State */
+.directory-empty-state {
   text-align: center;
-  padding: 3rem 1.5rem;
+  padding: 3.5rem 1.5rem;
   background-color: var(--vp-c-bg-alt);
   border: 1px dashed var(--vp-c-border);
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.empty-icon {
-  margin: 0 auto 0.75rem auto;
+.empty-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--vp-c-bg-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--vp-c-text-3);
+  margin-bottom: 0.85rem;
 }
 
-.empty-title {
-  margin: 0 0 0.4rem 0;
-  font-size: 1.1rem;
+.empty-heading {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: var(--vp-c-text-1);
 }
 
-.empty-desc {
-  margin: 0 0 1.25rem 0;
-  font-size: 0.88rem;
+.empty-message {
+  margin: 0 0 1.35rem 0;
+  font-size: 0.86rem;
   color: var(--vp-c-text-3);
+  max-width: 46ch;
+  line-height: 1.5;
 }
 
-.empty-actions {
+.empty-button-row {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
   justify-content: center;
-  gap: 0.75rem;
 }
 
-.clear-btn, .suggest-btn {
+.empty-btn-primary {
+  padding: 0.45rem 1rem;
   font-size: 0.84rem;
-  padding: 0.4rem 0.85rem;
+  font-weight: 500;
+  background-color: var(--vp-c-text-1);
+  color: var(--vp-c-bg);
   border-radius: 4px;
   text-decoration: none;
-  cursor: pointer;
+  transition: opacity var(--hub-transition);
 }
 
-.clear-btn {
+.empty-btn-primary:hover {
+  opacity: 0.88;
+}
+
+.empty-btn-secondary {
+  padding: 0.45rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 500;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
   color: var(--vp-c-text-1);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color var(--hub-transition);
 }
 
-.suggest-btn {
-  background-color: var(--vp-c-brand-1);
-  color: #ffffff;
-  border: 1px solid var(--vp-c-brand-1);
+.empty-btn-secondary:hover {
+  border-color: var(--vp-c-text-1);
 }
 </style>

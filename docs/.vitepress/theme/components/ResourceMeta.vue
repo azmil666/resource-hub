@@ -23,8 +23,8 @@ const pricingClass = computed(() => {
 
 <template>
   <div v-if="frontmatter.title && frontmatter.category && frontmatter.url" class="resource-meta-banner">
-    <!-- Breadcrumb -->
-    <nav class="resource-breadcrumb">
+    <!-- Breadcrumb Trail -->
+    <nav class="resource-breadcrumb" aria-label="Breadcrumb">
       <a href="/resources/">Resources</a>
       <span class="sep">/</span>
       <a :href="`/resources/${frontmatter.category}/`">{{ categoryMeta.name }}</a>
@@ -33,49 +33,48 @@ const pricingClass = computed(() => {
     </nav>
 
     <!-- Metadata Grid -->
-    <div class="meta-details">
-      <div class="meta-cell">
+    <div class="meta-strip">
+      <div class="meta-col">
         <span class="meta-label">Category</span>
-        <a :href="`/resources/${frontmatter.category}/`" class="meta-val cat-link">
+        <a :href="`/resources/${frontmatter.category}/`" class="meta-val link-val">
           {{ categoryMeta.name }}
         </a>
       </div>
 
-      <div class="meta-cell">
+      <div class="meta-col">
         <span class="meta-label">Type</span>
-        <span class="meta-val type-val">{{ frontmatter.type || 'website' }}</span>
+        <span class="meta-val">{{ frontmatter.type || 'website' }}</span>
       </div>
 
-      <div class="meta-cell">
+      <div class="meta-col">
         <span class="meta-label">Pricing</span>
         <span class="pricing-pill" :class="pricingClass">{{ frontmatter.pricing || 'unknown' }}</span>
       </div>
 
-      <div v-if="frontmatter.status && frontmatter.status !== 'published'" class="meta-cell">
+      <div v-if="frontmatter.status && frontmatter.status !== 'published'" class="meta-col">
         <span class="meta-label">Status</span>
         <span class="status-pill">{{ frontmatter.status }}</span>
       </div>
     </div>
 
-    <!-- Direct Action Button -->
-    <div v-if="frontmatter.url" class="action-row">
+    <!-- Actions & Tags Row -->
+    <div class="action-footer">
       <a
         :href="frontmatter.url"
         target="_blank"
         rel="noopener noreferrer"
-        class="visit-btn"
+        class="official-link-btn"
       >
         <span>Visit Official Website</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M15 3h6v6"/>
           <path d="M10 14 21 3"/>
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
         </svg>
       </a>
 
-      <div v-if="frontmatter.tags && frontmatter.tags.length > 0" class="tags-container">
-        <span class="tags-label">Tags:</span>
-        <span v-for="tag in frontmatter.tags" :key="tag" class="tag-pill">
+      <div v-if="frontmatter.tags && frontmatter.tags.length > 0" class="meta-tags-container">
+        <span v-for="tag in frontmatter.tags" :key="tag" class="meta-tag-pill">
           #{{ tag }}
         </span>
       </div>
@@ -85,8 +84,8 @@ const pricingClass = computed(() => {
 
 <style scoped>
 .resource-meta-banner {
-  margin: 1rem 0 1.75rem 0;
-  padding: 1rem 1.25rem;
+  margin: 1.25rem 0 2rem 0;
+  padding: 1.15rem 1.35rem;
   background-color: var(--vp-c-bg-alt);
   border: 1px solid var(--vp-c-border);
   border-radius: 6px;
@@ -95,23 +94,24 @@ const pricingClass = computed(() => {
 .resource-breadcrumb {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   font-size: 0.8rem;
   color: var(--vp-c-text-3);
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.95rem;
 }
 
 .resource-breadcrumb a {
   color: var(--vp-c-text-2);
   text-decoration: none;
+  transition: color var(--hub-transition);
 }
 
 .resource-breadcrumb a:hover {
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-text-1);
 }
 
 .sep {
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 .current {
@@ -119,15 +119,15 @@ const pricingClass = computed(() => {
   font-weight: 500;
 }
 
-.meta-details {
+.meta-strip {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  padding-bottom: 0.85rem;
+  gap: 1.75rem;
+  padding-bottom: 0.95rem;
   border-bottom: 1px solid var(--vp-c-border);
 }
 
-.meta-cell {
+.meta-col {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
@@ -145,15 +145,17 @@ const pricingClass = computed(() => {
   font-size: 0.88rem;
   color: var(--vp-c-text-1);
   font-weight: 500;
-}
-
-.cat-link {
-  text-decoration: none;
-  color: var(--vp-c-brand-1);
-}
-
-.type-val {
   text-transform: capitalize;
+}
+
+.link-val {
+  text-decoration: none;
+  transition: color var(--hub-transition);
+}
+
+.link-val:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .pricing-pill {
@@ -167,21 +169,39 @@ const pricingClass = computed(() => {
 }
 
 .badge-free {
-  background-color: rgba(34, 197, 94, 0.1);
-  color: #16a34a;
-  border: 1px solid rgba(34, 197, 94, 0.25);
+  background-color: rgba(34, 197, 94, 0.06);
+  color: #15803d;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.dark .badge-free {
+  background-color: rgba(74, 222, 128, 0.08);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.22);
 }
 
 .badge-freemium {
-  background-color: rgba(59, 130, 246, 0.1);
-  color: #2563eb;
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  background-color: rgba(100, 116, 139, 0.07);
+  color: #475569;
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.dark .badge-freemium {
+  background-color: rgba(148, 163, 184, 0.08);
+  color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.22);
 }
 
 .badge-paid {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: #d97706;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background-color: rgba(217, 119, 6, 0.06);
+  color: #b45309;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.dark .badge-paid {
+  background-color: rgba(251, 191, 36, 0.08);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.22);
 }
 
 .badge-unknown {
@@ -194,53 +214,47 @@ const pricingClass = computed(() => {
   font-size: 0.75rem;
   padding: 1px 6px;
   border-radius: 3px;
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background-color: var(--vp-c-bg);
+  color: var(--vp-c-text-3);
+  border: 1px solid var(--vp-c-border);
   text-transform: capitalize;
 }
 
-.action-row {
+.action-footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding-top: 0.85rem;
+  padding-top: 0.95rem;
 }
 
-.visit-btn {
+.official-link-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   font-size: 0.84rem;
   font-weight: 500;
-  background-color: var(--vp-c-brand-1);
-  color: #ffffff;
-  padding: 0.35rem 0.85rem;
+  background-color: var(--vp-c-text-1);
+  color: var(--vp-c-bg);
+  padding: 0.4rem 0.95rem;
   border-radius: 4px;
   text-decoration: none;
-  transition: opacity 0.15s ease;
+  transition: opacity var(--hub-transition);
 }
 
-.visit-btn:hover {
-  opacity: 0.9;
+.official-link-btn:hover {
+  opacity: 0.88;
 }
 
-.tags-container {
+.meta-tags-container {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.35rem;
 }
 
-.tags-label {
-  font-size: 0.76rem;
-  color: var(--vp-c-text-3);
-  margin-right: 0.2rem;
-}
-
-.tag-pill {
+.meta-tag-pill {
   font-size: 0.72rem;
   font-family: var(--vp-font-family-mono);
   color: var(--vp-c-text-2);

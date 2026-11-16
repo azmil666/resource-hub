@@ -16,18 +16,25 @@ const resourcesInCategory = computed(() => {
 </script>
 
 <template>
-  <div class="category-page">
-    <header class="category-header">
-      <nav class="breadcrumb">
-        <a href="/resources/">← Back to All Resources</a>
+  <div class="category-view">
+    <header class="category-header-block">
+      <nav class="breadcrumb-trail" aria-label="Breadcrumbs">
+        <a href="/resources/" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          <span>All Resources</span>
+        </a>
       </nav>
-      <div class="header-main">
-        <h1 class="cat-title">{{ meta.name }}</h1>
-        <span class="count-badge">
+
+      <div class="title-line">
+        <h1 class="cat-page-title">{{ meta.name }}</h1>
+        <span class="count-tag tabular-nums">
           {{ resourcesInCategory.length }} {{ resourcesInCategory.length === 1 ? 'resource' : 'resources' }}
         </span>
       </div>
-      <p class="cat-desc">{{ meta.description }}</p>
+      <p class="cat-page-desc">{{ meta.description }}</p>
     </header>
 
     <ResourceDirectory :initial-category="props.category" />
@@ -35,60 +42,66 @@ const resourcesInCategory = computed(() => {
 </template>
 
 <style scoped>
-.category-page {
-  margin-top: 1rem;
+.category-view {
+  margin-top: 0.5rem;
 }
 
-.category-header {
-  padding-bottom: 1.25rem;
+.category-header-block {
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--vp-c-border);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
-.breadcrumb {
-  margin-bottom: 0.75rem;
+.breadcrumb-trail {
+  margin-bottom: 0.85rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.82rem;
-}
-
-.breadcrumb a {
   color: var(--vp-c-text-3);
   text-decoration: none;
+  transition: color var(--hub-transition);
 }
 
-.breadcrumb a:hover {
-  color: var(--vp-c-brand-1);
+.back-link:hover {
+  color: var(--vp-c-text-1);
 }
 
-.header-main {
+.title-line {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 0.35rem;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
 }
 
-.cat-title {
+.cat-page-title {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   font-weight: 700;
   color: var(--vp-c-text-1);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
-.count-badge {
-  font-size: 0.8rem;
+.count-tag {
+  font-size: 0.78rem;
   font-family: var(--vp-font-family-mono);
-  background-color: var(--vp-c-bg-alt);
+  background-color: var(--vp-c-bg-soft);
   color: var(--vp-c-text-2);
   padding: 2px 8px;
   border-radius: 4px;
   border: 1px solid var(--vp-c-border);
 }
 
-.cat-desc {
+.cat-page-desc {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   color: var(--vp-c-text-2);
-  line-height: 1.5;
-  max-width: 680px;
+  line-height: 1.55;
+  max-width: 65ch;
+  text-wrap: pretty;
 }
 </style>

@@ -13,52 +13,52 @@ const categoryCounts = computed(() => {
 </script>
 
 <template>
-  <div class="category-grid">
+  <div class="category-index-grid">
     <a
       v-for="cat in CATEGORIES"
       :key="cat.slug"
       :href="`/resources/${cat.slug}/`"
-      class="category-card"
+      class="category-entry"
     >
-      <div class="card-top">
-        <h3 class="category-name">{{ cat.name }}</h3>
-        <span class="category-count">
-          {{ categoryCounts[cat.slug] || 0 }} {{ (categoryCounts[cat.slug] || 0) === 1 ? 'resource' : 'resources' }}
+      <div class="entry-header">
+        <h3 class="category-title">{{ cat.name }}</h3>
+        <span class="category-count tabular-nums">
+          {{ categoryCounts[cat.slug] || 0 }}
         </span>
       </div>
-      <p class="category-desc">{{ cat.description }}</p>
-      <div class="card-footer">
-        <span class="view-link">Explore category →</span>
+      <p class="category-description">{{ cat.description }}</p>
+      <div class="entry-footer">
+        <span class="explore-cue">Explore category →</span>
       </div>
     </a>
   </div>
 </template>
 
 <style scoped>
-.category-grid {
+.category-index-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 0.85rem;
-  margin: 1.5rem 0 2.5rem 0;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 0.75rem;
+  margin: 1.25rem 0 2rem 0;
 }
 
-.category-card {
+.category-entry {
   display: flex;
   flex-direction: column;
-  padding: 1.15rem;
+  padding: 1.15rem 1.25rem;
   background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
   border-radius: 6px;
   text-decoration: none;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition: border-color var(--hub-transition), background-color var(--hub-transition);
 }
 
-.category-card:hover {
-  border-color: var(--vp-c-brand-1);
-  transform: translateY(-1px);
+.category-entry:hover {
+  border-color: var(--vp-c-text-2);
+  background-color: var(--vp-c-bg-hover);
 }
 
-.card-top {
+.entry-header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -66,39 +66,43 @@ const categoryCounts = computed(() => {
   margin-bottom: 0.4rem;
 }
 
-.category-name {
+.category-title {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   font-weight: 600;
   color: var(--vp-c-text-1);
+  letter-spacing: -0.015em;
 }
 
 .category-count {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: var(--vp-c-text-3);
   font-family: var(--vp-font-family-mono);
-  background-color: var(--vp-c-bg-alt);
+  background-color: var(--vp-c-bg-soft);
   padding: 1px 6px;
   border-radius: 3px;
   border: 1px solid var(--vp-c-border);
 }
 
-.category-desc {
+.category-description {
   margin: 0 0 0.85rem 0;
-  font-size: 0.86rem;
-  line-height: 1.45;
+  font-size: 0.85rem;
+  line-height: 1.48;
   color: var(--vp-c-text-2);
   flex-grow: 1;
 }
 
-.card-footer {
+.entry-footer {
   margin-top: auto;
-  font-size: 0.82rem;
-  color: var(--vp-c-brand-1);
+  font-size: 0.8rem;
+  color: var(--vp-c-text-3);
   font-weight: 500;
+  transition: color var(--hub-transition);
 }
 
-.category-card:hover .view-link {
+.category-entry:hover .explore-cue {
+  color: var(--vp-c-text-1);
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 </style>

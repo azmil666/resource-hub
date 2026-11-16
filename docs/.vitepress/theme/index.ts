@@ -24,5 +24,25 @@ export default {
     app.component('CategoryPage', CategoryPage);
     app.component('ResourceCard', ResourceCard);
     app.component('ResourceMeta', ResourceMeta);
+
+    // Global ergonomic shortcut: Pressing `/` opens search or focuses filter input
+    if (typeof window !== 'undefined') {
+      window.addEventListener('keydown', (e) => {
+        if (
+          e.key === '/' &&
+          !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)
+        ) {
+          e.preventDefault();
+          const dirInput = document.querySelector('.directory-search-input') as HTMLInputElement | null;
+          if (dirInput) {
+            dirInput.focus();
+            dirInput.select();
+          } else {
+            const searchBtn = document.querySelector('.DocSearch-Button, .VPNavBarSearchButton, [aria-label*="Search"]') as HTMLButtonElement | null;
+            searchBtn?.click();
+          }
+        }
+      });
+    }
   }
 } satisfies Theme;
