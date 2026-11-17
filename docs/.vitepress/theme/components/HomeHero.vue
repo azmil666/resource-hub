@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { data as allResources } from '../data/resources.data';
-import { CATEGORIES } from '../data/categories';
 import ResourceCard from './ResourceCard.vue';
 import AnnouncementBar from './landing/AnnouncementBar.vue';
 import HeroSection from './landing/HeroSection.vue';
+import CategoryMarquee from './landing/CategoryMarquee.vue';
+import BentoGrid from './landing/BentoGrid.vue';
+import CategoryShowcase from './landing/CategoryShowcase.vue';
 
 // Dynamic computed statistics
 const totalResources = computed(() => allResources.length);
@@ -63,44 +65,14 @@ const categoryAccents: Record<string, string> = {
     <!-- Grade-S Hero with Product Window Mockup -->
     <HeroSection />
 
-    <!-- 3. BROWSE BY CATEGORY GRID -->
-    <section class="rh-home-section">
-      <div class="rh-section-header">
-        <div>
-          <h2 class="rh-section-title">Explore by Category</h2>
-          <p class="rh-section-subtitle">Structured catalogs spanning frontend, backend, AI models, and design tools.</p>
-        </div>
-        <a href="/categories" class="rh-btn rh-btn-ghost rh-btn-sm rh-section-link">
-          <span>View all categories</span>
-          <span aria-hidden="true">→</span>
-        </a>
-      </div>
+    <!-- Category Marquee Strip -->
+    <CategoryMarquee />
 
-      <div class="rh-category-grid">
-        <a
-          v-for="cat in CATEGORIES"
-          :key="cat.slug"
-          :href="`/resources/${cat.slug}/`"
-          class="rh-card rh-card-interactive rh-category-card"
-        >
-          <div class="rh-category-top">
-            <span
-              class="rh-category-dot"
-              :style="{ backgroundColor: categoryAccents[cat.slug] || 'var(--rh-c-brand)' }"
-              aria-hidden="true"
-            ></span>
-            <span class="rh-badge rh-tnum rh-category-count">
-              {{ categoryCountMap[cat.slug] || 0 }} resources
-            </span>
-          </div>
-          <h3 class="rh-category-name">{{ cat.name }}</h3>
-          <p class="rh-category-desc">{{ cat.description }}</p>
-          <div class="rh-category-foot">
-            <span class="rh-category-arrow">Explore catalog →</span>
-          </div>
-        </a>
-      </div>
-    </section>
+    <!-- Bento Engineering Highlights -->
+    <BentoGrid />
+
+    <!-- Category Showcase Grid -->
+    <CategoryShowcase />
 
     <!-- 4. FEATURED SPOTLIGHT SECTION -->
     <section v-if="featuredResources.length > 0" class="rh-home-section">
