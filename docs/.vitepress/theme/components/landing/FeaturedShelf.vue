@@ -2,6 +2,11 @@
 import { computed } from 'vue';
 import { data as allResources } from '../../data/resources.data';
 import ResourceCard from '../ResourceCard.vue';
+import {
+  FEATURED_SECTION_EYEBROW,
+  FEATURED_SECTION_TITLE,
+  FEATURED_SECTION_SUBTITLE
+} from '../../utils/labels';
 
 const featuredResources = computed(() => {
   return allResources.filter(r => r.featured).slice(0, 6);
@@ -16,14 +21,14 @@ const featuredResources = computed(() => {
   >
     <div class="rh-section-header-row">
       <div>
-        <div class="rh-section-eyebrow">EDITORIAL SPOTLIGHT</div>
-        <h2 id="featured-heading" class="rh-section-title">Staff Picks & Standards</h2>
+        <div class="rh-section-eyebrow">{{ FEATURED_SECTION_EYEBROW }}</div>
+        <h2 id="featured-heading" class="rh-section-title">{{ FEATURED_SECTION_TITLE }}</h2>
         <p class="rh-section-subtitle">
-          Foundational benchmarks and industry-standard utilities selected for exceptional craft.
+          {{ FEATURED_SECTION_SUBTITLE }}
         </p>
       </div>
-      <a href="/resources/?featured=true" class="rh-btn rh-btn-secondary rh-btn-sm rh-view-featured-link">
-        <span>View all spotlight tools</span>
+      <a href="/resources/?featured=true" class="rh-btn rh-btn-secondary rh-btn-sm rh-view-featured-link" aria-label="View all hand-picked tools">
+        <span>View all hand-picked tools</span>
         <span aria-hidden="true">→</span>
       </a>
     </div>

@@ -27,7 +27,7 @@ import LandingFooter from './landing/LandingFooter.vue';
     <!-- 5. 10 Curated Category Showcase Cards -->
     <CategoryShowcase />
 
-    <!-- 6. Staff Picks & Standards Showcase -->
+    <!-- 6. Hand-picked Tools / Featured Showcase -->
     <FeaturedShelf />
 
     <!-- 7. Chronological Recent Table Feed -->

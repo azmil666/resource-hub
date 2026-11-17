@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import type { ResourceItem } from '../data/resources.data';
 import { getCategory } from '../data/categories';
 import { getCtaLabel } from '../utils/cta';
+import { FEATURED_BADGE } from '../utils/labels';
 
 const props = withDefaults(
   defineProps<{
@@ -127,9 +128,14 @@ function handleCardClick(event: MouseEvent) {
           {{ resource.type }}
         </span>
 
-        <!-- Staff Pick Badge if featured -->
-        <span v-if="resource.featured" class="rh-badge rh-badge-amber rh-rc-featured-badge">
-          ★ Staff Pick
+        <!-- Featured Badge if featured -->
+        <span
+          v-if="resource.featured"
+          class="rh-badge rh-badge-amber rh-rc-featured-badge"
+          title="Featured resource"
+          aria-label="Featured resource"
+        >
+          ★ {{ FEATURED_BADGE }}
         </span>
       </div>
 

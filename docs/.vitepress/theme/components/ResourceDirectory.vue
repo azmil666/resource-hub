@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { data as allResources } from '../data/resources.data';
 import { CATEGORIES, getCategory } from '../data/categories';
 import ResourceCard from './ResourceCard.vue';
+import { FEATURED_SORT_LABEL } from '../utils/labels';
 
 const props = withDefaults(
   defineProps<{
@@ -481,7 +482,7 @@ function togglePopover(name: 'category' | 'type' | 'pricing' | 'sort') {
                 :class="{ 'is-selected': sortBy === 'featured' }"
                 @click="selectSort('featured')"
               >
-                <span>Staff Picks First</span>
+                <span>{{ FEATURED_SORT_LABEL }}</span>
               </button>
             </div>
           </div>

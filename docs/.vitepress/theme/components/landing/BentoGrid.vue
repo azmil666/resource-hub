@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { FEATURED_BADGE } from '../../utils/labels';
 
 function handlePointerMove(e: PointerEvent) {
   const card = (e.currentTarget as HTMLElement);
@@ -75,7 +76,7 @@ function handlePointerMove(e: PointerEvent) {
           <div class="rh-pill-stack">
             <span class="rh-badge rh-badge-brand rh-pill-active">Frontend</span>
             <span class="rh-badge rh-badge-emerald">Free & Open</span>
-            <span class="rh-badge rh-badge-amber">Staff Pick</span>
+            <span class="rh-badge rh-badge-amber">{{ FEATURED_BADGE }}</span>
           </div>
         </div>
       </div>

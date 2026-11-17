@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { useData } from 'vitepress';
 import { getCategory } from '../data/categories';
 import { getCtaLabel } from '../utils/cta';
+import { FEATURED_BADGE } from '../utils/labels';
 
 const { frontmatter } = useData();
 
@@ -106,8 +107,13 @@ async function copyPageLink() {
             {{ frontmatter.type || 'website' }}
           </span>
 
-          <span v-if="frontmatter.featured" class="rh-badge rh-badge-amber">
-            ★ Staff Pick
+          <span
+            v-if="frontmatter.featured"
+            class="rh-badge rh-badge-amber"
+            title="Featured resource"
+            aria-label="Featured resource"
+          >
+            ★ {{ FEATURED_BADGE }}
           </span>
         </div>
 
