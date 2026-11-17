@@ -1,30 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { data as allResources } from '../data/resources.data';
-import { CATEGORIES, getCategory } from '../data/categories';
+import { CATEGORIES } from '../data/categories';
 import ResourceCard from './ResourceCard.vue';
+import AnnouncementBar from './landing/AnnouncementBar.vue';
+import HeroSection from './landing/HeroSection.vue';
 
-// Live interactive search on hero
-const heroSearchQuery = ref('');
-
-function executeSearch() {
-  const query = heroSearchQuery.value.trim();
-  if (typeof window !== 'undefined') {
-    if (query) {
-      window.location.href = `/resources/?q=${encodeURIComponent(query)}`;
-    } else {
-      window.location.href = '/resources/';
-    }
-  }
-}
-
-function handleSearchKeydown(e: KeyboardEvent) {
-  if (e.key === 'Enter') {
-    executeSearch();
-  }
-}
-
-// Dynamic computed statistics (no hardcoded numbers)
+// Dynamic computed statistics
 const totalResources = computed(() => allResources.length);
 const totalCategories = computed(() => CATEGORIES.length);
 
@@ -75,96 +57,11 @@ const categoryAccents: Record<string, string> = {
 
 <template>
   <div class="rh-home">
-    <!-- 1. HERO SECTION -->
-    <header class="rh-hero">
-      <!-- Animated Background Mesh & Glow -->
-      <div class="rh-hero-bg" aria-hidden="true">
-        <div class="rh-hero-grid"></div>
-        <div class="rh-hero-glow"></div>
-      </div>
+    <!-- Announcement Pulse Bar -->
+    <AnnouncementBar />
 
-      <!-- Live Catalog Tag -->
-      <div class="rh-hero-badge-wrap">
-        <a href="/resources/" class="rh-badge rh-badge-brand rh-hero-badge">
-          <span class="rh-badge-pulse" aria-hidden="true"></span>
-          <span>Verified Knowledge Catalog • {{ totalResources }} Developer Resources</span>
-        </a>
-      </div>
-
-      <!-- Main Heading -->
-      <h1 class="rh-hero-title">
-        The curated directory for<br />
-        <span class="rh-gradient-text">modern engineering</span>
-      </h1>
-
-      <!-- Subtitle -->
-      <p class="rh-hero-lead">
-        A high-signal, zero-fluff index of open-source libraries, devtools, design systems, and AI models. Engineered for velocity.
-      </p>
-
-      <!-- Live Search Bar -->
-      <div class="rh-hero-search-box">
-        <div class="rh-hero-search-inner">
-          <svg class="rh-hero-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
-          </svg>
-          <input
-            v-model="heroSearchQuery"
-            type="text"
-            class="rh-hero-search-input"
-            placeholder="Search resources by title, library, or tag (e.g. tailwind, orm, icons)..."
-            aria-label="Search resources directly"
-            @keydown="handleSearchKeydown"
-          />
-          <button
-            class="rh-btn rh-btn-primary rh-btn-sm rh-hero-search-btn"
-            @click="executeSearch"
-          >
-            <span>Search</span>
-            <kbd class="rh-kbd" aria-hidden="true">↵</kbd>
-          </button>
-        </div>
-      </div>
-
-      <!-- Quick Action CTAs -->
-      <div class="rh-hero-ctas">
-        <a href="/resources/" class="rh-btn rh-btn-primary rh-btn-md">
-          <span>Browse All Resources</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-        <a href="/contribute" class="rh-btn rh-btn-secondary rh-btn-md">
-          <span>Contribute</span>
-          <span aria-hidden="true">→</span>
-        </a>
-      </div>
-    </header>
-
-    <!-- 2. SOCIAL PROOF & METRICS STRIP -->
-    <section class="rh-metrics-bar" aria-label="Directory statistics">
-      <div class="rh-metric-item">
-        <span class="rh-metric-value rh-tnum">{{ totalResources }}</span>
-        <span class="rh-metric-label">Curated Entries</span>
-      </div>
-      <div class="rh-metric-divider" aria-hidden="true"></div>
-      <div class="rh-metric-item">
-        <span class="rh-metric-value rh-tnum">{{ totalCategories }}</span>
-        <span class="rh-metric-label">Disciplines</span>
-      </div>
-      <div class="rh-metric-divider" aria-hidden="true"></div>
-      <div class="rh-metric-item">
-        <span class="rh-metric-value rh-tnum">{{ freePercentage }}%</span>
-        <span class="rh-metric-label">Free & Open Source</span>
-      </div>
-      <div class="rh-metric-divider" aria-hidden="true"></div>
-      <div class="rh-metric-item">
-        <span class="rh-metric-value rh-tnum">0</span>
-        <span class="rh-metric-label">Sponsored Ads</span>
-      </div>
-    </section>
+    <!-- Grade-S Hero with Product Window Mockup -->
+    <HeroSection />
 
     <!-- 3. BROWSE BY CATEGORY GRID -->
     <section class="rh-home-section">
