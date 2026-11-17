@@ -1,101 +1,225 @@
 /**
- * Developer Resource Hub — Tier-1 Production Design System
- * Inspired by Vercel, Linear, and Awwwards.
- * Monochromatic high-contrast, deep black surfaces, glassmorphic navigation,
- * precision typography, and physics-based micro-interactions.
+ * Developer Resource Hub — Modern SaaS Design System
+ * Inspired by Linear, Vercel, Stripe Docs, and Raycast.
+ * Design tokens, component primitives, and VitePress overrides.
  */
 
-:root {
-  /* Modern Sans-Serif Font Stack (Geist / Inter / System) */
-  --vp-font-family-base: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --vp-font-family-mono: 'Geist Mono', 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+/* ==========================================================================
+   1. DESIGN TOKENS (LIGHT & DARK ROOTS)
+   ========================================================================== */
 
-  /* Monochromatic Brand - Light Theme */
-  --vp-c-brand-1: #000000;
-  --vp-c-brand-2: #171717;
-  --vp-c-brand-3: #2d2d2d;
+:root {
+  /* Font Stacks */
+  --rh-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --rh-font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  /* VitePress Core Font Variables */
+  --vp-font-family-base: var(--rh-font-sans);
+  --vp-font-family-mono: var(--rh-font-mono);
+
+  /* Spacing Scale (4px Base) */
+  --rh-space-1: 4px;
+  --rh-space-2: 8px;
+  --rh-space-3: 12px;
+  --rh-space-4: 16px;
+  --rh-space-5: 20px;
+  --rh-space-6: 24px;
+  --rh-space-8: 32px;
+  --rh-space-10: 40px;
+  --rh-space-12: 48px;
+  --rh-space-16: 64px;
+  --rh-space-20: 80px;
+
+  /* Border Radii */
+  --rh-radius-xs: 4px;
+  --rh-radius-sm: 6px;
+  --rh-radius-md: 10px;
+  --rh-radius-lg: 14px;
+  --rh-radius-xl: 20px;
+  --rh-radius-full: 9999px;
+
+  /* Motion Timing & Easings */
+  --rh-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --rh-ease-bounce: cubic-bezier(0.34, 1.25, 0.64, 1);
+  --rh-duration-fast: 150ms;
+  --rh-duration-base: 220ms;
+  --rh-duration-slow: 350ms;
+  --rh-transition-fast: var(--rh-duration-fast) var(--rh-ease);
+  --rh-transition-base: var(--rh-duration-base) var(--rh-ease);
+  --rh-transition-slow: var(--rh-duration-slow) var(--rh-ease);
+
+  /* Semantic Status Colors (Shared Scale) */
+  --rh-color-emerald-bg: rgba(16, 185, 129, 0.1);
+  --rh-color-emerald-border: rgba(16, 185, 129, 0.28);
+  --rh-color-emerald-text: #059669;
+
+  --rh-color-amber-bg: rgba(245, 158, 11, 0.1);
+  --rh-color-amber-border: rgba(245, 158, 11, 0.28);
+  --rh-color-amber-text: #d97706;
+
+  --rh-color-rose-bg: rgba(244, 63, 94, 0.1);
+  --rh-color-rose-border: rgba(244, 63, 94, 0.28);
+  --rh-color-rose-text: #e11d48;
+
+  --rh-color-slate-bg: rgba(100, 116, 139, 0.1);
+  --rh-color-slate-border: rgba(100, 116, 139, 0.25);
+  --rh-color-slate-text: #64748b;
+
+  /* Category UI Accents (Curated Palette) */
+  --cat-accent-frontend: #3b82f6;
+  --cat-accent-backend: #8b5cf6;
+  --cat-accent-ai-tools: #ec4899;
+  --cat-accent-utilities: #06b6d4;
+  --cat-accent-github: #10b981;
+  --cat-accent-design: #f97316;
+  --cat-accent-learning: #eab308;
+  --cat-accent-inspiration: #a855f7;
+  --cat-accent-productivity: #14b8a6;
+  --cat-accent-miscellaneous: #64748b;
+
+  /* ========================================================================
+     LIGHT MODE TOKENS (VitePress Overrides & Theme Tokens)
+     ======================================================================== */
+  --rh-c-bg: #ffffff;
+  --rh-c-bg-subtle: #fafafa;
+  --rh-c-bg-surface: #ffffff;
+  --rh-c-bg-elevated: #ffffff;
+  --rh-c-bg-hover: #f4f4f5;
+
+  --rh-c-border: #e4e4e7;
+  --rh-c-border-subtle: #f0f0f2;
+  --rh-c-border-hover: #d4d4d8;
+  --rh-c-border-focus: #09090b;
+
+  --rh-c-text-primary: #09090b;
+  --rh-c-text-secondary: #52525b;
+  --rh-c-text-tertiary: #a1a1aa;
+
+  --rh-c-brand: #09090b;
+  --rh-c-brand-hover: #27272a;
+  --rh-c-brand-soft: rgba(0, 0, 0, 0.05);
+  --rh-c-brand-glow: rgba(0, 0, 0, 0.12);
+
+  /* Layered Soft Shadows (Light) */
+  --rh-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --rh-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --rh-shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --rh-shadow-lg: 0 12px 28px -6px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+  --rh-shadow-xl: 0 24px 48px -12px rgba(0, 0, 0, 0.14);
+  --rh-shadow-glow: 0 0 40px rgba(0, 0, 0, 0.08);
+
+  /* Glassmorphism Navigation */
+  --rh-glass-bg: rgba(255, 255, 255, 0.82);
+  --rh-glass-border: rgba(0, 0, 0, 0.08);
+  --rh-glass-blur: blur(16px);
+
+  /* VitePress CSS Variables Overwrite (Light) */
+  --vp-c-brand-1: #09090b;
+  --vp-c-brand-2: #27272a;
+  --vp-c-brand-3: #3f3f46;
   --vp-c-brand-soft: rgba(0, 0, 0, 0.04);
 
-  /* Light Theme Surfaces & Crisp Borders */
-  --vp-c-bg: #ffffff;
-  --vp-c-bg-alt: #fafafa;
-  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg: var(--rh-c-bg);
+  --vp-c-bg-alt: var(--rh-c-bg-subtle);
+  --vp-c-bg-elv: var(--rh-c-bg-surface);
   --vp-c-bg-soft: #f4f4f5;
-  --vp-c-bg-hover: #f0f0f2;
 
-  --vp-c-border: #e4e4e7;
-  --vp-c-border-hover: #d4d4d8;
-  --vp-c-divider: #e4e4e7;
-  --vp-c-gutter: #e4e4e7;
+  --vp-c-border: var(--rh-c-border);
+  --vp-c-divider: var(--rh-c-border);
+  --vp-c-gutter: #f0f0f2;
 
-  --vp-c-text-1: #09090b;
-  --vp-c-text-2: #64748b;
-  --vp-c-text-3: #94a3b8;
+  --vp-c-text-1: var(--rh-c-text-primary);
+  --vp-c-text-2: var(--rh-c-text-secondary);
+  --vp-c-text-3: var(--rh-c-text-tertiary);
 
-  --vp-c-default-1: #09090b;
-  --vp-c-default-2: #64748b;
-  --vp-c-default-3: #94a3b8;
+  --vp-c-default-1: var(--rh-c-text-primary);
+  --vp-c-default-2: var(--rh-c-text-secondary);
+  --vp-c-default-3: var(--rh-c-text-tertiary);
   --vp-c-default-soft: #f4f4f5;
-
-  /* Motion & Physics Tokens */
-  --ease-smooth-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-bounce-subtle: cubic-bezier(0.34, 1.3, 0.64, 1);
-  --duration-quick: 140ms;
-  --duration-fast: 200ms;
-  --duration-medium: 300ms;
-  --hub-transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  --hub-card-radius: 10px;
-  --hub-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --hub-card-shadow-hover: 0 12px 28px -6px rgba(0, 0, 0, 0.08);
-
-  /* Glassmorphism Tokens */
-  --hub-glass-bg: rgba(255, 255, 255, 0.82);
-  --hub-glass-border: rgba(0, 0, 0, 0.08);
-  --hub-glass-blur: blur(16px);
-}
-
-.dark {
-  /* Monochromatic High-Contrast Brand - Dark Theme (Vercel / Linear) */
-  --vp-c-brand-1: #ffffff;
-  --vp-c-brand-2: #f0f0f0;
-  --vp-c-brand-3: #d4d4d4;
-  --vp-c-brand-soft: rgba(255, 255, 255, 0.06);
-
-  /* Deep Black Surfaces */
-  --vp-c-bg: #000000;
-  --vp-c-bg-alt: #080808;
-  --vp-c-bg-elv: #0c0c0c;
-  --vp-c-bg-soft: #121212;
-  --vp-c-bg-hover: #181818;
-
-  /* Crisp 1px Separation Borders */
-  --vp-c-border: #1e1e1e;
-  --vp-c-border-hover: #333333;
-  --vp-c-divider: #181818;
-  --vp-c-gutter: #121212;
-
-  /* High-Contrast Crisp Typography */
-  --vp-c-text-1: #ededed;
-  --vp-c-text-2: #888888;
-  --vp-c-text-3: #555555;
-
-  --vp-c-default-1: #ededed;
-  --vp-c-default-2: #888888;
-  --vp-c-default-3: #555555;
-  --vp-c-default-soft: #121212;
-
-  /* Glassmorphism Tokens (Dark) */
-  --hub-glass-bg: rgba(10, 10, 10, 0.72);
-  --hub-glass-border: rgba(255, 255, 255, 0.08);
-  --hub-glass-blur: blur(16px);
-
-  /* Subtle Card Glow & Elevation */
-  --hub-card-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
-  --hub-card-shadow-hover: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 16px 40px -10px rgba(0, 0, 0, 0.8);
 }
 
 /* ==========================================================================
-   Base Typography & Global Surfaces
+   DARK MODE TOKENS (Deep black, intentional contrast, Linear / Vercel grade)
+   ========================================================================== */
+
+.dark {
+  --rh-c-bg: #09090b;
+  --rh-c-bg-subtle: #0f0f12;
+  --rh-c-bg-surface: #141418;
+  --rh-c-bg-elevated: #1a1a20;
+  --rh-c-bg-hover: #22222a;
+
+  --rh-c-border: rgba(255, 255, 255, 0.08);
+  --rh-c-border-subtle: rgba(255, 255, 255, 0.05);
+  --rh-c-border-hover: rgba(255, 255, 255, 0.18);
+  --rh-c-border-focus: #ffffff;
+
+  --rh-c-text-primary: #f4f4f5;
+  --rh-c-text-secondary: #a1a1aa;
+  --rh-c-text-tertiary: #71717a;
+
+  --rh-c-brand: #ffffff;
+  --rh-c-brand-hover: #e4e4e7;
+  --rh-c-brand-soft: rgba(255, 255, 255, 0.08);
+  --rh-c-brand-glow: rgba(255, 255, 255, 0.16);
+
+  /* Semantic Status Colors (Dark mode brightness adjusted) */
+  --rh-color-emerald-bg: rgba(16, 185, 129, 0.12);
+  --rh-color-emerald-border: rgba(16, 185, 129, 0.35);
+  --rh-color-emerald-text: #34d399;
+
+  --rh-color-amber-bg: rgba(245, 158, 11, 0.12);
+  --rh-color-amber-border: rgba(245, 158, 11, 0.35);
+  --rh-color-amber-text: #fbbf24;
+
+  --rh-color-rose-bg: rgba(244, 63, 94, 0.12);
+  --rh-color-rose-border: rgba(244, 63, 94, 0.35);
+  --rh-color-rose-text: #fb7185;
+
+  --rh-color-slate-bg: rgba(148, 163, 184, 0.12);
+  --rh-color-slate-border: rgba(148, 163, 184, 0.28);
+  --rh-color-slate-text: #94a3b8;
+
+  /* Layered Shadows (Dark Mode: subtle rim highlight + deep falloff) */
+  --rh-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --rh-shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 2px 4px rgba(0, 0, 0, 0.4);
+  --rh-shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 6px 18px -4px rgba(0, 0, 0, 0.7);
+  --rh-shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 16px 40px -8px rgba(0, 0, 0, 0.85);
+  --rh-shadow-xl: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 28px 64px -12px rgba(0, 0, 0, 0.95);
+  --rh-shadow-glow: 0 0 50px rgba(255, 255, 255, 0.06);
+
+  /* Dark Glassmorphism */
+  --rh-glass-bg: rgba(9, 9, 11, 0.8);
+  --rh-glass-border: rgba(255, 255, 255, 0.08);
+  --rh-glass-blur: blur(16px);
+
+  /* VitePress Overwrite (Dark) */
+  --vp-c-brand-1: #ffffff;
+  --vp-c-brand-2: #e4e4e7;
+  --vp-c-brand-3: #a1a1aa;
+  --vp-c-brand-soft: rgba(255, 255, 255, 0.08);
+
+  --vp-c-bg: var(--rh-c-bg);
+  --vp-c-bg-alt: var(--rh-c-bg-subtle);
+  --vp-c-bg-elv: var(--rh-c-bg-surface);
+  --vp-c-bg-soft: #18181b;
+
+  --vp-c-border: var(--rh-c-border);
+  --vp-c-divider: var(--rh-c-border);
+  --vp-c-gutter: #18181b;
+
+  --vp-c-text-1: var(--rh-c-text-primary);
+  --vp-c-text-2: var(--rh-c-text-secondary);
+  --vp-c-text-3: var(--rh-c-text-tertiary);
+
+  --vp-c-default-1: var(--rh-c-text-primary);
+  --vp-c-default-2: var(--rh-c-text-secondary);
+  --vp-c-default-3: var(--rh-c-text-tertiary);
+  --vp-c-default-soft: #18181b;
+}
+
+/* ==========================================================================
+   2. BASE RESETS & TYPOGRAPHY
    ========================================================================== */
 
 *,
@@ -112,60 +236,54 @@ html {
 }
 
 body {
-  color: var(--vp-c-text-1);
-  background-color: var(--vp-c-bg);
+  color: var(--rh-c-text-primary);
+  background-color: var(--rh-c-bg);
+  font-family: var(--rh-font-sans);
   line-height: 1.6;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.011em;
 }
 
-/* Themed Text Selection */
+/* Text Selection */
 ::selection {
-  background-color: #000000;
+  background-color: #09090b;
   color: #ffffff;
 }
 
 .dark ::selection {
   background-color: #ffffff;
-  color: #000000;
+  color: #09090b;
 }
 
-/* Accessible, crisp focus rings */
+/* Accessible Focus Rings */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
+  outline: 2px solid var(--rh-c-brand);
   outline-offset: 2px;
 }
 
-/* Headings & Precision Tracking */
+/* Headings with Balanced Line Breaks & Tight Tracking */
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
-  letter-spacing: -0.03em;
-  color: var(--vp-c-text-1);
+  letter-spacing: -0.035em;
+  color: var(--rh-c-text-primary);
   font-weight: 600;
+  line-height: 1.25;
 }
 
 p, li {
   text-wrap: pretty;
 }
 
-/* Tabular Numerals for metrics, counters, and dates */
+/* Tabular Numerals for Metrics & Counters */
 .tabular-nums,
-.metric-num,
-.pill-count,
-.category-count,
-.count-badge,
-.count-tag,
-.cat-count,
-.tab-count,
-.results-count,
-.tag-more {
+.rh-tnum {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' on;
 }
 
-/* Custom Minimalist Scrollbar */
+/* Custom Minimalist Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -176,36 +294,276 @@ p, li {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--vp-c-border);
-  border-radius: 9999px;
+  background: var(--rh-c-border);
+  border-radius: var(--rh-radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--vp-c-border-hover);
+  background: var(--rh-c-border-hover);
 }
 
 /* ==========================================================================
-   VitePress Layout Overrides & Navigation
+   3. REUSABLE UI PRIMITIVES (rh- PREFIX)
+   ========================================================================== */
+
+/* Section Container */
+.rh-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--rh-space-4);
+  padding-right: var(--rh-space-4);
+}
+
+@media (min-width: 768px) {
+  .rh-container {
+    padding-left: var(--rh-space-6);
+    padding-right: var(--rh-space-6);
+  }
+}
+
+/* Button Primitives */
+.rh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rh-space-2);
+  font-family: var(--rh-font-sans);
+  font-weight: 500;
+  border-radius: var(--rh-radius-md);
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--rh-transition-fast);
+  user-select: none;
+}
+
+.rh-btn-sm {
+  height: 32px;
+  padding: 0 var(--rh-space-3);
+  font-size: 0.8125rem;
+}
+
+.rh-btn-md {
+  height: 40px;
+  padding: 0 var(--rh-space-4);
+  font-size: 0.875rem;
+}
+
+.rh-btn-lg {
+  height: 48px;
+  padding: 0 var(--rh-space-6);
+  font-size: 0.9375rem;
+}
+
+.rh-btn-primary {
+  background-color: var(--rh-c-brand);
+  color: var(--rh-c-bg) !important;
+  border-color: var(--rh-c-brand);
+  box-shadow: var(--rh-shadow-xs);
+}
+
+.rh-btn-primary:hover {
+  background-color: var(--rh-c-brand-hover);
+  border-color: var(--rh-c-brand-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--rh-shadow-sm);
+}
+
+.rh-btn-primary:active {
+  transform: translateY(0);
+}
+
+.rh-btn-secondary {
+  background-color: var(--rh-c-bg-surface);
+  color: var(--rh-c-text-primary) !important;
+  border-color: var(--rh-c-border);
+  box-shadow: var(--rh-shadow-xs);
+}
+
+.rh-btn-secondary:hover {
+  background-color: var(--rh-c-bg-hover);
+  border-color: var(--rh-c-border-hover);
+  transform: translateY(-1px);
+}
+
+.rh-btn-secondary:active {
+  transform: translateY(0);
+}
+
+.rh-btn-ghost {
+  background-color: transparent;
+  color: var(--rh-c-text-secondary) !important;
+}
+
+.rh-btn-ghost:hover {
+  background-color: var(--rh-c-bg-hover);
+  color: var(--rh-c-text-primary) !important;
+}
+
+/* Badge / Chip Primitives */
+.rh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rh-space-1);
+  padding: 2px 8px;
+  border-radius: var(--rh-radius-full);
+  font-size: 0.725rem;
+  font-weight: 500;
+  line-height: 1.4;
+  border: 1px solid var(--rh-c-border);
+  background-color: var(--rh-c-bg-subtle);
+  color: var(--rh-c-text-secondary);
+  white-space: nowrap;
+}
+
+.rh-badge-emerald {
+  background-color: var(--rh-color-emerald-bg);
+  border-color: var(--rh-color-emerald-border);
+  color: var(--rh-color-emerald-text);
+}
+
+.rh-badge-amber {
+  background-color: var(--rh-color-amber-bg);
+  border-color: var(--rh-color-amber-border);
+  color: var(--rh-color-amber-text);
+}
+
+.rh-badge-rose {
+  background-color: var(--rh-color-rose-bg);
+  border-color: var(--rh-color-rose-border);
+  color: var(--rh-color-rose-text);
+}
+
+.rh-badge-slate {
+  background-color: var(--rh-color-slate-bg);
+  border-color: var(--rh-color-slate-border);
+  color: var(--rh-color-slate-text);
+}
+
+.rh-badge-brand {
+  background-color: var(--rh-c-brand-soft);
+  border-color: var(--rh-c-border);
+  color: var(--rh-c-text-primary);
+}
+
+/* Card Surface Primitive */
+.rh-card {
+  position: relative;
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-lg);
+  box-shadow: var(--rh-shadow-sm);
+  transition: transform var(--rh-transition-base),
+              box-shadow var(--rh-transition-base),
+              border-color var(--rh-transition-base);
+  overflow: hidden;
+}
+
+.rh-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--rh-c-border-hover);
+  box-shadow: var(--rh-shadow-md);
+}
+
+/* Input Primitive */
+.rh-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--rh-space-3);
+  font-family: var(--rh-font-sans);
+  font-size: 0.875rem;
+  color: var(--rh-c-text-primary);
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-md);
+  outline: none;
+  transition: border-color var(--rh-transition-fast),
+              box-shadow var(--rh-transition-fast);
+}
+
+.rh-input::placeholder {
+  color: var(--rh-c-text-tertiary);
+}
+
+.rh-input:focus {
+  border-color: var(--rh-c-brand);
+  box-shadow: 0 0 0 3px var(--rh-c-brand-soft);
+}
+
+/* Keyboard Shortcut Primitive (Kbd) */
+.rh-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  font-family: var(--rh-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--rh-c-text-tertiary);
+  background: var(--rh-c-bg-hover);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-xs);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Gradient Text Accent */
+.rh-gradient-text {
+  background: linear-gradient(135deg, var(--rh-c-text-primary) 30%, var(--rh-c-text-tertiary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .rh-gradient-text {
+  background: linear-gradient(135deg, #ffffff 40%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Shimmer Skeleton Loader */
+@keyframes rh-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.rh-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--rh-c-bg-subtle) 25%,
+    var(--rh-c-bg-hover) 50%,
+    var(--rh-c-bg-subtle) 75%
+  );
+  background-size: 200% 100%;
+  animation: rh-shimmer 1.8s infinite ease-in-out;
+  border-radius: var(--rh-radius-sm);
+}
+
+/* ==========================================================================
+   4. VITEPRESS LAYOUT & GLOBAL CHROME POLISH
    ========================================================================== */
 
 .VPNav {
-  border-bottom: 1px solid var(--hub-glass-border) !important;
-  background-color: var(--hub-glass-bg) !important;
-  backdrop-filter: var(--hub-glass-blur) !important;
-  -webkit-backdrop-filter: var(--hub-glass-blur) !important;
-  transition: border-color var(--hub-transition);
+  border-bottom: 1px solid var(--rh-glass-border) !important;
+  background-color: var(--rh-glass-bg) !important;
+  backdrop-filter: var(--rh-glass-blur) !important;
+  -webkit-backdrop-filter: var(--rh-glass-blur) !important;
+  transition: border-color var(--rh-transition-base);
 }
 
 .VPSidebar {
-  border-right: 1px solid var(--vp-c-border) !important;
-  background-color: var(--vp-c-bg) !important;
+  border-right: 1px solid var(--rh-c-border) !important;
+  background-color: var(--rh-c-bg) !important;
 }
 
-/* Sleek Sidebar Active Indicator */
 .VPSidebarItem .text {
-  font-size: 0.86rem !important;
+  font-size: 0.85rem !important;
   letter-spacing: -0.01em !important;
-  transition: color var(--hub-transition) !important;
+  transition: color var(--rh-transition-fast) !important;
 }
 
 .VPSidebarItem.is-active > .item {
@@ -219,171 +577,80 @@ p, li {
   top: 6px;
   bottom: 6px;
   width: 2px;
-  background: var(--vp-c-brand-1);
+  background: var(--rh-c-brand);
   border-radius: 2px;
-  box-shadow: 0 0 8px var(--vp-c-brand-1);
+  box-shadow: 0 0 8px var(--rh-c-brand-glow);
 }
 
 .VPSidebarItem.is-active > .item > .link > .text {
-  color: var(--vp-c-text-1) !important;
+  color: var(--rh-c-text-primary) !important;
   font-weight: 600 !important;
 }
 
 .VPFooter {
-  border-top: 1px solid var(--vp-c-border) !important;
-  background-color: var(--vp-c-bg) !important;
-  padding: 2.5rem 1.5rem !important;
+  border-top: 1px solid var(--rh-c-border) !important;
+  background-color: var(--rh-c-bg) !important;
+  padding: 3rem 1.5rem !important;
 }
 
 .VPFooter .message,
 .VPFooter .copyright {
-  font-size: 0.8rem !important;
-  color: var(--vp-c-text-3) !important;
+  font-size: 0.8125rem !important;
+  color: var(--rh-c-text-tertiary) !important;
 }
 
-/* ==========================================================================
-   Vercel / Linear Local Search Command Palette Modal Overrides
-   ========================================================================== */
-
-.VPLocalSearchBox {
-  --vp-local-search-bg: #0A0A0A;
-  --vp-local-search-result-bg: transparent;
-  --vp-local-search-result-border: transparent;
-  --vp-local-search-result-selected-bg: #141414;
-  --vp-local-search-result-selected-border: #282828;
-  --vp-local-search-highlight-bg: rgba(255, 255, 255, 0.15);
-  --vp-local-search-highlight-text: #FFFFFF;
-}
-
+/* Command Palette / Local Search Overrides */
 .VPLocalSearchBox .backdrop {
-  background: rgba(0, 0, 0, 0.78) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
 
 .VPLocalSearchBox .shell,
 .DocSearch-Modal {
-  background-color: #0A0A0A !important;
-  border: 1px solid #222222 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  background-color: var(--rh-c-bg-surface) !important;
+  border: 1px solid var(--rh-c-border) !important;
+  border-radius: var(--rh-radius-lg) !important;
+  box-shadow: var(--rh-shadow-xl) !important;
   padding: 16px !important;
   max-width: 660px !important;
 }
 
 .VPLocalSearchBox .search-bar {
-  background-color: #111111 !important;
-  border: 1px solid #242424 !important;
-  border-radius: 8px !important;
+  background-color: var(--rh-c-bg-subtle) !important;
+  border: 1px solid var(--rh-c-border) !important;
+  border-radius: var(--rh-radius-md) !important;
   padding: 4px 12px !important;
-  transition: border-color var(--hub-transition), box-shadow var(--hub-transition) !important;
+  transition: border-color var(--rh-transition-fast), box-shadow var(--rh-transition-fast) !important;
 }
 
 .VPLocalSearchBox .search-bar:focus-within {
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+  border-color: var(--rh-c-brand) !important;
+  box-shadow: 0 0 0 3px var(--rh-c-brand-soft) !important;
 }
 
-/* Force inner search input to be borderless and transparent so only .search-bar highlights */
 .VPLocalSearchBox input,
-.VPLocalSearchBox .search-input,
-.VPLocalSearchBox input:focus,
-.VPLocalSearchBox .search-input:focus,
-.VPLocalSearchBox input:focus-visible,
-.VPLocalSearchBox .search-input:focus-visible,
-.DocSearch-Input,
-.DocSearch-Input:focus,
-.DocSearch-Input:focus-visible {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  background-color: transparent !important;
-  background: transparent !important;
-}
-
-.VPLocalSearchBox .search-actions button,
-.VPLocalSearchBox .search-actions button:focus,
-.VPLocalSearchBox .search-actions button:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
 .VPLocalSearchBox .search-input {
-  font-family: var(--vp-font-family-base) !important;
-  font-size: 0.95rem !important;
-  color: #EDEDED !important;
-}
-
-.VPLocalSearchBox .search-input::placeholder {
-  color: #666666 !important;
-}
-
-.VPLocalSearchBox .results {
-  gap: 4px !important;
-  padding: 6px 0 !important;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  font-family: var(--rh-font-sans) !important;
+  color: var(--rh-c-text-primary) !important;
 }
 
 .VPLocalSearchBox .result {
-  border: 1px solid transparent !important;
-  border-radius: 8px !important;
-  background-color: transparent !important;
-  transition: background-color 140ms ease, border-color 140ms ease !important;
+  border-radius: var(--rh-radius-md) !important;
+  transition: background-color var(--rh-transition-fast) !important;
 }
 
 .VPLocalSearchBox .result:hover,
 .VPLocalSearchBox .result.selected {
-  background-color: #141414 !important;
-  border-color: #242424 !important;
-}
-
-.VPLocalSearchBox .title.main {
-  color: #EDEDED !important;
-  font-weight: 600 !important;
-  font-size: 0.92rem !important;
-  letter-spacing: -0.015em !important;
-}
-
-.VPLocalSearchBox .title-icon {
-  color: #FFFFFF !important;
-  opacity: 0.8 !important;
-}
-
-.VPLocalSearchBox .titles mark,
-.VPLocalSearchBox .excerpt mark {
-  background-color: rgba(255, 255, 255, 0.18) !important;
-  color: #FFFFFF !important;
-  border-radius: 3px !important;
-  padding: 1px 4px !important;
-  font-weight: 600 !important;
-}
-
-.VPLocalSearchBox .excerpt {
-  color: #888888 !important;
-  font-size: 0.8rem !important;
-}
-
-.VPLocalSearchBox .search-keyboard-shortcuts {
-  border-top: 1px solid #1A1A1A !important;
-  padding-top: 12px !important;
-  margin-top: 8px !important;
-  color: #666666 !important;
-  font-size: 0.75rem !important;
-}
-
-.VPLocalSearchBox .search-keyboard-shortcuts kbd {
-  background: #141414 !important;
-  border: 1px solid #242424 !important;
-  color: #999999 !important;
-  border-radius: 4px !important;
-  box-shadow: none !important;
-  font-family: var(--vp-font-family-mono) !important;
-  font-size: 0.7rem !important;
-  padding: 2px 5px !important;
+  background-color: var(--rh-c-bg-hover) !important;
 }
 
 /* ==========================================================================
-   Documentation Measure, SaaS Markdown Typography & Spacing
+   5. MARKDOWN CONTENT STYLING (.vp-doc)
    ========================================================================== */
 
 .vp-doc {
@@ -391,7 +658,7 @@ p, li {
   line-height: 1.7;
 }
 
-/* Strict Suppression of Redundant Markdown H1 on Resource Detail Pages */
+/* Suppress duplicated H1 in resource detail pages when ResourceMeta is present */
 .saas-header ~ .main .vp-doc h1:first-of-type,
 .saas-header ~ main .vp-doc h1:first-of-type,
 .content-container:has(.saas-header) .vp-doc h1:first-of-type,
@@ -403,34 +670,34 @@ p, li {
 .vp-doc p,
 .vp-doc li {
   line-height: 1.7;
-  font-size: 0.98rem;
-  color: var(--vp-c-text-2);
+  font-size: 0.95rem;
+  color: var(--rh-c-text-secondary);
   margin-bottom: 1rem;
 }
 
 .vp-doc strong {
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
   font-weight: 600;
 }
 
 .vp-doc h1 {
-  font-size: 2.25rem;
+  font-size: 2.125rem;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.035em;
   line-height: 1.2;
   margin-bottom: 1.25rem;
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
 }
 
 .vp-doc h2 {
   font-size: 1.35rem;
   font-weight: 600;
   letter-spacing: -0.025em;
-  margin-top: 2.75rem;
+  margin-top: 2.5rem;
   margin-bottom: 0.85rem;
   padding-top: 1.25rem;
-  border-top: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-1);
+  border-top: 1px solid var(--rh-c-border);
+  color: var(--rh-c-text-primary);
 }
 
 .vp-doc h3 {
@@ -439,47 +706,42 @@ p, li {
   letter-spacing: -0.02em;
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
 }
 
-/* Premium SaaS Links with Subtle Underline Offset */
 .vp-doc a:not([class]) {
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
-  text-decoration-color: #444444;
-  transition: text-decoration-color var(--hub-transition), color var(--hub-transition);
+  text-decoration-color: var(--rh-c-border);
+  transition: text-decoration-color var(--rh-transition-fast), color var(--rh-transition-fast);
 }
 
 .vp-doc a:not([class]):hover {
-  text-decoration-color: var(--vp-c-text-1);
-  color: #FFFFFF;
+  text-decoration-color: var(--rh-c-text-primary);
 }
 
-/* Intentional SaaS Callout Blockquotes */
 .vp-doc blockquote {
-  border-left: 3px solid var(--vp-c-brand-1);
-  background-color: var(--vp-c-bg-elv);
-  border-radius: 0 8px 8px 0;
-  padding: 1rem 1.35rem;
+  border-left: 3px solid var(--rh-c-brand);
+  background-color: var(--rh-c-bg-subtle);
+  border-radius: 0 var(--rh-radius-md) var(--rh-radius-md) 0;
+  padding: 1rem 1.25rem;
   margin: 1.75rem 0;
-  color: var(--vp-c-text-2);
+  color: var(--rh-c-text-secondary);
   font-style: normal;
-  border-top: 1px solid var(--vp-c-border);
-  border-right: 1px solid var(--vp-c-border);
-  border-bottom: 1px solid var(--vp-c-border);
+  border-top: 1px solid var(--rh-c-border);
+  border-right: 1px solid var(--rh-c-border);
+  border-bottom: 1px solid var(--rh-c-border);
 }
 
 .vp-doc blockquote p {
   margin: 0;
-  line-height: 1.65;
 }
 
-/* Lists */
 .vp-doc ul,
 .vp-doc ol {
-  padding-left: 1.35rem;
+  padding-left: 1.25rem;
   margin-bottom: 1.25rem;
 }
 
@@ -488,45 +750,43 @@ p, li {
 }
 
 .vp-doc li::marker {
-  color: var(--vp-c-text-3);
+  color: var(--rh-c-text-tertiary);
 }
 
-/* Tables */
 .vp-doc table {
   border-collapse: collapse;
   margin: 1.75rem 0;
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--rh-radius-md);
   overflow: hidden;
-  border: 1px solid var(--vp-c-border);
+  border: 1px solid var(--rh-c-border);
 }
 
 .vp-doc th,
 .vp-doc td {
-  border: 1px solid var(--vp-c-border);
+  border: 1px solid var(--rh-c-border);
   padding: 0.75rem 1rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
 }
 
 .vp-doc th {
-  background-color: var(--vp-c-bg-soft);
+  background-color: var(--rh-c-bg-subtle);
   font-weight: 600;
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
 }
 
-/* Inline Code & Pre */
 .vp-doc :not(pre) > code {
   font-size: 0.85em;
-  padding: 0.15em 0.45em;
-  border-radius: 4px;
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-1);
-  font-family: var(--vp-font-family-mono);
+  padding: 0.15em 0.4em;
+  border-radius: var(--rh-radius-xs);
+  background-color: var(--rh-c-bg-hover);
+  border: 1px solid var(--rh-c-border);
+  color: var(--rh-c-text-primary);
+  font-family: var(--rh-font-mono);
 }
 
 /* ==========================================================================
-   Reduced Motion Accessibility
+   6. REDUCED MOTION ACCESSIBILITY
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
