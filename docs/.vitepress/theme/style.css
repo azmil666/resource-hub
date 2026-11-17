@@ -77,6 +77,11 @@
   --cat-accent-productivity: #14b8a6;
   --cat-accent-miscellaneous: #64748b;
 
+  /* Extended Display Scale & Rhythm */
+  --rh-text-display: clamp(2.5rem, 5.5vw + 0.5rem, 4.25rem);
+  --rh-section-padding-y: clamp(4.5rem, 8vw, 7.5rem);
+  --rh-mockup-glow: radial-gradient(ellipse 65% 50% at 50% 0%, rgba(59, 130, 246, 0.14) 0%, rgba(139, 92, 246, 0.08) 45%, transparent 70%);
+
   /* ========================================================================
      LIGHT MODE TOKENS (VitePress Overrides & Theme Tokens)
      ======================================================================== */
@@ -192,6 +197,7 @@
   --rh-glass-bg: rgba(9, 9, 11, 0.8);
   --rh-glass-border: rgba(255, 255, 255, 0.08);
   --rh-glass-blur: blur(16px);
+  --rh-mockup-glow: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(59, 130, 246, 0.22) 0%, rgba(139, 92, 246, 0.14) 45%, transparent 70%);
 
   /* VitePress Overwrite (Dark) */
   --vp-c-brand-1: #ffffff;
@@ -543,6 +549,89 @@ p, li {
   border-radius: var(--rh-radius-sm);
 }
 
+/* Spotlight Card Hover */
+.rh-spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.rh-spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    400px circle at var(--spotlight-x, -200px) var(--spotlight-y, -200px),
+    rgba(255, 255, 255, 0.16),
+    transparent 60%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--rh-transition-fast);
+}
+
+:root:not(.dark) .rh-spotlight-card::before {
+  background: radial-gradient(
+    400px circle at var(--spotlight-x, -200px) var(--spotlight-y, -200px),
+    rgba(0, 0, 0, 0.12),
+    transparent 60%
+  );
+}
+
+.rh-spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Infinite Marquee Strip */
+.rh-marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: var(--rh-space-3);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.rh-marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--rh-space-3);
+  animation: rh-marquee-scroll 36s linear infinite;
+}
+
+.rh-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes rh-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--rh-space-3))); }
+}
+
+/* Scroll Reveal Animation */
+.rh-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s var(--rh-ease), transform 0.5s var(--rh-ease);
+  will-change: opacity, transform;
+}
+
+.rh-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Performance Containment for Below-the-fold */
+.rh-cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
+}
+
 /* ==========================================================================
    4. VITEPRESS LAYOUT & GLOBAL CHROME POLISH
    ========================================================================== */
@@ -797,5 +886,12 @@ p, li {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .rh-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .rh-marquee-track {
+    animation: none !important;
   }
 }
