@@ -41,7 +41,16 @@ export default createContentLoader('resources/**/*.md', {
           type: String(frontmatter.type || 'website').toLowerCase(),
           url: String(frontmatter.url || ''),
           pricing: (frontmatter.pricing || 'unknown') as ResourceItem['pricing'],
-          tags: Array.isArray(frontmatter.tags) ? frontmatter.tags.map(String) : [],
+          tags: Array.isArray(frontmatter.tags)
+            ? Array.from(
+                new Set(
+                  frontmatter.tags
+                    .filter((t: any) => typeof t === 'string' && t.trim().length > 0)
+                    .map((t: string) => t.trim().toLowerCase())
+                    .filter((t: string) => t !== '[object object]' && !t.includes('[object'))
+                )
+              )
+            : [],
           status: (frontmatter.status || 'published') as ResourceItem['status'],
           featured: Boolean(frontmatter.featured),
           dateAdded: frontmatter.dateAdded ? String(frontmatter.dateAdded) : '',

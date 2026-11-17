@@ -10,27 +10,48 @@ const categoryCounts = computed(() => {
   });
   return map;
 });
+
+// Category accent colors mapping
+const categoryAccents: Record<string, string> = {
+  frontend: 'var(--cat-accent-frontend)',
+  backend: 'var(--cat-accent-backend)',
+  'ai-tools': 'var(--cat-accent-ai-tools)',
+  utilities: 'var(--cat-accent-utilities)',
+  github: 'var(--cat-accent-github)',
+  design: 'var(--cat-accent-design)',
+  learning: 'var(--cat-accent-learning)',
+  inspiration: 'var(--cat-accent-inspiration)',
+  productivity: 'var(--cat-accent-productivity)',
+  miscellaneous: 'var(--cat-accent-miscellaneous)'
+};
 </script>
 
 <template>
-  <div class="category-index-grid">
+  <div class="rh-cat-overview-grid">
     <a
       v-for="cat in CATEGORIES"
       :key="cat.slug"
       :href="`/resources/${cat.slug}/`"
-      class="category-entry"
+      class="rh-card rh-card-interactive rh-cat-entry"
     >
-      <div class="entry-header">
-        <h3 class="category-title">{{ cat.name }}</h3>
-        <span class="category-count tabular-nums">
-          {{ categoryCounts[cat.slug] || 0 }}
+      <div class="rh-cat-entry-top">
+        <span
+          class="rh-cat-entry-dot"
+          :style="{ backgroundColor: categoryAccents[cat.slug] || 'var(--rh-c-brand)' }"
+          aria-hidden="true"
+        ></span>
+        <span class="rh-badge rh-tnum">
+          {{ categoryCounts[cat.slug] || 0 }} resources
         </span>
       </div>
-      <p class="category-description">{{ cat.description }}</p>
-      <div class="entry-footer">
-        <span class="explore-cue">
+
+      <h3 class="rh-cat-entry-title">{{ cat.name }}</h3>
+      <p class="rh-cat-entry-desc">{{ cat.description }}</p>
+
+      <div class="rh-cat-entry-footer">
+        <span class="rh-cat-entry-cue">
           Explore category
-          <span class="explore-arrow">→</span>
+          <span class="rh-cat-entry-arrow" aria-hidden="true">→</span>
         </span>
       </div>
     </a>
@@ -38,86 +59,78 @@ const categoryCounts = computed(() => {
 </template>
 
 <style scoped>
-.category-index-grid {
+.rh-cat-overview-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-  margin: 1.25rem 0 2rem 0;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--rh-space-4);
+  margin: var(--rh-space-6) 0 var(--rh-space-12) 0;
 }
 
-.category-entry {
+@media (min-width: 640px) {
+  .rh-cat-overview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rh-cat-overview-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.rh-cat-entry {
   display: flex;
   flex-direction: column;
-  padding: 1.25rem;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: var(--hub-card-radius, 8px);
-  box-shadow: var(--hub-card-shadow);
-  text-decoration: none;
-  transition: transform var(--hub-transition), border-color var(--hub-transition), box-shadow var(--hub-transition);
+  padding: var(--rh-space-5);
+  text-decoration: none !important;
+  color: inherit;
 }
 
-.category-entry:hover {
-  transform: translateY(-2px);
-  border-color: var(--vp-c-border-hover);
-  box-shadow: var(--hub-card-shadow-hover);
-}
-
-.entry-header {
+.rh-cat-entry-top {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--rh-space-3);
 }
 
-.category-title {
-  margin: 0;
-  font-size: 1rem;
+.rh-cat-entry-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--rh-radius-full);
+}
+
+.rh-cat-entry-title {
+  margin: 0 0 var(--rh-space-2) 0;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--vp-c-text-1);
-  letter-spacing: -0.02em;
+  color: var(--rh-c-text-primary);
+  letter-spacing: -0.025em;
 }
 
-.category-count {
-  font-size: 0.72rem;
-  color: var(--vp-c-text-3);
-  font-family: var(--vp-font-family-mono);
-  background-color: var(--vp-c-bg-soft);
-  padding: 1px 6px;
-  border-radius: 4px;
-  border: 1px solid var(--vp-c-border);
-}
-
-.category-description {
-  margin: 0 0 1rem 0;
-  font-size: 0.84rem;
-  line-height: 1.5;
-  color: var(--vp-c-text-2);
+.rh-cat-entry-desc {
+  margin: 0 0 var(--rh-space-4) 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--rh-c-text-secondary);
   flex-grow: 1;
 }
 
-.entry-footer {
+.rh-cat-entry-footer {
   margin-top: auto;
-  font-size: 0.78rem;
-  color: var(--vp-c-text-3);
+  font-size: 0.8125rem;
   font-weight: 500;
+  color: var(--rh-c-brand);
   display: flex;
   align-items: center;
-  transition: color var(--hub-transition);
 }
 
-.explore-arrow {
+.rh-cat-entry-arrow {
   display: inline-block;
-  margin-left: 0.35rem;
-  transition: transform var(--hub-transition);
+  margin-left: 4px;
+  transition: transform var(--rh-transition-fast);
 }
 
-.category-entry:hover .entry-footer {
-  color: var(--vp-c-text-1);
-}
-
-.category-entry:hover .explore-arrow {
+.rh-cat-entry:hover .rh-cat-entry-arrow {
   transform: translateX(4px);
 }
 </style>

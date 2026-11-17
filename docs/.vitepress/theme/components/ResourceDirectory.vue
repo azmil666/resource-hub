@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { data as allResources } from '../data/resources.data';
 import { CATEGORIES, getCategory } from '../data/categories';
 import ResourceCard from './ResourceCard.vue';
+import { FEATURED_SORT_LABEL } from '../utils/labels';
 
 const props = withDefaults(
   defineProps<{
@@ -19,10 +20,13 @@ const selectedCategory = ref(props.initialCategory);
 const selectedType = ref('');
 const selectedPricing = ref('');
 const selectedTag = ref('');
-const sortBy = ref<'title-asc' | 'title-desc'>('title-asc');
+const sortBy = ref<'title-asc' | 'title-desc' | 'newest' | 'featured'>('title-asc');
+
+// View mode: 'grid' | 'list' (persisted in localStorage)
+const viewMode = ref<'grid' | 'list'>('grid');
 
 // Active popover menus for custom filters
-const openFilterMenu = ref<'type' | 'pricing' | 'sort' | null>(null);
+const openFilterMenu = ref<'category' | 'type' | 'pricing' | 'sort' | null>(null);
 
 // Pagination / Progressive Rendering: 36 initial items + 24 per load
 const PAGE_SIZE = 36;
@@ -37,12 +41,16 @@ function syncFromUrl() {
   const typeParam = params.get('type');
   const pricingParam = params.get('pricing');
   const qParam = params.get('q');
+  const sortParam = params.get('sort');
 
   if (tagParam) selectedTag.value = tagParam;
   if (catParam && !props.initialCategory) selectedCategory.value = catParam;
   if (typeParam) selectedType.value = typeParam;
   if (pricingParam) selectedPricing.value = pricingParam;
   if (qParam) searchQuery.value = qParam;
+  if (sortParam && ['title-asc', 'title-desc', 'newest', 'featured'].includes(sortParam)) {
+    sortBy.value = sortParam as any;
+  }
 }
 
 function updateUrlQuery() {
@@ -55,6 +63,7 @@ function updateUrlQuery() {
   if (selectedType.value) params.set('type', selectedType.value);
   if (selectedPricing.value) params.set('pricing', selectedPricing.value);
   if (selectedTag.value) params.set('tag', selectedTag.value);
+  if (sortBy.value && sortBy.value !== 'title-asc') params.set('sort', sortBy.value);
 
   const queryStr = params.toString();
   const newUrl = queryStr ? `${window.location.pathname}?${queryStr}` : window.location.pathname;
@@ -63,7 +72,7 @@ function updateUrlQuery() {
 
 // Global keyboard shortcuts
 function handleGlobalKeydown(e: KeyboardEvent) {
-  // Pressing '/' focuses filter input
+  // Pressing '/' focuses search input
   if (
     e.key === '/' &&
     !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)
@@ -86,13 +95,20 @@ function handleGlobalKeydown(e: KeyboardEvent) {
 // Click outside handler for popovers
 function handleClickOutside(e: MouseEvent) {
   const target = e.target as HTMLElement;
-  if (!target.closest('.popover-container')) {
+  if (!target.closest('.rh-popover-root')) {
     openFilterMenu.value = null;
   }
 }
 
 onMounted(() => {
   syncFromUrl();
+  try {
+    const savedMode = localStorage.getItem('rh-view-mode');
+    if (savedMode === 'grid' || savedMode === 'list') {
+      viewMode.value = savedMode;
+    }
+  } catch (_) {}
+
   if (typeof window !== 'undefined') {
     window.addEventListener('keydown', handleGlobalKeydown);
     window.addEventListener('click', handleClickOutside);
@@ -106,13 +122,20 @@ onUnmounted(() => {
   }
 });
 
+function setViewMode(mode: 'grid' | 'list') {
+  viewMode.value = mode;
+  try {
+    localStorage.setItem('rh-view-mode', mode);
+  } catch (_) {}
+}
+
 // Reset display limit when filter criteria change
 watch([searchQuery, selectedCategory, selectedType, selectedPricing, selectedTag, sortBy], () => {
   displayLimit.value = PAGE_SIZE;
   updateUrlQuery();
 });
 
-// Types derived dynamically from data
+// Dynamic types derived from catalog
 const availableTypes = computed(() => {
   const set = new Set<string>();
   allResources.forEach(r => {
@@ -121,8 +144,8 @@ const availableTypes = computed(() => {
   return Array.from(set).sort();
 });
 
-// Category counts
-const categoryCounts = computed(() => {
+// Dynamic category counts map
+const categoryCountMap = computed(() => {
   const map: Record<string, number> = {};
   allResources.forEach(r => {
     map[r.category] = (map[r.category] || 0) + 1;
@@ -130,7 +153,7 @@ const categoryCounts = computed(() => {
   return map;
 });
 
-// Filtered and sorted master list
+// Filtered and sorted master collection
 const filteredResources = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
 
@@ -140,23 +163,19 @@ const filteredResources = computed(() => {
       if (selectedCategory.value && res.category !== selectedCategory.value) {
         return false;
       }
-
       // Type filter
       if (selectedType.value && res.type !== selectedType.value) {
         return false;
       }
-
       // Pricing filter
       if (selectedPricing.value && res.pricing !== selectedPricing.value) {
         return false;
       }
-
       // Tag filter
       if (selectedTag.value && !res.tags.includes(selectedTag.value)) {
         return false;
       }
-
-      // Search query
+      // Search query (fuzzy match title, description, tags, type, url)
       if (query) {
         const inTitle = res.title.toLowerCase().includes(query);
         const inDesc = res.description.toLowerCase().includes(query);
@@ -167,14 +186,25 @@ const filteredResources = computed(() => {
           return false;
         }
       }
-
       return true;
     })
     .sort((a, b) => {
       if (sortBy.value === 'title-asc') {
         return a.title.localeCompare(b.title);
       }
-      return b.title.localeCompare(a.title);
+      if (sortBy.value === 'title-desc') {
+        return b.title.localeCompare(a.title);
+      }
+      if (sortBy.value === 'newest') {
+        return (b.dateAdded || '').localeCompare(a.dateAdded || '');
+      }
+      if (sortBy.value === 'featured') {
+        if (a.featured === b.featured) {
+          return a.title.localeCompare(b.title);
+        }
+        return a.featured ? -1 : 1;
+      }
+      return 0;
     });
 });
 
@@ -217,31 +247,46 @@ function resetFilters() {
 
 function selectCategory(slug: string) {
   selectedCategory.value = selectedCategory.value === slug ? '' : slug;
+  openFilterMenu.value = null;
+}
+
+function selectType(t: string) {
+  selectedType.value = selectedType.value === t ? '' : t;
+  openFilterMenu.value = null;
+}
+
+function selectPricing(p: string) {
+  selectedPricing.value = selectedPricing.value === p ? '' : p;
+  openFilterMenu.value = null;
+}
+
+function selectSort(s: 'title-asc' | 'title-desc' | 'newest' | 'featured') {
+  sortBy.value = s;
+  openFilterMenu.value = null;
 }
 
 function handleTagSelect(tag: string) {
   selectedTag.value = selectedTag.value === tag ? '' : tag;
-  // Scroll to top of directory smoothly
-  const el = document.querySelector('.directory-view');
+  const el = document.querySelector('.rh-directory-root');
   if (el) {
     const top = el.getBoundingClientRect().top + window.scrollY - 80;
     window.scrollTo({ top, behavior: 'smooth' });
   }
 }
 
-function togglePopover(name: 'type' | 'pricing' | 'sort') {
+function togglePopover(name: 'category' | 'type' | 'pricing' | 'sort') {
   openFilterMenu.value = openFilterMenu.value === name ? null : name;
 }
 </script>
 
 <template>
-  <div class="directory-view">
-    <!-- Sticky Glassmorphic Filter Bar -->
-    <header class="sticky-filter-shell">
-      <div class="filter-glass-container">
-        <!-- Top Search Row -->
-        <div class="search-bar-wrap">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <div class="rh-directory-root">
+    <!-- 1. STICKY FILTER TOOLBAR -->
+    <div class="rh-filter-toolbar">
+      <div class="rh-toolbar-main">
+        <!-- Search Field -->
+        <div class="rh-search-wrapper">
+          <svg class="rh-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/>
             <path d="m21 21-4.3-4.3"/>
           </svg>
@@ -249,725 +294,679 @@ function togglePopover(name: 'type' | 'pricing' | 'sort') {
             ref="searchInputRef"
             v-model="searchQuery"
             type="text"
-            placeholder="Search resources by title, stack, or tag... (Press / to focus)"
-            class="directory-search-input"
-            aria-label="Filter resources"
+            class="rh-search-input"
+            placeholder="Filter by keyword, library, or tag..."
+            aria-label="Filter resources by keyword"
           />
-          <div class="search-trailing">
+          <button
+            v-if="searchQuery"
+            class="rh-clear-btn"
+            title="Clear search"
+            aria-label="Clear search input"
+            @click="searchQuery = ''; searchInputRef?.focus();"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+          <kbd v-else class="rh-kbd" title="Press / to search">/</kbd>
+        </div>
+
+        <!-- Filter Pill Dropdowns -->
+        <div class="rh-pill-group">
+          <!-- Category Filter Pill (Only when not in fixed category page) -->
+          <div v-if="!props.initialCategory" class="rh-popover-root">
             <button
-              v-if="searchQuery"
-              class="clear-input-btn"
-              title="Clear search"
-              aria-label="Clear search"
-              @click="searchQuery = ''"
+              class="rh-btn rh-btn-sm rh-pill-btn"
+              :class="{ 'rh-pill-active': selectedCategory }"
+              @click="togglePopover('category')"
+              aria-haspopup="true"
+              :aria-expanded="openFilterMenu === 'category'"
             >
-              ×
+              <span>{{ selectedCategory ? getCategory(selectedCategory).name : 'All Categories' }}</span>
+              <svg class="rh-pill-caret" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
             </button>
-            <kbd v-else class="key-indicator">/</kbd>
-          </div>
-        </div>
-
-        <!-- Category Filter Pills -->
-        <div v-if="!initialCategory" class="category-tabs-wrap" role="tablist" aria-label="Category filter tabs">
-          <button
-            class="category-tab"
-            :class="{ 'is-active': selectedCategory === '' }"
-            role="tab"
-            :aria-selected="selectedCategory === ''"
-            @click="selectedCategory = ''"
-          >
-            <span>All</span>
-            <span class="tab-count tabular-nums">{{ allResources.length }}</span>
-          </button>
-          <button
-            v-for="cat in CATEGORIES"
-            :key="cat.slug"
-            class="category-tab"
-            :class="{ 'is-active': selectedCategory === cat.slug }"
-            role="tab"
-            :aria-selected="selectedCategory === cat.slug"
-            @click="selectCategory(cat.slug)"
-          >
-            <span>{{ cat.name }}</span>
-            <span class="tab-count tabular-nums">{{ categoryCounts[cat.slug] || 0 }}</span>
-          </button>
-        </div>
-
-        <!-- Secondary Custom Popover Controls -->
-        <div class="controls-pill-row">
-          <div class="popover-filters-group">
-            <!-- Type Popover -->
-            <div class="popover-container">
+            <div v-if="openFilterMenu === 'category'" class="rh-card rh-popover-menu">
+              <div class="rh-popover-header">Categories</div>
               <button
-                class="filter-pill-btn"
-                :class="{ 'is-active': selectedType !== '' }"
-                aria-haspopup="true"
-                :aria-expanded="openFilterMenu === 'type'"
-                @click.stop="togglePopover('type')"
+                class="rh-popover-item"
+                :class="{ 'is-selected': !selectedCategory }"
+                @click="selectCategory('')"
               >
-                <span>Type: <strong>{{ selectedType || 'All' }}</strong></span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
+                <span>All Categories</span>
+                <span class="rh-tnum rh-item-count">{{ allResources.length }}</span>
               </button>
-
-              <div v-if="openFilterMenu === 'type'" class="popover-dropdown">
-                <button
-                  class="dropdown-item"
-                  :class="{ 'is-selected': selectedType === '' }"
-                  @click="selectedType = ''; openFilterMenu = null"
-                >
-                  All Types
-                </button>
-                <button
-                  v-for="t in availableTypes"
-                  :key="t"
-                  class="dropdown-item"
-                  :class="{ 'is-selected': selectedType === t }"
-                  @click="selectedType = t; openFilterMenu = null"
-                >
-                  {{ t }}
-                </button>
-              </div>
-            </div>
-
-            <!-- Pricing Popover -->
-            <div class="popover-container">
               <button
-                class="filter-pill-btn"
-                :class="{ 'is-active': selectedPricing !== '' }"
-                aria-haspopup="true"
-                :aria-expanded="openFilterMenu === 'pricing'"
-                @click.stop="togglePopover('pricing')"
+                v-for="cat in CATEGORIES"
+                :key="cat.slug"
+                class="rh-popover-item"
+                :class="{ 'is-selected': selectedCategory === cat.slug }"
+                @click="selectCategory(cat.slug)"
               >
-                <span>Pricing: <strong>{{ selectedPricing || 'All' }}</strong></span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
+                <span>{{ cat.name }}</span>
+                <span class="rh-tnum rh-item-count">{{ categoryCountMap[cat.slug] || 0 }}</span>
               </button>
-
-              <div v-if="openFilterMenu === 'pricing'" class="popover-dropdown">
-                <button
-                  class="dropdown-item"
-                  :class="{ 'is-selected': selectedPricing === '' }"
-                  @click="selectedPricing = ''; openFilterMenu = null"
-                >
-                  All Pricing
-                </button>
-                <button
-                  v-for="p in ['free', 'freemium', 'paid', 'unknown']"
-                  :key="p"
-                  class="dropdown-item"
-                  :class="{ 'is-selected': selectedPricing === p }"
-                  @click="selectedPricing = p; openFilterMenu = null"
-                >
-                  <span class="pricing-label">{{ p }}</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Sort Popover -->
-            <div class="popover-container">
-              <button
-                class="filter-pill-btn"
-                aria-haspopup="true"
-                :aria-expanded="openFilterMenu === 'sort'"
-                @click.stop="togglePopover('sort')"
-              >
-                <span>Sort: <strong>{{ sortBy === 'title-asc' ? 'A to Z' : 'Z to A' }}</strong></span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
-              </button>
-
-              <div v-if="openFilterMenu === 'sort'" class="popover-dropdown">
-                <button
-                  class="dropdown-item"
-                  :class="{ 'is-selected': sortBy === 'title-asc' }"
-                  @click="sortBy = 'title-asc'; openFilterMenu = null"
-                >
-                  Alphabetical (A to Z)
-                </button>
-                <button
-                  class="dropdown-item"
-                  :class="{ 'is-selected': sortBy === 'title-desc' }"
-                  @click="sortBy = 'title-desc'; openFilterMenu = null"
-                >
-                  Reverse (Z to A)
-                </button>
-              </div>
             </div>
           </div>
 
-          <!-- Reset Action Button -->
+          <!-- Type Filter Pill -->
+          <div class="rh-popover-root">
+            <button
+              class="rh-btn rh-btn-sm rh-pill-btn"
+              :class="{ 'rh-pill-active': selectedType }"
+              @click="togglePopover('type')"
+              aria-haspopup="true"
+              :aria-expanded="openFilterMenu === 'type'"
+            >
+              <span style="text-transform: capitalize;">{{ selectedType || 'All Types' }}</span>
+              <svg class="rh-pill-caret" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div v-if="openFilterMenu === 'type'" class="rh-card rh-popover-menu">
+              <div class="rh-popover-header">Resource Type</div>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': !selectedType }"
+                @click="selectType('')"
+              >
+                <span>All Types</span>
+              </button>
+              <button
+                v-for="t in availableTypes"
+                :key="t"
+                class="rh-popover-item"
+                :class="{ 'is-selected': selectedType === t }"
+                @click="selectType(t)"
+                style="text-transform: capitalize;"
+              >
+                <span>{{ t }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Pricing Filter Pill -->
+          <div class="rh-popover-root">
+            <button
+              class="rh-btn rh-btn-sm rh-pill-btn"
+              :class="{ 'rh-pill-active': selectedPricing }"
+              @click="togglePopover('pricing')"
+              aria-haspopup="true"
+              :aria-expanded="openFilterMenu === 'pricing'"
+            >
+              <span style="text-transform: capitalize;">{{ selectedPricing || 'All Pricing' }}</span>
+              <svg class="rh-pill-caret" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div v-if="openFilterMenu === 'pricing'" class="rh-card rh-popover-menu">
+              <div class="rh-popover-header">Pricing Model</div>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': !selectedPricing }"
+                @click="selectPricing('')"
+              >
+                <span>All Pricing</span>
+              </button>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': selectedPricing === 'free' }"
+                @click="selectPricing('free')"
+              >
+                <span class="rh-badge rh-badge-emerald" style="padding: 1px 6px;">Free</span>
+              </button>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': selectedPricing === 'freemium' }"
+                @click="selectPricing('freemium')"
+              >
+                <span class="rh-badge rh-badge-amber" style="padding: 1px 6px;">Freemium</span>
+              </button>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': selectedPricing === 'paid' }"
+                @click="selectPricing('paid')"
+              >
+                <span class="rh-badge rh-badge-rose" style="padding: 1px 6px;">Paid</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sort Selector -->
+          <div class="rh-popover-root">
+            <button
+              class="rh-btn rh-btn-sm rh-pill-btn"
+              @click="togglePopover('sort')"
+              aria-haspopup="true"
+              :aria-expanded="openFilterMenu === 'sort'"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="21" y1="10" x2="3" y2="10"/>
+                <line x1="21" y1="6" x2="3" y2="6"/>
+                <line x1="21" y1="14" x2="3" y2="14"/>
+                <line x1="21" y1="18" x2="3" y2="18"/>
+              </svg>
+              <span>Sort</span>
+              <svg class="rh-pill-caret" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div v-if="openFilterMenu === 'sort'" class="rh-card rh-popover-menu">
+              <div class="rh-popover-header">Sort Order</div>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': sortBy === 'title-asc' }"
+                @click="selectSort('title-asc')"
+              >
+                <span>Name (A–Z)</span>
+              </button>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': sortBy === 'title-desc' }"
+                @click="selectSort('title-desc')"
+              >
+                <span>Name (Z–A)</span>
+              </button>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': sortBy === 'newest' }"
+                @click="selectSort('newest')"
+              >
+                <span>Recently Added</span>
+              </button>
+              <button
+                class="rh-popover-item"
+                :class="{ 'is-selected': sortBy === 'featured' }"
+                @click="selectSort('featured')"
+              >
+                <span>{{ FEATURED_SORT_LABEL }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- View Mode Switcher: Grid vs List -->
+        <div class="rh-view-switcher" role="group" aria-label="Catalog view mode">
           <button
-            v-if="hasActiveFilters"
-            class="reset-filters-pill"
-            aria-label="Reset all filters"
-            @click="resetFilters"
+            class="rh-view-btn"
+            :class="{ 'is-active': viewMode === 'grid' }"
+            title="Grid view"
+            aria-label="Grid view"
+            @click="setViewMode('grid')"
           >
-            <span>Reset Filters</span>
-            <span class="reset-count tabular-nums">({{ activeFilterCount }})</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </button>
+          <button
+            class="rh-view-btn"
+            :class="{ 'is-active': viewMode === 'list' }"
+            title="Compact list view"
+            aria-label="List view"
+            @click="setViewMode('list')"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"/>
+              <line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/>
+              <line x1="3" y1="12" x2="3.01" y2="12"/>
+              <line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
           </button>
         </div>
       </div>
-    </header>
 
-    <!-- Active Filter Status & Screen Reader Announcement -->
-    <div class="directory-status-line" role="status" aria-live="polite">
-      <span class="results-count tabular-nums">
-        Showing <strong>{{ visibleResources.length }}</strong> of {{ filteredResources.length }} {{ filteredResources.length === 1 ? 'resource' : 'resources' }}
-        <span v-if="filteredResources.length < allResources.length" class="filtered-total">
-          (filtered from {{ allResources.length }})
-        </span>
-      </span>
+      <!-- 2. ACTIVE FILTERS CHIP BAR -->
+      <div v-if="hasActiveFilters" class="rh-active-filters-bar">
+        <span class="rh-active-label">Active filters:</span>
 
-      <div v-if="hasActiveFilters" class="active-chips">
-        <span v-if="selectedCategory && !initialCategory" class="active-chip">
-          Category: {{ getCategory(selectedCategory).name }}
-          <button class="chip-remove" aria-label="Remove category filter" @click="selectedCategory = ''">×</button>
+        <span v-if="searchQuery" class="rh-badge rh-badge-brand rh-active-chip">
+          <span>q: "{{ searchQuery }}"</span>
+          <button class="rh-chip-close" @click="searchQuery = ''" aria-label="Remove search query filter">×</button>
         </span>
-        <span v-if="selectedType" class="active-chip">
-          Type: {{ selectedType }}
-          <button class="chip-remove" aria-label="Remove type filter" @click="selectedType = ''">×</button>
+
+        <span v-if="selectedCategory && selectedCategory !== props.initialCategory" class="rh-badge rh-badge-brand rh-active-chip">
+          <span>category: {{ getCategory(selectedCategory).name }}</span>
+          <button class="rh-chip-close" @click="selectedCategory = props.initialCategory" aria-label="Remove category filter">×</button>
         </span>
-        <span v-if="selectedPricing" class="active-chip">
-          Pricing: {{ selectedPricing }}
-          <button class="chip-remove" aria-label="Remove pricing filter" @click="selectedPricing = ''">×</button>
+
+        <span v-if="selectedType" class="rh-badge rh-badge-brand rh-active-chip">
+          <span>type: {{ selectedType }}</span>
+          <button class="rh-chip-close" @click="selectedType = ''" aria-label="Remove type filter">×</button>
         </span>
-        <span v-if="selectedTag" class="active-chip">
-          Tag: #{{ selectedTag }}
-          <button class="chip-remove" aria-label="Remove tag filter" @click="selectedTag = ''">×</button>
+
+        <span v-if="selectedPricing" class="rh-badge rh-badge-brand rh-active-chip">
+          <span>pricing: {{ selectedPricing }}</span>
+          <button class="rh-chip-close" @click="selectedPricing = ''" aria-label="Remove pricing filter">×</button>
+        </span>
+
+        <span v-if="selectedTag" class="rh-badge rh-badge-brand rh-active-chip">
+          <span>#{{ selectedTag }}</span>
+          <button class="rh-chip-close" @click="selectedTag = ''" aria-label="Remove tag filter">×</button>
+        </span>
+
+        <button class="rh-btn rh-btn-ghost rh-btn-sm rh-clear-all-btn" @click="resetFilters">
+          Clear all filters
+        </button>
+      </div>
+
+      <!-- Result Counter Line -->
+      <div class="rh-result-count-line">
+        <span class="rh-tnum rh-result-count">
+          Showing <strong>{{ visibleResources.length }}</strong> of <strong>{{ filteredResources.length }}</strong> resources
         </span>
       </div>
     </div>
 
-    <!-- Strict Directory Grid -->
-    <div v-if="visibleResources.length > 0" class="directory-grid">
+    <!-- 3. CARDS PRESENTATION (GRID OR LIST) -->
+    <div
+      v-if="visibleResources.length > 0"
+      :class="viewMode === 'grid' ? 'rh-dir-grid' : 'rh-dir-list'"
+    >
       <ResourceCard
         v-for="res in visibleResources"
         :key="res.urlPath"
         :resource="res"
+        :view-mode="viewMode"
         @select-tag="handleTagSelect"
+        @select-category="selectCategory"
       />
     </div>
 
-    <!-- Progressive Loading: Load More Button -->
-    <div v-if="hasMore" class="load-more-container">
-      <button class="load-more-btn" @click="loadMore">
-        <span>Load More Resources</span>
-        <span class="load-count tabular-nums">
-          ({{ filteredResources.length - visibleResources.length }} remaining)
-        </span>
-      </button>
-    </div>
-
-    <!-- Premium Vercel / Linear Empty State -->
-    <div v-if="filteredResources.length === 0" class="directory-empty-state">
-      <div class="empty-icon-box">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 4. EMPTY SEARCH / FILTER STATE -->
+    <div v-else class="rh-card rh-empty-state">
+      <div class="rh-empty-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          <line x1="11" y1="8" x2="11" y2="14"/>
           <line x1="8" y1="11" x2="14" y2="11"/>
         </svg>
       </div>
-      <h3 class="empty-heading">No matching resources found</h3>
-      <p class="empty-message">
-        {{
-          allResources.length === 0
-            ? 'The resource collection is currently being cataloged.'
-            : 'No developer tools or references match your active search terms and selected filters.'
-        }}
+      <h3 class="rh-empty-title">No resources matched your criteria</h3>
+      <p class="rh-empty-desc">
+        We couldn't find any resources matching your current filters. Try refining your keywords, clearing tags, or expanding your category selection.
       </p>
-      <div class="empty-button-row">
-        <button v-if="hasActiveFilters" class="btn-solid-small" @click="resetFilters">
-          Clear All Filters
+      <div class="rh-empty-actions">
+        <button class="rh-btn rh-btn-primary rh-btn-md" @click="resetFilters">
+          Reset all filters
         </button>
-        <a href="/contribute" class="btn-outline-small">
-          Suggest a Resource →
+        <a href="/contribute" class="rh-btn rh-btn-secondary rh-btn-md">
+          Suggest missing tool
         </a>
       </div>
+    </div>
+
+    <!-- 5. PROGRESSIVE LOAD MORE BUTTON -->
+    <div v-if="hasMore" class="rh-load-more-wrap">
+      <button class="rh-btn rh-btn-secondary rh-btn-md" @click="loadMore">
+        <span>Load More Resources ({{ filteredResources.length - visibleResources.length }} remaining)</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.directory-view {
-  margin: 1rem 0 3.5rem 0;
+.rh-directory-root {
+  width: 100%;
+  margin-top: var(--rh-space-4);
+  margin-bottom: var(--rh-space-16);
 }
 
-/* Sticky Glassmorphic Filter Shell */
-.sticky-filter-shell {
+/* ==========================================================================
+   1. STICKY FILTER TOOLBAR
+   ========================================================================== */
+
+.rh-filter-toolbar {
   position: sticky;
-  top: calc(var(--vp-nav-height, 64px) + 0.5rem);
+  top: 64px;
   z-index: 20;
-  margin-bottom: 1.5rem;
-}
-
-.filter-glass-container {
+  background-color: var(--rh-glass-bg);
+  backdrop-filter: var(--rh-glass-blur);
+  -webkit-backdrop-filter: var(--rh-glass-blur);
+  border: 1px solid var(--rh-glass-border);
+  border-radius: var(--rh-radius-lg);
+  padding: var(--rh-space-3);
+  margin-bottom: var(--rh-space-6);
+  box-shadow: var(--rh-shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  padding: 1rem 1.15rem;
-  background-color: var(--hub-glass-bg);
-  backdrop-filter: var(--hub-glass-blur);
-  -webkit-backdrop-filter: var(--hub-glass-blur);
-  border: 1px solid var(--hub-glass-border);
-  border-radius: var(--hub-card-radius, 10px);
-  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.4), var(--hub-card-shadow);
-  transition: border-color var(--hub-transition);
+  gap: var(--rh-space-3);
 }
 
-/* Search Bar Wrap */
-.search-bar-wrap {
-  position: relative;
+.rh-toolbar-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rh-space-3);
+}
+
+/* Search input wrapper */
+.rh-search-wrapper {
+  flex: 1;
+  min-width: 220px;
+  height: 38px;
   display: flex;
   align-items: center;
-  width: 100%;
+  gap: var(--rh-space-2);
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-md);
+  padding: 0 var(--rh-space-3);
+  transition: border-color var(--rh-transition-fast), box-shadow var(--rh-transition-fast);
 }
 
-.search-icon {
-  position: absolute;
-  left: 0.95rem;
-  color: var(--vp-c-text-3);
-  pointer-events: none;
+.rh-search-wrapper:focus-within {
+  border-color: var(--rh-c-brand);
+  box-shadow: 0 0 0 3px var(--rh-c-brand-soft);
 }
 
-.directory-search-input {
-  width: 100%;
-  padding: 0.7rem 3rem 0.7rem 2.6rem;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
-  color: var(--vp-c-text-1);
-  font-size: 0.88rem;
-  font-family: var(--vp-font-family-base);
-  transition: border-color var(--hub-transition), box-shadow var(--hub-transition);
+.rh-search-icon {
+  color: var(--rh-c-text-tertiary);
+  flex-shrink: 0;
 }
 
-.directory-search-input:focus {
-  border-color: var(--vp-c-brand-1);
-  box-shadow: 0 0 0 1px var(--vp-c-brand-1);
+.rh-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
   outline: none;
+  font-family: var(--rh-font-sans);
+  font-size: 0.875rem;
+  color: var(--rh-c-text-primary);
 }
 
-.search-trailing {
-  position: absolute;
-  right: 0.75rem;
-  display: flex;
-  align-items: center;
+.rh-search-input::placeholder {
+  color: var(--rh-c-text-tertiary);
 }
 
-.key-indicator {
-  font-size: 0.72rem;
-  font-family: var(--vp-font-family-mono);
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 4px;
-  padding: 2px 7px;
-  color: var(--vp-c-text-3);
-}
-
-.clear-input-btn {
+.rh-clear-btn {
   background: none;
   border: none;
-  color: var(--vp-c-text-3);
-  font-size: 1.25rem;
+  color: var(--rh-c-text-tertiary);
   cursor: pointer;
-  padding: 0 0.35rem;
-  line-height: 1;
-  transition: color var(--hub-transition);
-}
-
-.clear-input-btn:hover {
-  color: var(--vp-c-text-1);
-}
-
-/* Category Tabs */
-.category-tabs-wrap {
+  padding: 2px;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  overflow-x: auto;
-  padding-bottom: 0.2rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  transition: color var(--rh-transition-fast);
 }
 
-.category-tab {
-  display: inline-flex;
+.rh-clear-btn:hover {
+  color: var(--rh-c-text-primary);
+}
+
+/* Pill groups */
+.rh-pill-group {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.4rem 0.85rem;
-  min-height: 36px;
-  background-color: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background-color var(--hub-transition), color var(--hub-transition), border-color var(--hub-transition);
+  gap: var(--rh-space-2);
 }
 
-.category-tab:hover {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border-hover);
-  background-color: var(--vp-c-bg-hover);
+.rh-pill-btn {
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  color: var(--rh-c-text-secondary);
+  border-radius: var(--rh-radius-full);
+  padding: 0 12px;
+  gap: 6px;
+  font-size: 0.8125rem;
 }
 
-.category-tab.is-active {
-  background-color: var(--vp-c-brand-1);
-  color: var(--vp-c-bg) !important;
-  border-color: var(--vp-c-brand-1);
+.rh-pill-btn:hover {
+  background-color: var(--rh-c-bg-hover);
+  color: var(--rh-c-text-primary);
+  border-color: var(--rh-c-border-hover);
+}
+
+.rh-pill-active {
+  background-color: var(--rh-c-brand-soft);
+  border-color: var(--rh-c-brand);
+  color: var(--rh-c-text-primary);
   font-weight: 600;
 }
 
-.tab-count {
-  font-size: 0.7rem;
-  font-family: var(--vp-font-family-mono);
-  background-color: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-3);
-  padding: 1px 5px;
-  border-radius: 3px;
-  transition: background-color var(--hub-transition), color var(--hub-transition);
+.rh-pill-caret {
+  opacity: 0.6;
 }
 
-.category-tab.is-active .tab-count {
-  background-color: rgba(0, 0, 0, 0.25);
-  color: var(--vp-c-bg);
-}
-
-.dark .category-tab.is-active .tab-count {
-  background-color: rgba(0, 0, 0, 0.35);
-  color: #000000;
-}
-
-/* Popover Controls Row */
-.controls-pill-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  padding-top: 0.65rem;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-.popover-filters-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.popover-container {
+/* Popover menus */
+.rh-popover-root {
   position: relative;
 }
 
-.filter-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.4rem 0.8rem;
-  min-height: 36px;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  color: var(--vp-c-text-2);
-  font-size: 0.78rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: border-color var(--hub-transition), color var(--hub-transition);
-}
-
-.filter-pill-btn:hover,
-.filter-pill-btn.is-active {
-  border-color: var(--vp-c-border-hover);
-  color: var(--vp-c-text-1);
-}
-
-.filter-pill-btn.is-active {
-  border-color: var(--vp-c-brand-1);
-}
-
-.chevron-icon {
-  color: var(--vp-c-text-3);
-  transition: transform var(--hub-transition);
-}
-
-.filter-pill-btn[aria-expanded="true"] .chevron-icon {
-  transform: rotate(180deg);
-}
-
-.popover-dropdown {
+.rh-popover-menu {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: 0;
   z-index: 50;
-  min-width: 170px;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
-  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.6);
-  padding: 4px;
+  min-width: 200px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 6px;
+  border-radius: var(--rh-radius-md);
+  box-shadow: var(--rh-shadow-lg);
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.dropdown-item {
+.rh-popover-header {
+  font-size: 0.725rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--rh-c-text-tertiary);
+  padding: 6px 10px 4px 10px;
+  letter-spacing: 0.04em;
+}
+
+.rh-popover-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.78rem;
-  color: var(--vp-c-text-2);
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: var(--rh-radius-sm);
   background: transparent;
   border: none;
-  border-radius: 5px;
+  font-family: var(--rh-font-sans);
+  font-size: 0.8125rem;
+  color: var(--rh-c-text-secondary);
   cursor: pointer;
   text-align: left;
-  transition: background-color var(--hub-transition), color var(--hub-transition);
+  transition: background-color var(--rh-transition-fast), color var(--rh-transition-fast);
 }
 
-.dropdown-item:hover {
-  background-color: var(--vp-c-bg-hover);
-  color: var(--vp-c-text-1);
+.rh-popover-item:hover {
+  background-color: var(--rh-c-bg-hover);
+  color: var(--rh-c-text-primary);
 }
 
-.dropdown-item.is-selected {
-  background-color: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
+.rh-popover-item.is-selected {
+  background-color: var(--rh-c-brand-soft);
+  color: var(--rh-c-text-primary);
   font-weight: 600;
 }
 
-.reset-filters-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.8rem;
-  min-height: 36px;
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  color: var(--vp-c-text-2);
+.rh-item-count {
   font-size: 0.75rem;
-  font-weight: 500;
+  color: var(--rh-c-text-tertiary);
+}
+
+/* View Switcher */
+.rh-view-switcher {
+  display: flex;
+  align-items: center;
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-md);
+  padding: 2px;
+  margin-left: auto;
+}
+
+.rh-view-btn {
+  background: transparent;
+  border: none;
+  color: var(--rh-c-text-tertiary);
+  padding: 5px 8px;
+  border-radius: var(--rh-radius-xs);
   cursor: pointer;
-  transition: color var(--hub-transition), border-color var(--hub-transition);
-}
-
-.reset-filters-pill:hover {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border-hover);
-}
-
-.reset-count {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.72rem;
-}
-
-/* Status Line & Active Chips */
-.directory-status-line {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-  flex-wrap: wrap;
+  justify-content: center;
+  transition: all var(--rh-transition-fast);
 }
 
-.results-count {
-  font-size: 0.84rem;
-  color: var(--vp-c-text-2);
+.rh-view-btn:hover {
+  color: var(--rh-c-text-primary);
 }
 
-.results-count strong {
-  color: var(--vp-c-text-1);
-  font-weight: 600;
+.rh-view-btn.is-active {
+  background-color: var(--rh-c-bg-hover);
+  color: var(--rh-c-text-primary);
 }
 
-.filtered-total {
-  color: var(--vp-c-text-3);
-  font-size: 0.78rem;
-  margin-left: 0.25rem;
-}
-
-.active-chips {
+/* Active filter chip bar */
+.rh-active-filters-bar {
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
   flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rh-space-2);
+  padding-top: var(--rh-space-2);
+  border-top: 1px solid var(--rh-c-border-subtle);
 }
 
-.active-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.72rem;
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-2);
+.rh-active-label {
+  font-size: 0.78125rem;
+  color: var(--rh-c-text-tertiary);
+  font-weight: 500;
+}
+
+.rh-active-chip {
+  gap: 6px;
   padding: 3px 8px;
-  border-radius: 4px;
 }
 
-.chip-remove {
+.rh-chip-close {
   background: none;
   border: none;
-  color: var(--vp-c-text-3);
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0 2px;
+  color: inherit;
+  font-size: 0.95rem;
   line-height: 1;
-}
-
-.chip-remove:hover {
-  color: var(--vp-c-text-1);
-}
-
-/* Directory Grid */
-.directory-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.15rem;
-}
-
-/* Progressive Loading Container */
-.load-more-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 2.5rem;
-}
-
-.load-more-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.7rem 1.6rem;
-  min-height: 44px;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
-  color: var(--vp-c-text-1);
-  font-size: 0.85rem;
-  font-weight: 600;
+  padding: 0;
   cursor: pointer;
-  box-shadow: var(--hub-card-shadow);
-  transition: border-color var(--hub-transition), transform var(--hub-transition), box-shadow var(--hub-transition);
+  opacity: 0.7;
+  transition: opacity var(--rh-transition-fast);
 }
 
-.load-more-btn:hover {
-  border-color: var(--vp-c-border-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--hub-card-shadow-hover);
+.rh-chip-close:hover {
+  opacity: 1;
 }
 
-.load-count {
-  font-size: 0.75rem;
-  color: var(--vp-c-text-3);
-  font-family: var(--vp-font-family-mono);
+.rh-clear-all-btn {
+  font-size: 0.78125rem;
+  height: 24px;
+  padding: 0 8px;
 }
 
-/* Premium Empty State */
-.directory-empty-state {
-  padding: 4rem 1.5rem;
-  text-align: center;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: var(--hub-card-radius, 10px);
+/* Result count line */
+.rh-result-count-line {
+  font-size: 0.8125rem;
+  color: var(--rh-c-text-secondary);
+}
+
+/* ==========================================================================
+   2. CARDS LAYOUT: GRID & LIST
+   ========================================================================== */
+
+.rh-dir-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--rh-space-4);
+}
+
+@media (min-width: 640px) {
+  .rh-dir-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rh-dir-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.rh-dir-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rh-space-3);
+}
+
+/* ==========================================================================
+   3. EMPTY STATE
+   ========================================================================== */
+
+.rh-empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1rem;
+  text-align: center;
+  padding: var(--rh-space-12) var(--rh-space-6);
+  margin: var(--rh-space-8) 0;
 }
 
-.empty-icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+.rh-empty-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--rh-radius-full);
+  background-color: var(--rh-c-bg-subtle);
+  border: 1px solid var(--rh-c-border);
+  color: var(--rh-c-text-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-3);
-  margin-bottom: 1.25rem;
-  border: 1px solid var(--vp-c-border);
+  margin-bottom: var(--rh-space-4);
 }
 
-.empty-heading {
-  margin: 0 0 0.45rem 0;
-  font-size: 1.15rem;
+.rh-empty-title {
+  font-size: 1.25rem;
   font-weight: 600;
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
+  margin: 0 0 var(--rh-space-2) 0;
 }
 
-.empty-message {
-  margin: 0 auto 1.75rem auto;
-  max-width: 440px;
-  font-size: 0.88rem;
+.rh-empty-desc {
+  max-width: 480px;
+  font-size: 0.9375rem;
   line-height: 1.6;
-  color: var(--vp-c-text-2);
+  color: var(--rh-c-text-secondary);
+  margin: 0 0 var(--rh-space-6) 0;
 }
 
-.empty-button-row {
+.rh-empty-actions {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  gap: var(--rh-space-3);
+  justify-content: center;
 }
 
-.btn-solid-small {
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 0.55rem 1.15rem;
-  min-height: 40px;
-  background-color: var(--vp-c-brand-1);
-  color: var(--vp-c-bg) !important;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity var(--hub-transition);
-}
+/* ==========================================================================
+   4. LOAD MORE
+   ========================================================================== */
 
-.btn-solid-small:hover {
-  opacity: 0.9;
-}
-
-.btn-outline-small {
-  font-size: 0.82rem;
-  font-weight: 500;
-  padding: 0.55rem 1.15rem;
-  min-height: 40px;
-  display: inline-flex;
-  align-items: center;
-  background-color: var(--vp-c-bg-elv);
-  color: var(--vp-c-text-1) !important;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  text-decoration: none;
-  transition: border-color var(--hub-transition);
-}
-
-.btn-outline-small:hover {
-  border-color: var(--vp-c-border-hover);
-}
-
-/* Responsive */
-@media (max-width: 640px) {
-  .directory-grid {
-    grid-template-columns: 1fr;
-  }
-  .controls-pill-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .sticky-filter-shell {
-    top: calc(var(--vp-nav-height, 64px) + 0.25rem);
-  }
+.rh-load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--rh-space-10);
 }
 </style>

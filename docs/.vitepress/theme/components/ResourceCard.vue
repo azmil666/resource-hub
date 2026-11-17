@@ -2,337 +2,442 @@
 import { computed } from 'vue';
 import type { ResourceItem } from '../data/resources.data';
 import { getCategory } from '../data/categories';
+import { getCtaLabel } from '../utils/cta';
+import { FEATURED_BADGE } from '../utils/labels';
 
-const props = defineProps<{
-  resource: ResourceItem;
-}>();
+const props = withDefaults(
+  defineProps<{
+    resource: ResourceItem;
+    viewMode?: 'grid' | 'list';
+  }>(),
+  {
+    viewMode: 'grid'
+  }
+);
 
 const emit = defineEmits<{
   (e: 'select-tag', tag: string): void;
+  (e: 'select-category', cat: string): void;
 }>();
 
 const categoryMeta = computed(() => getCategory(props.resource.category));
 
-const pricingDotClass = computed(() => {
-  switch (props.resource.pricing) {
-    case 'free':
-      return 'dot-free';
-    case 'freemium':
-      return 'dot-freemium';
-    case 'paid':
-      return 'dot-paid';
-    default:
-      return 'dot-unknown';
+const cta = computed(() => getCtaLabel(props.resource));
+
+// Clean domain extraction (e.g., github.com, tailwindcss.com)
+const cleanDomain = computed(() => {
+  if (!props.resource.url) return '';
+  try {
+    const parsed = new URL(props.resource.url);
+    return parsed.hostname.replace(/^www\./, '');
+  } catch {
+    return props.resource.url;
   }
 });
 
+// Semantic pricing badge styling class
+const pricingBadgeClass = computed(() => {
+  switch (props.resource.pricing) {
+    case 'free':
+      return 'rh-badge-emerald';
+    case 'freemium':
+      return 'rh-badge-amber';
+    case 'paid':
+      return 'rh-badge-rose';
+    default:
+      return 'rh-badge-slate';
+  }
+});
+
+// Category accent colors mapping
+const categoryAccentColor = computed(() => {
+  const map: Record<string, string> = {
+    frontend: 'var(--cat-accent-frontend)',
+    backend: 'var(--cat-accent-backend)',
+    'ai-tools': 'var(--cat-accent-ai-tools)',
+    utilities: 'var(--cat-accent-utilities)',
+    github: 'var(--cat-accent-github)',
+    design: 'var(--cat-accent-design)',
+    learning: 'var(--cat-accent-learning)',
+    inspiration: 'var(--cat-accent-inspiration)',
+    productivity: 'var(--cat-accent-productivity)',
+    miscellaneous: 'var(--cat-accent-miscellaneous)'
+  };
+  return map[props.resource.category] || 'var(--rh-c-brand)';
+});
+
+const sanitizedTags = computed(() => {
+  const raw = props.resource.tags;
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((t: any) => typeof t === 'string' && t.trim().length > 0 && t !== '[object Object]')
+    .map((t: string) => t.trim().toLowerCase());
+});
+
 function handleTagClick(tag: string, event: MouseEvent) {
+  event.stopPropagation();
+  event.preventDefault();
   emit('select-tag', tag);
+}
+
+function handleCategoryClick(cat: string, event: MouseEvent) {
+  event.stopPropagation();
+  emit('select-category', cat);
+}
+
+function handleCardClick(event: MouseEvent) {
+  // If user clicked inside an anchor tag or button, let native browser action occur
+  const target = event.target as HTMLElement;
+  if (target.closest('a') || target.closest('button')) {
+    return;
+  }
+  if (typeof window !== 'undefined') {
+    window.location.href = props.resource.urlPath;
+  }
 }
 </script>
 
 <template>
-  <article class="resource-card">
-    <!-- Top Metadata Header -->
-    <div class="card-header">
-      <div class="header-badges">
-        <a :href="`/resources/${resource.category}/`" class="category-badge">
-          {{ categoryMeta.name }}
+  <article
+    class="rh-card rh-resource-card"
+    :class="[
+      `rh-card-${viewMode}`,
+      { 'rh-card-featured': resource.featured }
+    ]"
+    @click="handleCardClick"
+  >
+    <!-- Top Metadata Bar -->
+    <div class="rh-rc-header">
+      <div class="rh-rc-badges">
+        <!-- Category Pill -->
+        <a
+          :href="`/resources/${resource.category}/`"
+          class="rh-badge rh-rc-cat-badge"
+          @click="handleCategoryClick(resource.category, $event)"
+        >
+          <span
+            class="rh-rc-cat-dot"
+            :style="{ backgroundColor: categoryAccentColor }"
+            aria-hidden="true"
+          ></span>
+          <span>{{ categoryMeta.name }}</span>
         </a>
-        <span class="type-badge">{{ resource.type }}</span>
+
+        <!-- Type Pill -->
+        <span class="rh-badge rh-badge-brand rh-rc-type-badge">
+          {{ resource.type }}
+        </span>
+
+        <!-- Featured Badge if featured -->
+        <span
+          v-if="resource.featured"
+          class="rh-badge rh-badge-amber rh-rc-featured-badge"
+          title="Featured resource"
+          aria-label="Featured resource"
+        >
+          ★ {{ FEATURED_BADGE }}
+        </span>
       </div>
 
+      <!-- External Outbound Link Affordance -->
       <a
         v-if="resource.url"
         :href="resource.url"
         target="_blank"
         rel="noopener noreferrer"
-        class="external-btn"
-        :title="`Visit official site: ${resource.title} (${resource.url})`"
-        :aria-label="`Visit official site for ${resource.title}`"
+        class="rh-rc-ext-btn"
+        :title="`${cta.label}: ${resource.title} (${cleanDomain})`"
+        :aria-label="`${cta.label} for ${resource.title} (opens in a new tab)`"
+        @click.stop
       >
-        <span class="btn-icon-wrapper" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7"/>
-            <polyline points="7 7 17 7 17 17"/>
-          </svg>
-        </span>
+        <span class="rh-rc-domain-text">{{ cleanDomain }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"/>
+          <polyline points="7 7 17 7 17 17"/>
+        </svg>
       </a>
     </div>
 
-    <!-- Main Title & Description -->
-    <div class="card-body">
-      <a :href="resource.urlPath" class="title-link">
-        <h3 class="resource-title">{{ resource.title }}</h3>
-      </a>
-      <p class="resource-desc">
+    <!-- Main Content: Title & Clamped Description -->
+    <div class="rh-rc-body">
+      <h3 class="rh-rc-title">
+        <a :href="resource.urlPath" class="rh-rc-title-link">
+          {{ resource.title }}
+        </a>
+      </h3>
+      <p class="rh-rc-desc">
         {{ resource.description }}
       </p>
     </div>
 
-    <!-- Card Footer: Tags & Pricing -->
-    <div class="card-footer">
-      <div v-if="resource.tags && resource.tags.length > 0" class="tags-group">
+    <!-- Footer: Tags & Pricing Indicator -->
+    <div class="rh-rc-footer">
+      <div v-if="sanitizedTags.length > 0" class="rh-rc-tags">
         <a
-          v-for="tag in resource.tags.slice(0, 3)"
+          v-for="tag in sanitizedTags.slice(0, 3)"
           :key="tag"
           :href="`/resources/?tag=${encodeURIComponent(tag)}`"
-          class="tag-pill"
-          @click.prevent="handleTagClick(tag, $event)"
+          class="rh-badge rh-rc-tag-chip"
+          @click="handleTagClick(tag, $event)"
         >
           #{{ tag }}
         </a>
-        <span v-if="resource.tags.length > 3" class="tag-more tabular-nums" :title="resource.tags.slice(3).join(', ')">
-          +{{ resource.tags.length - 3 }}
+        <span
+          v-if="sanitizedTags.length > 3"
+          class="rh-rc-tag-more rh-tnum"
+          :title="sanitizedTags.slice(3).join(', ')"
+        >
+          +{{ sanitizedTags.length - 3 }}
         </span>
       </div>
-      <div v-else class="tags-group"></div>
+      <div v-else class="rh-rc-tags"></div>
 
-      <span class="pricing-pill">
-        <span class="status-dot" :class="pricingDotClass"></span>
-        {{ resource.pricing }}
+      <!-- Pricing Badge with Colored Dot -->
+      <span class="rh-badge rh-rc-pricing-badge" :class="pricingBadgeClass">
+        <span class="rh-rc-pricing-dot" aria-hidden="true"></span>
+        <span class="rh-rc-pricing-text">{{ resource.pricing }}</span>
       </span>
     </div>
   </article>
 </template>
 
 <style scoped>
-.resource-card {
+.rh-resource-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: 1.25rem 1.35rem;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: var(--hub-card-radius, 10px);
-  box-shadow: var(--hub-card-shadow);
-  transition: transform var(--hub-transition), border-color var(--hub-transition), box-shadow var(--hub-transition);
-  position: relative;
+  padding: var(--rh-space-5);
   cursor: pointer;
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-lg);
+  box-shadow: var(--rh-shadow-sm);
+  transition: transform var(--rh-transition-base),
+              box-shadow var(--rh-transition-base),
+              border-color var(--rh-transition-base);
 }
 
-.resource-card:hover {
+.rh-resource-card:hover {
   transform: translateY(-2px);
-  border-color: var(--vp-c-border-hover);
-  box-shadow: var(--hub-card-shadow-hover);
+  border-color: var(--rh-c-border-hover);
+  box-shadow: var(--rh-shadow-md);
 }
 
-.resource-card:focus-within {
-  border-color: var(--vp-c-brand-1);
-  box-shadow: 0 0 0 1px var(--vp-c-brand-1);
+.rh-card-featured {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: linear-gradient(
+    145deg,
+    var(--rh-c-bg-surface) 0%,
+    var(--rh-c-bg-subtle) 100%
+  );
 }
 
-.card-header {
+.dark .rh-card-featured {
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.rh-rc-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.85rem;
+  gap: var(--rh-space-2);
+  margin-bottom: var(--rh-space-3);
 }
 
-.header-badges {
+.rh-rc-badges {
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
   flex-wrap: wrap;
-}
-
-/* Category Badge with Elevated z-index */
-.category-badge {
-  position: relative;
-  z-index: 2;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 4px;
-  padding: 2px 7px;
-  text-decoration: none;
-  transition: color var(--hub-transition), border-color var(--hub-transition);
-}
-
-.category-badge:hover {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border-hover);
-}
-
-.type-badge {
-  font-size: 0.7rem;
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-text-3);
-  padding: 1px 4px;
-  text-transform: lowercase;
-}
-
-/* External Link with Elevated z-index & Accessible 44x44px Hit Target */
-.external-btn {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
-  margin: -10px -10px -10px 0;
-  color: var(--vp-c-text-3);
-  background: transparent;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: color var(--hub-transition);
-  flex-shrink: 0;
+  gap: var(--rh-space-2);
 }
 
-.btn-icon-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 5px;
-  background-color: transparent;
-  border: 1px solid transparent;
-  transition: background-color var(--hub-transition), border-color var(--hub-transition), color var(--hub-transition);
+.rh-rc-cat-badge {
+  text-decoration: none !important;
+  color: var(--rh-c-text-secondary);
+  transition: color var(--rh-transition-fast), border-color var(--rh-transition-fast);
 }
 
-.external-btn:hover .btn-icon-wrapper {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border);
-  background-color: var(--vp-c-bg-hover);
+.rh-rc-cat-badge:hover {
+  color: var(--rh-c-text-primary);
+  border-color: var(--rh-c-border-hover);
 }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  flex-grow: 1;
-  margin-bottom: 1.15rem;
-}
-
-/* Stretched Link Pattern on Title Anchor */
-.title-link {
-  text-decoration: none;
-  align-self: flex-start;
-}
-
-.title-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: var(--hub-card-radius, 10px);
-}
-
-.title-link:focus-visible {
-  outline: none;
-}
-
-.resource-title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-  letter-spacing: -0.02em;
-  line-height: 1.35;
-  transition: color var(--hub-transition);
-}
-
-.resource-card:hover .resource-title,
-.title-link:hover .resource-title {
-  color: var(--vp-c-brand-1);
-}
-
-.resource-desc {
-  margin: 0;
-  font-size: 0.84rem;
-  line-height: 1.55;
-  color: var(--vp-c-text-2);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.card-footer {
-  margin-top: auto;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--vp-c-divider);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.tags-group {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-  overflow: hidden;
-}
-
-/* Tag Pill with Elevated z-index */
-.tag-pill {
-  position: relative;
-  z-index: 2;
-  font-size: 0.7rem;
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-text-3);
-  background-color: var(--vp-c-bg-soft);
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid var(--vp-c-border);
-  text-decoration: none;
-  transition: color var(--hub-transition), border-color var(--hub-transition), background-color var(--hub-transition);
-}
-
-.tag-pill:hover {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border-hover);
-  background-color: var(--vp-c-bg-hover);
-}
-
-.tag-more {
-  font-size: 0.68rem;
-  color: var(--vp-c-text-3);
-  font-family: var(--vp-font-family-mono);
-  cursor: default;
-}
-
-.pricing-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.72rem;
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-text-2);
-  text-transform: lowercase;
-  flex-shrink: 0;
-}
-
-.status-dot {
+.rh-rc-cat-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.dot-free {
-  background-color: #10b981;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+.rh-rc-type-badge {
+  font-size: 0.7rem;
+  text-transform: capitalize;
 }
 
-.dot-freemium {
-  background-color: #06b6d4;
-  box-shadow: 0 0 6px rgba(6, 182, 212, 0.4);
+.rh-rc-featured-badge {
+  font-size: 0.7rem;
 }
 
-.dot-paid {
-  background-color: #f59e0b;
-  box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+/* External Link Button */
+.rh-rc-ext-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--rh-c-text-tertiary);
+  text-decoration: none !important;
+  padding: 3px 6px;
+  border-radius: var(--rh-radius-sm);
+  transition: color var(--rh-transition-fast), background-color var(--rh-transition-fast);
+  flex-shrink: 0;
 }
 
-.dot-unknown {
-  background-color: #71717a;
+.rh-rc-ext-btn:hover {
+  color: var(--rh-c-text-primary);
+  background-color: var(--rh-c-bg-hover);
+}
+
+.rh-rc-domain-text {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   BODY: TITLE & DESCRIPTION
+   ========================================================================== */
+
+.rh-rc-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--rh-space-4);
+}
+
+.rh-rc-title {
+  margin: 0 0 var(--rh-space-2) 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+
+.rh-rc-title-link {
+  color: var(--rh-c-text-primary);
+  text-decoration: none !important;
+  transition: color var(--rh-transition-fast);
+}
+
+.rh-rc-title-link:hover {
+  color: var(--rh-c-brand);
+}
+
+.rh-rc-desc {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--rh-c-text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   FOOTER: TAGS & PRICING
+   ========================================================================== */
+
+.rh-rc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rh-space-2);
+  margin-top: auto;
+  padding-top: var(--rh-space-3);
+  border-top: 1px solid var(--rh-c-border-subtle);
+}
+
+.rh-rc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.rh-rc-tag-chip {
+  text-decoration: none !important;
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  transition: background-color var(--rh-transition-fast), color var(--rh-transition-fast);
+}
+
+.rh-rc-tag-chip:hover {
+  background-color: var(--rh-c-bg-hover);
+  color: var(--rh-c-text-primary);
+}
+
+.rh-rc-tag-more {
+  font-size: 0.7rem;
+  color: var(--rh-c-text-tertiary);
+  padding: 0 2px;
+}
+
+.rh-rc-pricing-badge {
+  font-size: 0.725rem;
+  text-transform: capitalize;
+  flex-shrink: 0;
+}
+
+.rh-rc-pricing-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* ==========================================================================
+   LIST VIEW MODE OVERRIDES
+   ========================================================================== */
+
+.rh-card-list {
+  padding: var(--rh-space-4) var(--rh-space-5);
+}
+
+@media (min-width: 768px) {
+  .rh-card-list {
+    display: grid;
+    grid-template-columns: 240px 1fr auto;
+    align-items: center;
+    gap: var(--rh-space-4);
+  }
+
+  .rh-card-list .rh-rc-header {
+    margin-bottom: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--rh-space-1);
+  }
+
+  .rh-card-list .rh-rc-body {
+    margin-bottom: 0;
+  }
+
+  .rh-card-list .rh-rc-desc {
+    -webkit-line-clamp: 1;
+  }
+
+  .rh-card-list .rh-rc-footer {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--rh-space-2);
+  }
 }
 </style>
