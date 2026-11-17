@@ -36,7 +36,7 @@ export default {
           !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)
         ) {
           e.preventDefault();
-          const dirInput = document.querySelector('.directory-search-input') as HTMLInputElement | null;
+          const dirInput = document.querySelector('.rh-search-input, .rh-hero-search-input, .directory-search-input') as HTMLInputElement | null;
           if (dirInput) {
             dirInput.focus();
             dirInput.select();
