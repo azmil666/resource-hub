@@ -1,110 +1,247 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { data as allResources } from '../data/resources.data';
+import { CATEGORIES, getCategory } from '../data/categories';
 import ResourceCard from './ResourceCard.vue';
-import CategoryOverview from './CategoryOverview.vue';
 
-const totalCount = computed(() => allResources.length);
+// Live interactive search on hero
+const heroSearchQuery = ref('');
 
-const featuredResources = computed(() => {
-  return allResources.filter(r => r.featured);
+function executeSearch() {
+  const query = heroSearchQuery.value.trim();
+  if (typeof window !== 'undefined') {
+    if (query) {
+      window.location.href = `/resources/?q=${encodeURIComponent(query)}`;
+    } else {
+      window.location.href = '/resources/';
+    }
+  }
+}
+
+function handleSearchKeydown(e: KeyboardEvent) {
+  if (e.key === 'Enter') {
+    executeSearch();
+  }
+}
+
+// Dynamic computed statistics (no hardcoded numbers)
+const totalResources = computed(() => allResources.length);
+const totalCategories = computed(() => CATEGORIES.length);
+
+const freeResourcesCount = computed(() => {
+  return allResources.filter(r => r.pricing === 'free' || r.pricing === 'freemium').length;
 });
 
+const freePercentage = computed(() => {
+  if (!allResources.length) return 0;
+  return Math.round((freeResourcesCount.value / allResources.length) * 100);
+});
+
+// Category counts map
+const categoryCountMap = computed(() => {
+  const counts: Record<string, number> = {};
+  for (const item of allResources) {
+    counts[item.category] = (counts[item.category] || 0) + 1;
+  }
+  return counts;
+});
+
+// Featured resources (prominent spotlight)
+const featuredResources = computed(() => {
+  return allResources.filter(r => r.featured).slice(0, 4);
+});
+
+// Recently added resources sorted by dateAdded descending
 const recentResources = computed(() => {
   return [...allResources]
     .sort((a, b) => (b.dateAdded || '').localeCompare(a.dateAdded || ''))
     .slice(0, 6);
 });
 
-function openVitePressSearch() {
-  const btn = document.querySelector('.DocSearch-Button, .VPNavBarSearchButton, [aria-label*="Search"]') as HTMLButtonElement | null;
-  if (btn) {
-    btn.click();
-  } else {
-    window.location.href = '/resources/';
-  }
-}
+// Category accent colors mapping
+const categoryAccents: Record<string, string> = {
+  frontend: 'var(--cat-accent-frontend)',
+  backend: 'var(--cat-accent-backend)',
+  'ai-tools': 'var(--cat-accent-ai-tools)',
+  utilities: 'var(--cat-accent-utilities)',
+  github: 'var(--cat-accent-github)',
+  design: 'var(--cat-accent-design)',
+  learning: 'var(--cat-accent-learning)',
+  inspiration: 'var(--cat-accent-inspiration)',
+  productivity: 'var(--cat-accent-productivity)',
+  miscellaneous: 'var(--cat-accent-miscellaneous)'
+};
 </script>
 
 <template>
-  <div class="home-layout">
-    <!-- Ambient Glow & High-Impact Hero -->
-    <header class="hero-block">
-      <div class="ambient-glow" aria-hidden="true"></div>
-
-      <div class="hero-badge-wrap">
-        <span class="hero-badge">
-          <span class="badge-dot"></span>
-          Curated Knowledge Directory • {{ totalCount }} Resources
-        </span>
+  <div class="rh-home">
+    <!-- 1. HERO SECTION -->
+    <header class="rh-hero">
+      <!-- Animated Background Mesh & Glow -->
+      <div class="rh-hero-bg" aria-hidden="true">
+        <div class="rh-hero-grid"></div>
+        <div class="rh-hero-glow"></div>
       </div>
 
-      <h1 class="hero-heading">
-        The Modern Developer<br />
-        <span class="gradient-text">Resource Hub</span>
+      <!-- Live Catalog Tag -->
+      <div class="rh-hero-badge-wrap">
+        <a href="/resources/" class="rh-badge rh-badge-brand rh-hero-badge">
+          <span class="rh-badge-pulse" aria-hidden="true"></span>
+          <span>Verified Knowledge Catalog • {{ totalResources }} Developer Resources</span>
+        </a>
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="rh-hero-title">
+        The curated directory for<br />
+        <span class="rh-gradient-text">modern engineering</span>
       </h1>
 
-      <p class="hero-summary">
-        A minimalist, high-contrast library of developer utilities, UI design systems, APIs, and engineering references. Engineered for rapid discovery.
+      <!-- Subtitle -->
+      <p class="rh-hero-lead">
+        A high-signal, zero-fluff index of open-source libraries, devtools, design systems, and AI models. Engineered for velocity.
       </p>
 
-      <!-- Center Vercel / Linear Command Bar Search -->
-      <div class="search-trigger-container">
-        <button class="search-trigger-box" @click="openVitePressSearch" aria-label="Open command palette search">
-          <svg class="search-lens" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Live Search Bar -->
+      <div class="rh-hero-search-box">
+        <div class="rh-hero-search-inner">
+          <svg class="rh-hero-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/>
             <path d="m21 21-4.3-4.3"/>
           </svg>
-          <span class="search-label">
-            Search {{ totalCount > 0 ? `${totalCount} resources` : 'library' }} by title, stack, or tag...
-          </span>
-          <div class="command-pill" aria-hidden="true">
-            <kbd class="kbd-mod">⌘</kbd>
-            <kbd class="kbd-char">K</kbd>
-          </div>
-        </button>
+          <input
+            v-model="heroSearchQuery"
+            type="text"
+            class="rh-hero-search-input"
+            placeholder="Search resources by title, library, or tag (e.g. tailwind, orm, icons)..."
+            aria-label="Search resources directly"
+            @keydown="handleSearchKeydown"
+          />
+          <button
+            class="rh-btn rh-btn-primary rh-btn-sm rh-hero-search-btn"
+            @click="executeSearch"
+          >
+            <span>Search</span>
+            <kbd class="rh-kbd" aria-hidden="true">↵</kbd>
+          </button>
+        </div>
       </div>
 
-      <!-- Linear Action Buttons -->
-      <div class="hero-actions-row">
-        <a href="/resources/" class="btn-solid">
+      <!-- Quick Action CTAs -->
+      <div class="rh-hero-ctas">
+        <a href="/resources/" class="rh-btn rh-btn-primary rh-btn-md">
           <span>Browse All Resources</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"/>
             <polyline points="12 5 19 12 12 19"/>
           </svg>
         </a>
-        <a href="/categories" class="btn-outline">
-          View Categories
-        </a>
-        <a href="/contribute" class="btn-ghost">
-          Suggest a Resource →
+        <a href="/contribute" class="rh-btn rh-btn-secondary rh-btn-md">
+          <span>Contribute</span>
+          <span aria-hidden="true">→</span>
         </a>
       </div>
     </header>
 
-    <!-- Categories Section -->
-    <section class="content-section">
-      <div class="section-title-bar">
-        <div>
-          <h2 class="section-heading">Browse by Discipline</h2>
-          <p class="section-subtext">10 curated categories spanning full-stack development, design, and developer tools.</p>
-        </div>
-        <a href="/categories" class="section-action-link">All Categories →</a>
+    <!-- 2. SOCIAL PROOF & METRICS STRIP -->
+    <section class="rh-metrics-bar" aria-label="Directory statistics">
+      <div class="rh-metric-item">
+        <span class="rh-metric-value rh-tnum">{{ totalResources }}</span>
+        <span class="rh-metric-label">Curated Entries</span>
       </div>
-      <CategoryOverview />
+      <div class="rh-metric-divider" aria-hidden="true"></div>
+      <div class="rh-metric-item">
+        <span class="rh-metric-value rh-tnum">{{ totalCategories }}</span>
+        <span class="rh-metric-label">Disciplines</span>
+      </div>
+      <div class="rh-metric-divider" aria-hidden="true"></div>
+      <div class="rh-metric-item">
+        <span class="rh-metric-value rh-tnum">{{ freePercentage }}%</span>
+        <span class="rh-metric-label">Free & Open Source</span>
+      </div>
+      <div class="rh-metric-divider" aria-hidden="true"></div>
+      <div class="rh-metric-item">
+        <span class="rh-metric-value rh-tnum">0</span>
+        <span class="rh-metric-label">Sponsored Ads</span>
+      </div>
     </section>
 
-    <!-- Recently Added Section (Strict Grid) -->
-    <section v-if="allResources.length > 0" class="content-section">
-      <div class="section-title-bar">
+    <!-- 3. BROWSE BY CATEGORY GRID -->
+    <section class="rh-home-section">
+      <div class="rh-section-header">
         <div>
-          <h2 class="section-heading">Recently Added</h2>
-          <p class="section-subtext">The latest tools and references added to the catalog.</p>
+          <h2 class="rh-section-title">Explore by Category</h2>
+          <p class="rh-section-subtitle">Structured catalogs spanning frontend, backend, AI models, and design tools.</p>
         </div>
-        <a href="/resources/" class="section-action-link">Open Directory ({{ totalCount }}) →</a>
+        <a href="/categories" class="rh-btn rh-btn-ghost rh-btn-sm rh-section-link">
+          <span>View all categories</span>
+          <span aria-hidden="true">→</span>
+        </a>
       </div>
-      <div class="resources-grid">
+
+      <div class="rh-category-grid">
+        <a
+          v-for="cat in CATEGORIES"
+          :key="cat.slug"
+          :href="`/resources/${cat.slug}/`"
+          class="rh-card rh-card-interactive rh-category-card"
+        >
+          <div class="rh-category-top">
+            <span
+              class="rh-category-dot"
+              :style="{ backgroundColor: categoryAccents[cat.slug] || 'var(--rh-c-brand)' }"
+              aria-hidden="true"
+            ></span>
+            <span class="rh-badge rh-tnum rh-category-count">
+              {{ categoryCountMap[cat.slug] || 0 }} resources
+            </span>
+          </div>
+          <h3 class="rh-category-name">{{ cat.name }}</h3>
+          <p class="rh-category-desc">{{ cat.description }}</p>
+          <div class="rh-category-foot">
+            <span class="rh-category-arrow">Explore catalog →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 4. FEATURED SPOTLIGHT SECTION -->
+    <section v-if="featuredResources.length > 0" class="rh-home-section">
+      <div class="rh-section-header">
+        <div>
+          <div class="rh-badge rh-badge-amber" style="margin-bottom: var(--rh-space-2);">Staff Picks</div>
+          <h2 class="rh-section-title">Spotlight Resources</h2>
+          <p class="rh-section-subtitle">High-utility tools and architectural references recognized across the industry.</p>
+        </div>
+        <a href="/resources/?type=tool" class="rh-btn rh-btn-ghost rh-btn-sm rh-section-link">
+          <span>View spotlight tools</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="rh-featured-grid">
+        <ResourceCard
+          v-for="res in featuredResources"
+          :key="res.urlPath"
+          :resource="res"
+        />
+      </div>
+    </section>
+
+    <!-- 5. RECENTLY ADDED FEED -->
+    <section v-if="recentResources.length > 0" class="rh-home-section">
+      <div class="rh-section-header">
+        <div>
+          <h2 class="rh-section-title">Recently Added</h2>
+          <p class="rh-section-subtitle">The freshest additions to the community repository.</p>
+        </div>
+        <a href="/resources/" class="rh-btn rh-btn-ghost rh-btn-sm rh-section-link">
+          <span>Explore all ({{ totalResources }})</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="rh-resources-grid">
         <ResourceCard
           v-for="res in recentResources"
           :key="res.urlPath"
@@ -113,51 +250,81 @@ function openVitePressSearch() {
       </div>
     </section>
 
-    <!-- Featured Spotlight Section -->
-    <section class="content-section">
-      <div class="section-title-bar">
+    <!-- 6. VALUE PROPOSITION & HOW IT WORKS -->
+    <section class="rh-home-section">
+      <div class="rh-section-header">
         <div>
-          <h2 class="section-heading">Spotlight Resources</h2>
-          <p class="section-subtext">Foundational benchmarks and standout open-source utilities.</p>
+          <h2 class="rh-section-title">Built for Developer Speed</h2>
+          <p class="rh-section-subtitle">Designed to remove friction from tooling discovery and research.</p>
         </div>
       </div>
 
-      <div v-if="featuredResources.length > 0" class="resources-grid">
-        <ResourceCard
-          v-for="res in featuredResources"
-          :key="res.urlPath"
-          :resource="res"
-        />
-      </div>
-      <div v-else class="empty-guide-box">
-        <div class="empty-icon-circle">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-          </svg>
+      <div class="rh-features-grid">
+        <div class="rh-card rh-feature-card">
+          <div class="rh-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+            </svg>
+          </div>
+          <h3 class="rh-feature-title">Keyboard-First Flow</h3>
+          <p class="rh-feature-desc">Tap <kbd class="rh-kbd">/</kbd> anywhere to focus search or use fuzzy matching to jump straight to libraries.</p>
         </div>
-        <h3 class="empty-guide-title">Curated spotlights will appear here</h3>
-        <p class="empty-guide-text">
-          Hand-picked highlights will appear as community suggestions are verified. All 251 resources are immediately browsable in the directory.
-        </p>
-        <div class="empty-actions">
-          <a href="/resources/" class="btn-solid-small">Browse Directory</a>
-          <a href="/contribute" class="btn-outline-small">Suggest Spotlight</a>
+
+        <div class="rh-card rh-feature-card">
+          <div class="rh-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
+          <h3 class="rh-feature-title">Shareable Deep Links</h3>
+          <p class="rh-feature-desc">Every query, category facet, and tag selection immediately reflects in the URL parameters for easy bookmarking.</p>
+        </div>
+
+        <div class="rh-card rh-feature-card">
+          <div class="rh-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3 class="rh-feature-title">Strict Quality Gate</h3>
+          <p class="rh-feature-desc">Automated CI verifies schema integrity, enforces HTTPS, and audits weekly for broken external links.</p>
+        </div>
+
+        <div class="rh-card rh-feature-card">
+          <div class="rh-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+              <path d="M9 18c-4.51 2-5-2-7-2"/>
+            </svg>
+          </div>
+          <h3 class="rh-feature-title">100% Open Markdown</h3>
+          <p class="rh-feature-desc">No database lock-in. Every resource is an open-source Markdown record you can clone, edit, or extend via pull request.</p>
         </div>
       </div>
     </section>
 
-    <!-- Minimalist Contribution Callout -->
-    <section class="editorial-callout">
-      <div class="callout-text-wrap">
-        <h3 class="callout-heading">Know a high-utility resource?</h3>
-        <p class="callout-desc">
-          Developer Resource Hub is open-source and community-maintained. Suggest libraries, frameworks, or guides via simple Markdown PRs.
+    <!-- 7. COMMUNITY CONTRIBUTION BANNER -->
+    <section class="rh-card rh-cta-banner">
+      <div class="rh-cta-content">
+        <h3 class="rh-cta-title">Know an exceptional developer tool?</h3>
+        <p class="rh-cta-desc">
+          Developer Resource Hub is fully open-source. Suggest a new framework, tool, or design resource through our streamlined workflow.
         </p>
       </div>
-      <div class="callout-actions">
-        <a href="/contribute" class="btn-solid-small">Suggest Resource</a>
-        <a href="https://github.com/azmil666/resource-hub" target="_blank" rel="noopener noreferrer" class="btn-outline-small">
-          GitHub Repository ↗
+      <div class="rh-cta-actions">
+        <a href="/contribute" class="rh-btn rh-btn-primary rh-btn-md">
+          <span>Suggest a Resource</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="https://github.com/azmil666/resource-hub"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rh-btn rh-btn-secondary rh-btn-md"
+        >
+          <span>Star on GitHub</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
     </section>
@@ -165,406 +332,525 @@ function openVitePressSearch() {
 </template>
 
 <style scoped>
-.home-layout {
-  max-width: 1040px;
+.rh-home {
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem 4rem 1.5rem;
+  padding: 0 var(--rh-space-4) var(--rh-space-16) var(--rh-space-4);
 }
 
-/* Hero Block & Ambient Glow */
-.hero-block {
+@media (min-width: 768px) {
+  .rh-home {
+    padding: 0 var(--rh-space-6) var(--rh-space-20) var(--rh-space-6);
+  }
+}
+
+/* ==========================================================================
+   1. HERO STYLING
+   ========================================================================== */
+
+.rh-hero {
   position: relative;
-  padding: 4.5rem 1rem 3.5rem 1rem;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  padding: var(--rh-space-12) var(--rh-space-2) var(--rh-space-10) var(--rh-space-2);
+  overflow: hidden;
 }
 
-.ambient-glow {
+@media (min-width: 768px) {
+  .rh-hero {
+    padding: var(--rh-space-16) var(--rh-space-4) var(--rh-space-12) var(--rh-space-4);
+  }
+}
+
+/* Ambient glow & grid mesh */
+.rh-hero-bg {
   position: absolute;
-  top: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  max-width: 100vw;
-  height: 380px;
-  background: radial-gradient(
-    ellipse 60% 50% at 50% 20%,
-    rgba(7, 255, 225, 0.15) 0%,
-    rgba(255, 229, 0, 0.04) 40%,
-    rgba(0, 0, 0, 0) 70%
-  );
+  inset: 0;
   pointer-events: none;
   z-index: 0;
-  filter: blur(40px);
+  overflow: hidden;
 }
 
-.hero-badge-wrap {
-  margin-bottom: 1.25rem;
+.rh-hero-grid {
+  position: absolute;
+  inset: -100px;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, var(--rh-c-border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rh-c-border-subtle) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 30%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 30%, black 20%, transparent 75%);
+  opacity: 0.6;
+}
+
+@keyframes rh-pulse-glow {
+  0%, 100% { transform: translate(-50%, -20%) scale(1); opacity: 0.7; }
+  50% { transform: translate(-50%, -18%) scale(1.08); opacity: 0.9; }
+}
+
+.rh-hero-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  width: 680px;
+  max-width: 95vw;
+  height: 380px;
+  border-radius: var(--rh-radius-full);
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.15) 0%,
+    rgba(147, 51, 234, 0.08) 45%,
+    transparent 70%
+  );
+  filter: blur(50px);
+  animation: rh-pulse-glow 8s ease-in-out infinite;
+}
+
+.dark .rh-hero-glow {
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.22) 0%,
+    rgba(147, 51, 234, 0.14) 45%,
+    transparent 75%
+  );
+}
+
+.rh-hero-badge-wrap {
+  position: relative;
   z-index: 1;
+  margin-bottom: var(--rh-space-4);
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  padding: 4px 12px;
-  border-radius: 9999px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+.rh-hero-badge {
+  text-decoration: none;
+  padding: 4px 14px;
+  font-size: 0.8125rem;
+  border-radius: var(--rh-radius-full);
+  background: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  box-shadow: var(--rh-shadow-xs);
+  transition: border-color var(--rh-transition-fast), transform var(--rh-transition-fast);
 }
 
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #07FFE1;
-  box-shadow: 0 0 8px rgba(7, 255, 225, 0.8);
-}
-
-.hero-heading {
-  margin: 0 0 1.25rem 0;
-  font-size: 3.25rem;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  color: var(--vp-c-text-1);
-  z-index: 1;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--vp-c-text-1) 30%, var(--vp-c-text-2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero-summary {
-  margin: 0 auto 2.25rem auto;
-  max-width: 620px;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: var(--vp-c-text-2);
-  letter-spacing: -0.01em;
-  z-index: 1;
-}
-
-/* Center Command Bar Search */
-.search-trigger-container {
-  width: 100%;
-  max-width: 600px;
-  margin-bottom: 2rem;
-  z-index: 1;
-}
-
-.search-trigger-box {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1.25rem;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #333333;
-  border-radius: 12px;
-  color: var(--vp-c-text-2);
-  cursor: pointer;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  transition: border-color var(--hub-transition), box-shadow var(--hub-transition), transform var(--hub-transition);
-}
-
-.search-trigger-box:hover,
-.search-trigger-box:focus-visible {
-  border-color: rgba(7, 255, 225, 0.5);
-  box-shadow: 0 0 24px -2px rgba(7, 255, 225, 0.22), 0 0 0 1px rgba(7, 255, 225, 0.25);
+.rh-hero-badge:hover {
+  border-color: var(--rh-c-border-hover);
   transform: translateY(-1px);
 }
 
-.search-trigger-box:hover .search-lens,
-.search-trigger-box:focus-visible .search-lens {
-  color: #07FFE1;
+.rh-badge-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--rh-color-emerald-text);
+  box-shadow: 0 0 8px var(--rh-color-emerald-text);
 }
 
-.search-lens {
-  color: var(--vp-c-text-3);
-  flex-shrink: 0;
-  transition: color var(--hub-transition);
+.rh-hero-title {
+  position: relative;
+  z-index: 1;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: var(--rh-c-text-primary);
+  margin: 0 0 var(--rh-space-4) 0;
 }
 
-.search-label {
-  font-size: 0.92rem;
-  color: var(--vp-c-text-3);
-  flex-grow: 1;
-  text-align: left;
-  letter-spacing: -0.01em;
+@media (min-width: 640px) {
+  .rh-hero-title {
+    font-size: 3.25rem;
+  }
 }
 
-.command-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 3px 8px;
-  border-radius: 6px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: border-color var(--hub-transition);
+@media (min-width: 1024px) {
+  .rh-hero-title {
+    font-size: 3.75rem;
+  }
 }
 
-.search-trigger-box:hover .command-pill {
-  border-color: rgba(7, 255, 225, 0.35);
+.rh-hero-lead {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto var(--rh-space-8) auto;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--rh-c-text-secondary);
 }
 
-.kbd-mod,
-.kbd-char {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-  line-height: 1;
+/* Hero live search box */
+.rh-hero-search-box {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto var(--rh-space-6) auto;
 }
 
-/* Action Buttons */
-.hero-actions-row {
+.rh-hero-search-inner {
   display: flex;
+  align-items: center;
+  gap: var(--rh-space-2);
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-lg);
+  padding: 6px 8px 6px var(--rh-space-4);
+  box-shadow: var(--rh-shadow-md);
+  transition: border-color var(--rh-transition-fast), box-shadow var(--rh-transition-fast);
+}
+
+.rh-hero-search-inner:focus-within {
+  border-color: var(--rh-c-brand);
+  box-shadow: 0 0 0 3px var(--rh-c-brand-soft), var(--rh-shadow-md);
+}
+
+.rh-hero-search-icon {
+  color: var(--rh-c-text-tertiary);
+  flex-shrink: 0;
+}
+
+.rh-hero-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--rh-font-sans);
+  font-size: 0.9375rem;
+  color: var(--rh-c-text-primary);
+  padding: 4px 0;
+}
+
+.rh-hero-search-input::placeholder {
+  color: var(--rh-c-text-tertiary);
+}
+
+.rh-hero-search-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rh-hero-ctas {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  z-index: 1;
+  gap: var(--rh-space-3);
 }
 
-.btn-solid {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.65rem 1.25rem;
-  background-color: var(--vp-c-brand-1);
-  color: var(--vp-c-bg) !important;
-  font-size: 0.88rem;
-  font-weight: 600;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: opacity var(--hub-transition), transform var(--hub-transition);
-}
+/* ==========================================================================
+   2. METRICS STRIP
+   ========================================================================== */
 
-.btn-solid:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.65rem 1.25rem;
-  background-color: var(--vp-c-bg-elv);
-  color: var(--vp-c-text-1) !important;
-  border: 1px solid var(--vp-c-border);
-  font-size: 0.88rem;
-  font-weight: 500;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: border-color var(--hub-transition), background-color var(--hub-transition), transform var(--hub-transition);
-}
-
-.btn-outline:hover {
-  border-color: var(--vp-c-border-hover);
-  background-color: var(--vp-c-bg-hover);
-  transform: translateY(-1px);
-}
-
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.65rem 1rem;
-  color: var(--vp-c-text-2) !important;
-  font-size: 0.88rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color var(--hub-transition);
-}
-
-.btn-ghost:hover {
-  color: var(--vp-c-text-1) !important;
-}
-
-/* Content Sections */
-.content-section {
-  margin-top: 3.5rem;
-}
-
-.section-title-bar {
+.rh-metrics-bar {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid var(--vp-c-border);
-  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--rh-space-4);
+  padding: var(--rh-space-5) var(--rh-space-6);
+  background-color: var(--rh-c-bg-subtle);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-lg);
+  margin-bottom: var(--rh-space-12);
 }
 
-.section-heading {
-  margin: 0;
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  color: var(--vp-c-text-1);
-}
-
-.section-subtext {
-  margin: 0.25rem 0 0 0;
-  font-size: 0.86rem;
-  color: var(--vp-c-text-2);
-}
-
-.section-action-link {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color var(--hub-transition);
-}
-
-.section-action-link:hover {
-  color: var(--vp-c-text-1);
-}
-
-/* Resources Strict Grid */
-.resources-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1rem;
-}
-
-/* Empty Spotlight Guide Box */
-.empty-guide-box {
-  padding: 2.5rem 1.5rem;
-  text-align: center;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: var(--hub-card-radius, 8px);
+.rh-metric-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2px;
 }
 
-.empty-icon-circle {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-3);
-  margin-bottom: 0.85rem;
+.rh-metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--rh-c-text-primary);
+  line-height: 1.2;
 }
 
-.empty-guide-title {
-  margin: 0 0 0.35rem 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-
-.empty-guide-text {
-  margin: 0 auto 1.25rem auto;
-  max-width: 480px;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: var(--vp-c-text-2);
-}
-
-.empty-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.btn-solid-small {
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.45rem 0.95rem;
-  background-color: var(--vp-c-brand-1);
-  color: var(--vp-c-bg) !important;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: opacity var(--hub-transition);
-}
-
-.btn-solid-small:hover {
-  opacity: 0.9;
-}
-
-.btn-outline-small {
-  font-size: 0.8rem;
+.rh-metric-label {
+  font-size: 0.78125rem;
+  color: var(--rh-c-text-tertiary);
   font-weight: 500;
-  padding: 0.45rem 0.95rem;
-  background-color: var(--vp-c-bg-elv);
-  color: var(--vp-c-text-1) !important;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 5px;
-  text-decoration: none;
-  transition: border-color var(--hub-transition);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.btn-outline-small:hover {
-  border-color: var(--vp-c-border-hover);
+.rh-metric-divider {
+  display: none;
+  width: 1px;
+  height: 32px;
+  background-color: var(--rh-c-border);
 }
 
-/* Bottom Callout Banner */
-.editorial-callout {
-  margin-top: 4.5rem;
-  padding: 2rem 2.25rem;
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: var(--hub-card-radius, 8px);
+@media (min-width: 640px) {
+  .rh-metric-divider {
+    display: block;
+  }
+}
+
+/* ==========================================================================
+   3. SECTIONS & CATEGORY GRID
+   ========================================================================== */
+
+.rh-home-section {
+  margin-bottom: var(--rh-space-12);
+}
+
+@media (min-width: 768px) {
+  .rh-home-section {
+    margin-bottom: var(--rh-space-16);
+  }
+}
+
+.rh-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rh-space-2);
+  margin-bottom: var(--rh-space-6);
+}
+
+@media (min-width: 640px) {
+  .rh-section-header {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.rh-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--rh-c-text-primary);
+  margin: 0;
+}
+
+.rh-section-subtitle {
+  font-size: 0.9375rem;
+  color: var(--rh-c-text-secondary);
+  margin: var(--rh-space-1) 0 0 0;
+}
+
+.rh-section-link {
+  align-self: flex-start;
+}
+
+/* Category cards */
+.rh-category-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--rh-space-4);
+}
+
+@media (min-width: 640px) {
+  .rh-category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rh-category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.rh-category-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--rh-space-5);
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.rh-category-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  margin-bottom: var(--rh-space-3);
 }
 
-.callout-heading {
-  margin: 0 0 0.25rem 0;
-  font-size: 1.15rem;
+.rh-category-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--rh-radius-full);
+}
+
+.rh-category-count {
+  font-size: 0.725rem;
+}
+
+.rh-category-name {
+  font-size: 1.0625rem;
   font-weight: 600;
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
+  margin: 0 0 var(--rh-space-2) 0;
+  letter-spacing: -0.02em;
 }
 
-.callout-desc {
-  margin: 0;
-  font-size: 0.86rem;
-  color: var(--vp-c-text-2);
-  max-width: 540px;
+.rh-category-desc {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--rh-c-text-secondary);
+  margin: 0 0 var(--rh-space-4) 0;
+  flex: 1;
 }
 
-.callout-actions {
+.rh-category-foot {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  flex-shrink: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--rh-c-brand);
 }
 
-/* Mobile responsive breakpoints */
-@media (max-width: 768px) {
-  .hero-heading {
-    font-size: 2.35rem;
+.rh-category-arrow {
+  transition: transform var(--rh-transition-fast);
+}
+
+.rh-category-card:hover .rh-category-arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   4. FEATURED & RECENT CARDS GRID
+   ========================================================================== */
+
+.rh-featured-grid,
+.rh-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--rh-space-4);
+}
+
+@media (min-width: 640px) {
+  .rh-featured-grid,
+  .rh-resources-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .section-title-bar {
-    flex-direction: column;
-    align-items: flex-start;
+}
+
+@media (min-width: 1024px) {
+  .rh-featured-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .editorial-callout {
-    flex-direction: column;
-    align-items: flex-start;
+  .rh-resources-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* ==========================================================================
+   5. FEATURE HIGHLIGHTS
+   ========================================================================== */
+
+.rh-features-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--rh-space-4);
+}
+
+@media (min-width: 640px) {
+  .rh-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rh-features-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.rh-feature-card {
+  padding: var(--rh-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rh-space-2);
+}
+
+.rh-feature-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--rh-radius-md);
+  background-color: var(--rh-c-brand-soft);
+  color: var(--rh-c-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--rh-space-2);
+}
+
+.rh-feature-title {
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: var(--rh-c-text-primary);
+  margin: 0;
+}
+
+.rh-feature-desc {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--rh-c-text-secondary);
+  margin: 0;
+}
+
+/* ==========================================================================
+   6. CTA BANNER
+   ========================================================================== */
+
+.rh-cta-banner {
+  padding: var(--rh-space-8) var(--rh-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rh-space-6);
+  background: linear-gradient(
+    135deg,
+    var(--rh-c-bg-surface) 0%,
+    var(--rh-c-bg-subtle) 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .rh-cta-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--rh-space-10) var(--rh-space-8);
+  }
+}
+
+.rh-cta-content {
+  max-width: 560px;
+}
+
+.rh-cta-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--rh-c-text-primary);
+  margin: 0 0 var(--rh-space-2) 0;
+}
+
+.rh-cta-desc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--rh-c-text-secondary);
+  margin: 0;
+}
+
+.rh-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rh-space-3);
+  flex-shrink: 0;
 }
 </style>
