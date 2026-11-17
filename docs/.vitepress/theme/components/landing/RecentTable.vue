@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { data as allResources } from '../../data/resources.data';
 import { getCategory } from '../../data/categories';
+import { getCtaLabel } from '../../utils/cta';
 
 const recentItems = computed(() => {
   return [...allResources]
@@ -108,10 +109,10 @@ function getDomain(urlStr: string) {
               target="_blank"
               rel="noopener noreferrer"
               class="rh-btn rh-btn-ghost rh-btn-sm rh-row-visit-btn"
-              :title="`Visit ${item.title}`"
-              :aria-label="`Visit ${item.title} website`"
+              :title="`${getCtaLabel(item).label}: ${item.title}`"
+              :aria-label="`${getCtaLabel(item).label} for ${item.title} (opens in a new tab)`"
             >
-              <span>Visit</span>
+              <span>{{ getCtaLabel(item).label }}</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="7" y1="17" x2="17" y2="7"/>
                 <polyline points="7 7 17 7 17 17"/>

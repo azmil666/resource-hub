@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import type { ResourceItem } from '../data/resources.data';
 import { getCategory } from '../data/categories';
+import { getCtaLabel } from '../utils/cta';
 
 const props = withDefaults(
   defineProps<{
@@ -19,6 +20,8 @@ const emit = defineEmits<{
 }>();
 
 const categoryMeta = computed(() => getCategory(props.resource.category));
+
+const cta = computed(() => getCtaLabel(props.resource));
 
 // Clean domain extraction (e.g., github.com, tailwindcss.com)
 const cleanDomain = computed(() => {
@@ -137,8 +140,8 @@ function handleCardClick(event: MouseEvent) {
         target="_blank"
         rel="noopener noreferrer"
         class="rh-rc-ext-btn"
-        :title="`Visit official site: ${resource.title} (${cleanDomain})`"
-        :aria-label="`Open official website for ${resource.title} in new tab`"
+        :title="`${cta.label}: ${resource.title} (${cleanDomain})`"
+        :aria-label="`${cta.label} for ${resource.title} (opens in a new tab)`"
         @click.stop
       >
         <span class="rh-rc-domain-text">{{ cleanDomain }}</span>
