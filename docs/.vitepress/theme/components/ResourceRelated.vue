@@ -60,7 +60,9 @@ const relatedResources = computed(() => {
 
   const category = String(frontmatter.value.category).toLowerCase();
   const currentTags = Array.isArray(frontmatter.value.tags)
-    ? frontmatter.value.tags.map((t: string) => String(t).toLowerCase())
+    ? frontmatter.value.tags
+        .filter((t: any) => typeof t === 'string' && t.trim().length > 0 && t !== '[object Object]')
+        .map((t: string) => t.trim().toLowerCase())
     : [];
 
   // Filter pool excluding current page

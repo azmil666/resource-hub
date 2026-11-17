@@ -51,6 +51,14 @@ const cleanDomain = computed(() => {
   }
 });
 
+const sanitizedTags = computed(() => {
+  const raw = frontmatter.value.tags;
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((t: any) => typeof t === 'string' && t.trim().length > 0 && t !== '[object Object]')
+    .map((t: string) => t.trim().toLowerCase());
+});
+
 async function copyPageLink() {
   if (typeof window === 'undefined') return;
   try {
@@ -109,9 +117,9 @@ async function copyPageLink() {
         </p>
 
         <!-- Tags List -->
-        <div v-if="frontmatter.tags && frontmatter.tags.length > 0" class="rh-meta-tags">
+        <div v-if="sanitizedTags.length > 0" class="rh-meta-tags">
           <a
-            v-for="tag in frontmatter.tags"
+            v-for="tag in sanitizedTags"
             :key="tag"
             :href="`/resources/?tag=${encodeURIComponent(tag)}`"
             class="rh-badge rh-meta-tag-pill"

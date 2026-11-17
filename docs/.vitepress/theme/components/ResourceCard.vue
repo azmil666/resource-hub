@@ -62,6 +62,14 @@ const categoryAccentColor = computed(() => {
   return map[props.resource.category] || 'var(--rh-c-brand)';
 });
 
+const sanitizedTags = computed(() => {
+  const raw = props.resource.tags;
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((t: any) => typeof t === 'string' && t.trim().length > 0 && t !== '[object Object]')
+    .map((t: string) => t.trim().toLowerCase());
+});
+
 function handleTagClick(tag: string, event: MouseEvent) {
   event.stopPropagation();
   event.preventDefault();
@@ -155,9 +163,9 @@ function handleCardClick(event: MouseEvent) {
 
     <!-- Footer: Tags & Pricing Indicator -->
     <div class="rh-rc-footer">
-      <div v-if="resource.tags && resource.tags.length > 0" class="rh-rc-tags">
+      <div v-if="sanitizedTags.length > 0" class="rh-rc-tags">
         <a
-          v-for="tag in resource.tags.slice(0, 3)"
+          v-for="tag in sanitizedTags.slice(0, 3)"
           :key="tag"
           :href="`/resources/?tag=${encodeURIComponent(tag)}`"
           class="rh-badge rh-rc-tag-chip"
@@ -166,11 +174,11 @@ function handleCardClick(event: MouseEvent) {
           #{{ tag }}
         </a>
         <span
-          v-if="resource.tags.length > 3"
+          v-if="sanitizedTags.length > 3"
           class="rh-rc-tag-more rh-tnum"
-          :title="resource.tags.slice(3).join(', ')"
+          :title="sanitizedTags.slice(3).join(', ')"
         >
-          +{{ resource.tags.length - 3 }}
+          +{{ sanitizedTags.length - 3 }}
         </span>
       </div>
       <div v-else class="rh-rc-tags"></div>

@@ -39,13 +39,18 @@ const latestDate = computed(() => {
   return dates[0] || 'Weekly';
 });
 
-// Derive top 5 most frequent tags from the dataset
+// Derive top 5 most frequent tags from the dataset (strictly sanitized)
 const topTags = computed(() => {
   const counts: Record<string, number> = {};
   for (const item of allResources) {
     if (Array.isArray(item.tags)) {
-      for (const t of item.tags) {
-        counts[t] = (counts[t] || 0) + 1;
+      for (const rawTag of item.tags) {
+        if (typeof rawTag === 'string') {
+          const t = rawTag.trim().toLowerCase();
+          if (t && t !== '[object object]' && !t.includes('[object')) {
+            counts[t] = (counts[t] || 0) + 1;
+          }
+        }
       }
     }
   }
