@@ -255,6 +255,7 @@ function getDomain(urlStr: string) {
   color: var(--rh-c-text-primary);
   font-weight: 600;
   font-size: 0.9375rem;
+  overflow-wrap: anywhere;
   transition: color var(--rh-transition-fast);
 }
 

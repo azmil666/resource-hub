@@ -348,6 +348,15 @@ onUnmounted(() => {
   gap: var(--rh-space-3);
 }
 
+@media (max-width: 520px) {
+  .rh-mockup-grid {
+    grid-template-columns: 1fr;
+  }
+  .rh-mock-tile:nth-child(n+3) {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .rh-mockup-grid {
     grid-template-columns: repeat(3, 1fr);

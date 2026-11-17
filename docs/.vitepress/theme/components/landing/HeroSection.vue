@@ -339,6 +339,7 @@ onMounted(() => {
 
 .rh-hero-search-input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
