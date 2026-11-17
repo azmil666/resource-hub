@@ -1,26 +1,46 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useData } from 'vitepress';
 import { getCategory } from '../data/categories';
 
 const { frontmatter } = useData();
 
+const copiedLink = ref(false);
+
 const categoryMeta = computed(() => getCategory(frontmatter.value.category));
 
-const pricingDotClass = computed(() => {
+// Category accent colors mapping
+const categoryAccentColor = computed(() => {
+  const map: Record<string, string> = {
+    frontend: 'var(--cat-accent-frontend)',
+    backend: 'var(--cat-accent-backend)',
+    'ai-tools': 'var(--cat-accent-ai-tools)',
+    utilities: 'var(--cat-accent-utilities)',
+    github: 'var(--cat-accent-github)',
+    design: 'var(--cat-accent-design)',
+    learning: 'var(--cat-accent-learning)',
+    inspiration: 'var(--cat-accent-inspiration)',
+    productivity: 'var(--cat-accent-productivity)',
+    miscellaneous: 'var(--cat-accent-miscellaneous)'
+  };
+  return map[frontmatter.value.category] || 'var(--rh-c-brand)';
+});
+
+// Semantic pricing badge styling class
+const pricingBadgeClass = computed(() => {
   switch (frontmatter.value.pricing) {
     case 'free':
-      return 'dot-free';
+      return 'rh-badge-emerald';
     case 'freemium':
-      return 'dot-freemium';
+      return 'rh-badge-amber';
     case 'paid':
-      return 'dot-paid';
+      return 'rh-badge-rose';
     default:
-      return 'dot-unknown';
+      return 'rh-badge-slate';
   }
 });
 
-// Format clean domain display for URL (e.g. modelviewer.dev)
+// Clean domain extraction
 const cleanDomain = computed(() => {
   if (!frontmatter.value.url) return '';
   try {
@@ -30,95 +50,145 @@ const cleanDomain = computed(() => {
     return frontmatter.value.url;
   }
 });
+
+async function copyPageLink() {
+  if (typeof window === 'undefined') return;
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    copiedLink.value = true;
+    setTimeout(() => {
+      copiedLink.value = false;
+    }, 2000);
+  } catch (err) {
+    console.error('Failed to copy link:', err);
+  }
+}
 </script>
 
 <template>
-  <header v-if="frontmatter.title && frontmatter.category && frontmatter.url" class="saas-header">
-    <!-- Breadcrumb Trail -->
-    <nav class="saas-breadcrumbs" aria-label="Breadcrumb navigation">
-      <a href="/resources/" class="crumb-link">Resources</a>
-      <span class="crumb-sep" aria-hidden="true">/</span>
-      <a :href="`/resources/${frontmatter.category}/`" class="crumb-link">{{ categoryMeta.name }}</a>
-      <span class="crumb-sep" aria-hidden="true">/</span>
-      <span class="crumb-current" aria-current="page">{{ frontmatter.title }}</span>
+  <header v-if="frontmatter.title && frontmatter.category && frontmatter.url" class="rh-meta-header">
+    <!-- Breadcrumb Navigation -->
+    <nav class="rh-breadcrumbs" aria-label="Breadcrumb navigation">
+      <a href="/resources/" class="rh-crumb-link">Resources</a>
+      <span class="rh-crumb-sep" aria-hidden="true">/</span>
+      <a :href="`/resources/${frontmatter.category}/`" class="rh-crumb-link">{{ categoryMeta.name }}</a>
+      <span class="rh-crumb-sep" aria-hidden="true">/</span>
+      <span class="rh-crumb-current" aria-current="page">{{ frontmatter.title }}</span>
     </nav>
 
-    <!-- Integrated SaaS App Store Hero Grid -->
-    <div class="saas-split-layout">
-      <!-- Left Column: Title, Category, Tagline, Tags -->
-      <div class="saas-main-col">
-        <div class="saas-badge-strip">
-          <a :href="`/resources/${frontmatter.category}/`" class="saas-category-badge">
-            <span class="cat-dot" aria-hidden="true"></span>
-            {{ categoryMeta.name }}
+    <!-- Split SaaS Header: Main Content Left + Specs Panel Right -->
+    <div class="rh-meta-split">
+      <!-- Left Column: Title, Badges, Tagline, Tags -->
+      <div class="rh-meta-main">
+        <!-- Badges row -->
+        <div class="rh-meta-badges">
+          <a :href="`/resources/${frontmatter.category}/`" class="rh-badge rh-badge-brand rh-meta-cat-badge">
+            <span
+              class="rh-meta-cat-dot"
+              :style="{ backgroundColor: categoryAccentColor }"
+              aria-hidden="true"
+            ></span>
+            <span>{{ categoryMeta.name }}</span>
           </a>
-          <span class="saas-type-chip">{{ frontmatter.type || 'website' }}</span>
+
+          <span class="rh-badge rh-badge-brand" style="text-transform: capitalize;">
+            {{ frontmatter.type || 'website' }}
+          </span>
+
+          <span v-if="frontmatter.featured" class="rh-badge rh-badge-amber">
+            ★ Staff Pick
+          </span>
         </div>
 
-        <h1 class="saas-title">{{ frontmatter.title }}</h1>
-        <p v-if="frontmatter.description" class="saas-tagline">
+        <!-- Resource Title -->
+        <h1 class="rh-meta-title">{{ frontmatter.title }}</h1>
+
+        <!-- Subtitle / Tagline -->
+        <p v-if="frontmatter.description" class="rh-meta-tagline">
           {{ frontmatter.description }}
         </p>
 
-        <!-- Interactive Tags List -->
-        <div v-if="frontmatter.tags && frontmatter.tags.length > 0" class="saas-tags-row">
+        <!-- Tags List -->
+        <div v-if="frontmatter.tags && frontmatter.tags.length > 0" class="rh-meta-tags">
           <a
             v-for="tag in frontmatter.tags"
             :key="tag"
             :href="`/resources/?tag=${encodeURIComponent(tag)}`"
-            class="saas-tag-pill"
+            class="rh-badge rh-meta-tag-pill"
           >
             #{{ tag }}
           </a>
         </div>
       </div>
 
-      <!-- Right Column: Specs Panel & Prominent Primary CTA -->
-      <div class="saas-side-col">
-        <!-- Prominent Primary Action Button -->
-        <div class="saas-cta-box">
+      <!-- Right Column: Action CTAs & Sticky Specs Panel -->
+      <div class="rh-meta-sidebar">
+        <!-- Primary & Secondary Action CTAs -->
+        <div class="rh-meta-actions">
           <a
             :href="frontmatter.url"
             target="_blank"
             rel="noopener noreferrer"
-            class="saas-primary-btn"
-            :title="`Open official website: ${frontmatter.url}`"
-            :aria-label="`Visit official website for ${frontmatter.title} (${cleanDomain})`"
+            class="rh-btn rh-btn-primary rh-btn-lg rh-visit-btn"
+            :title="`Visit official site: ${frontmatter.title} (${cleanDomain})`"
+            :aria-label="`Visit official site for ${frontmatter.title}`"
           >
             <span>Visit Website</span>
-            <svg class="cta-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="7" y1="17" x2="17" y2="7"/>
               <polyline points="7 7 17 7 17 17"/>
             </svg>
           </a>
+
+          <button
+            class="rh-btn rh-btn-secondary rh-btn-md rh-copy-btn"
+            :class="{ 'is-copied': copiedLink }"
+            @click="copyPageLink"
+            :aria-label="copiedLink ? 'Link copied' : 'Copy page URL'"
+          >
+            <svg v-if="!copiedLink" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>{{ copiedLink ? 'Link Copied!' : 'Copy Link' }}</span>
+          </button>
         </div>
 
-        <!-- Compact Metadata Specs Card -->
-        <div class="saas-specs-card">
-          <div class="spec-row">
-            <span class="spec-label">TYPE</span>
-            <span class="spec-val mono">{{ frontmatter.type || 'website' }}</span>
+        <!-- Sticky Metadata Specs Panel -->
+        <div class="rh-card rh-specs-card">
+          <div class="rh-spec-row">
+            <span class="rh-spec-label">TYPE</span>
+            <span class="rh-spec-val" style="text-transform: capitalize;">{{ frontmatter.type || 'website' }}</span>
           </div>
 
-          <div class="spec-row">
-            <span class="spec-label">PRICING</span>
-            <span class="spec-val pricing-val">
-              <span class="status-dot" :class="pricingDotClass" aria-hidden="true"></span>
+          <div class="rh-spec-row">
+            <span class="rh-spec-label">PRICING</span>
+            <span class="rh-badge rh-spec-badge" :class="pricingBadgeClass">
               {{ frontmatter.pricing || 'unknown' }}
             </span>
           </div>
 
-          <div class="spec-row">
-            <span class="spec-label">STATUS</span>
-            <span class="spec-val status-val" :class="{ 'needs-review': frontmatter.status === 'needs-review' }">
-              {{ frontmatter.status || 'published' }}
-            </span>
+          <div class="rh-spec-row">
+            <span class="rh-spec-label">STATUS</span>
+            <span class="rh-spec-val rh-spec-status">{{ frontmatter.status || 'published' }}</span>
           </div>
 
-          <div class="spec-row">
-            <span class="spec-label">DOMAIN</span>
-            <a :href="frontmatter.url" target="_blank" rel="noopener noreferrer" class="spec-val domain-link">
-              {{ cleanDomain }} ↗
+          <div v-if="frontmatter.dateAdded" class="rh-spec-row">
+            <span class="rh-spec-label">ADDED</span>
+            <span class="rh-spec-val rh-tnum">{{ frontmatter.dateAdded }}</span>
+          </div>
+
+          <div class="rh-spec-row">
+            <span class="rh-spec-label">DOMAIN</span>
+            <a :href="frontmatter.url" target="_blank" rel="noopener noreferrer" class="rh-spec-val rh-domain-link">
+              <span>{{ cleanDomain }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="7" y1="17" x2="17" y2="7"/>
+                <polyline points="7 7 17 7 17 17"/>
+              </svg>
             </a>
           </div>
         </div>
@@ -128,297 +198,206 @@ const cleanDomain = computed(() => {
 </template>
 
 <style scoped>
-.saas-header {
-  margin: 1rem 0 2.5rem 0;
-  padding: 1.75rem 0 2rem 0;
-  border-bottom: 1px solid var(--vp-c-divider);
-  display: flex;
-  flex-direction: column;
+.rh-meta-header {
+  margin: var(--rh-space-4) 0 var(--rh-space-8) 0;
+  padding-bottom: var(--rh-space-8);
+  border-bottom: 1px solid var(--rh-c-border);
 }
 
 /* Breadcrumbs */
-.saas-breadcrumbs {
+.rh-breadcrumbs {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  margin-bottom: 1.5rem;
+  gap: var(--rh-space-2);
+  font-size: 0.8125rem;
+  margin-bottom: var(--rh-space-6);
   flex-wrap: wrap;
 }
 
-.crumb-link {
-  color: var(--vp-c-text-3);
-  text-decoration: none;
-  transition: color var(--hub-transition);
+.rh-crumb-link {
+  color: var(--rh-c-text-tertiary);
+  text-decoration: none !important;
+  transition: color var(--rh-transition-fast);
 }
 
-.crumb-link:hover {
-  color: var(--vp-c-text-1);
+.rh-crumb-link:hover {
+  color: var(--rh-c-text-primary);
 }
 
-.crumb-sep {
-  color: var(--vp-c-text-3);
+.rh-crumb-sep {
+  color: var(--rh-c-text-tertiary);
   opacity: 0.4;
 }
 
-.crumb-current {
-  color: var(--vp-c-text-2);
+.rh-crumb-current {
+  color: var(--rh-c-text-secondary);
   font-weight: 500;
 }
 
-/* Split Hero Layout */
-.saas-split-layout {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-}
-
-.saas-main-col {
-  flex: 1 1 480px;
-  min-width: 280px;
-}
-
-.saas-side-col {
-  flex: 0 0 300px;
+/* Split Layout */
+.rh-meta-split {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: var(--rh-space-8);
 }
 
-/* Badge Strip */
-.saas-badge-strip {
+@media (min-width: 860px) {
+  .rh-meta-split {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--rh-space-8);
+  }
+}
+
+.rh-meta-main {
+  flex: 1 1 500px;
+}
+
+.rh-meta-badges {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.85rem;
   flex-wrap: wrap;
-}
-
-.saas-category-badge {
-  display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-  background-color: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  padding: 3px 10px;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: border-color var(--hub-transition), background-color var(--hub-transition);
+  gap: var(--rh-space-2);
+  margin-bottom: var(--rh-space-3);
 }
 
-.saas-category-badge:hover {
-  border-color: var(--vp-c-border-hover);
-  background-color: var(--vp-c-bg-hover);
+.rh-meta-cat-badge {
+  text-decoration: none !important;
 }
 
-.cat-dot {
+.rh-meta-cat-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--vp-c-brand-1);
-  box-shadow: 0 0 6px var(--vp-c-brand-1);
+  flex-shrink: 0;
 }
 
-.saas-type-chip {
-  font-size: 0.72rem;
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-text-3);
-  text-transform: lowercase;
-}
-
-/* Title & Description */
-.saas-title {
-  margin: 0 0 0.65rem 0;
-  font-size: 2.5rem;
+.rh-meta-title {
+  font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.15;
-  color: var(--vp-c-text-1);
+  color: var(--rh-c-text-primary);
+  margin: 0 0 var(--rh-space-3) 0;
 }
 
-.saas-tagline {
-  margin: 0 0 1.35rem 0;
-  font-size: 1.05rem;
+@media (min-width: 640px) {
+  .rh-meta-title {
+    font-size: 2.75rem;
+  }
+}
+
+.rh-meta-tagline {
+  font-size: 1.0625rem;
   line-height: 1.6;
-  color: var(--vp-c-text-2);
-  letter-spacing: -0.01em;
+  color: var(--rh-c-text-secondary);
+  margin: 0 0 var(--rh-space-5) 0;
 }
 
-/* Tags Row */
-.saas-tags-row {
+.rh-meta-tags {
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
   flex-wrap: wrap;
-}
-
-.saas-tag-pill {
-  font-size: 0.72rem;
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-text-3);
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  padding: 3px 8px;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: color var(--hub-transition), border-color var(--hub-transition), background-color var(--hub-transition);
-}
-
-.saas-tag-pill:hover {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border-hover);
-  background-color: var(--vp-c-bg-hover);
-}
-
-/* Primary Action Button (The High-Contrast Anchor) */
-.saas-cta-box {
-  width: 100%;
-}
-
-.saas-primary-btn {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  width: 100%;
-  min-height: 46px;
-  padding: 0.75rem 1.4rem;
-  background-color: var(--vp-c-brand-1);
-  color: var(--vp-c-bg) !important;
-  font-size: 0.92rem;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: transform var(--hub-transition), opacity var(--hub-transition), box-shadow var(--hub-transition);
+  gap: 6px;
 }
 
-.saas-primary-btn:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+.rh-meta-tag-pill {
+  text-decoration: none !important;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  transition: background-color var(--rh-transition-fast), color var(--rh-transition-fast);
 }
 
-.cta-arrow {
-  transition: transform var(--hub-transition);
+.rh-meta-tag-pill:hover {
+  background-color: var(--rh-c-bg-hover);
+  color: var(--rh-c-text-primary);
 }
 
-.saas-primary-btn:hover .cta-arrow {
-  transform: translate(2px, -2px);
-}
-
-/* Specs Panel */
-.saas-specs-card {
-  background-color: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
-  padding: 0.85rem 1.15rem;
+/* Sidebar / Specs Panel */
+.rh-meta-sidebar {
+  flex: 0 0 320px;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: var(--rh-space-4);
 }
 
-.spec-row {
+@media (min-width: 860px) {
+  .rh-meta-sidebar {
+    position: sticky;
+    top: 80px;
+  }
+}
+
+.rh-meta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rh-space-2);
+}
+
+.rh-visit-btn {
+  width: 100%;
+}
+
+.rh-copy-btn {
+  width: 100%;
+}
+
+.rh-copy-btn.is-copied {
+  border-color: var(--rh-color-emerald-border);
+  color: var(--rh-color-emerald-text) !important;
+}
+
+/* Specs Card */
+.rh-specs-card {
+  padding: var(--rh-space-4);
+  background-color: var(--rh-c-bg-surface);
+  border: 1px solid var(--rh-c-border);
+  border-radius: var(--rh-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rh-space-3);
+}
+
+.rh-spec-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  font-size: 0.8125rem;
 }
 
-.spec-label {
-  font-size: 0.68rem;
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-text-3);
-  letter-spacing: 0.05em;
+.rh-spec-label {
+  font-size: 0.7rem;
   font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--rh-c-text-tertiary);
 }
 
-.spec-val {
-  font-size: 0.82rem;
+.rh-spec-val {
+  color: var(--rh-c-text-primary);
   font-weight: 500;
-  color: var(--vp-c-text-1);
 }
 
-.spec-val.mono {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.76rem;
-  text-transform: lowercase;
+.rh-spec-badge {
+  font-size: 0.7rem;
+  text-transform: capitalize;
 }
 
-.pricing-val {
+.rh-spec-status {
+  text-transform: capitalize;
+  color: var(--rh-color-emerald-text);
+}
+
+.rh-domain-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.76rem;
-  text-transform: lowercase;
+  gap: 3px;
+  color: var(--rh-c-text-secondary);
+  text-decoration: none !important;
+  transition: color var(--rh-transition-fast);
 }
 
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.dot-free {
-  background-color: #10b981;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
-}
-
-.dot-freemium {
-  background-color: #06b6d4;
-  box-shadow: 0 0 6px rgba(6, 182, 212, 0.4);
-}
-
-.dot-paid {
-  background-color: #f59e0b;
-  box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
-}
-
-.dot-unknown {
-  background-color: #71717a;
-}
-
-.status-val {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.76rem;
-  color: #10b981;
-}
-
-.status-val.needs-review {
-  color: #f59e0b;
-}
-
-.domain-link {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.78rem;
-  color: var(--vp-c-text-2);
-  text-decoration: none;
-  transition: color var(--hub-transition);
-}
-
-.domain-link:hover {
-  color: var(--vp-c-text-1);
-  text-decoration: underline;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .saas-split-layout {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .saas-side-col {
-    width: 100%;
-    flex: 1 1 100%;
-  }
-  .saas-title {
-    font-size: 2rem;
-  }
+.rh-domain-link:hover {
+  color: var(--rh-c-brand);
 }
 </style>
